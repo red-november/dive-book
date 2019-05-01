@@ -11,18 +11,18 @@ const OfferedDive = require('./offeredDive')
  *    BlogPost.belongsTo(User)
  */
 
-DiveShop.belongsToMany(User, {through: 'usershops'})
-User.belongsToMany(DiveShop, {through: 'usershops'})
-Log.belongsToMany(User, {through: 'userlog'})
-User.belongsToMany(Log, {through: 'userlog'})
+DiveShop.belongsToMany(User, { through: 'usershops' })
+User.belongsToMany(DiveShop, { through: 'usershops' })
+Log.belongsTo(User)
+User.hasMany(Log)
 Certification.belongsTo(User)
 User.hasMany(Certification)
 
-OfferedDive.belongsToMany(Log, {through: 'logoffereddive'})
-Log.belongsToMany(OfferedDive, {through: 'logoffereddive'})
+OfferedDive.belongsToMany(Log, { through: 'logoffereddive' })
+Log.belongsToMany(OfferedDive, { through: 'logoffereddive' })
 
-DiveShop.belongsToMany(OfferedDive, {through: 'divesofferedbyshop'})
-OfferedDive.belongsToMany(DiveShop, {through: 'divesofferedbyshop'})
+DiveShop.belongsToMany(OfferedDive, { through: 'divesofferedbyshop' })
+OfferedDive.belongsToMany(DiveShop, { through: 'divesofferedbyshop' })
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
