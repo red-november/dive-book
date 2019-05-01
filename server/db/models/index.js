@@ -1,6 +1,8 @@
 const User = require('./user')
 const DiveShop = require('./diveShop')
 const Log = require('./log')
+const Certification = require('./certification')
+const OfferedDive = require('./offeredDive')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -8,6 +10,19 @@ const Log = require('./log')
  *
  *    BlogPost.belongsTo(User)
  */
+
+DiveShop.belongsToMany(User, {through: 'usershops'})
+User.belongsToMany(DiveShop, {through: 'usershops'})
+Log.belongsToMany(User, {through: 'userlog'})
+User.belongsToMany(Log, {through: 'userlog'})
+Certification.belongsTo(User)
+User.hasMany(Certification)
+
+OfferedDive.belongsToMany(Log, {through: 'logoffereddive'})
+Log.belongsToMany(OfferedDive, {through: 'logoffereddive'})
+
+DiveShop.belongsToMany(OfferedDive, {through: 'divesofferedbyshop'})
+OfferedDive.belongsToMany(DiveShop, {through: 'divesofferedbyshop'})
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -18,5 +33,7 @@ const Log = require('./log')
 module.exports = {
   User,
   DiveShop,
-  Log
+  Log,
+  Certification,
+  OfferedDive
 }

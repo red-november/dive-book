@@ -7,13 +7,13 @@ const User = db.define('user', {
   //   type: Sequelize.INTEGER,
   //   primaryKey: true
   // },
-  // FirstName: {
-  //   type: Sequelize.STRING,
-  //   allowNull: false,
-  //   validate: {
-  //     notEmpty: true
-  //   }
-  // },
+  FirstName: {
+    type: Sequelize.STRING,
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // }
+  },
   LastName: {
     type: Sequelize.STRING
   },
