@@ -1,5 +1,6 @@
 const User = require('./user')
 const DiveShop = require('./diveShop')
+const Log = require('./log')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -16,5 +17,6 @@ const DiveShop = require('./diveShop')
  */
 module.exports = {
   User,
-  DiveShop
+  DiveShop,
+  Log
 }
