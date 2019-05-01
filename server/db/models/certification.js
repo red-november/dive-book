@@ -1,27 +1,27 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Certification = db.define('certification',{
-  CertId: {
-    type: Sequelize.INTEGER,
+const Certification = db.define('certification', {
+  certId: {
+    type: Sequelize.STRING,
     validate: {
       notEmpty: true
     }
   },
-  Provider: {
+  provider: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  Date: {
+  date: {
     type: Sequelize.DATEONLY,
     allowNull: false
   },
-  Level: {
+  level: {
     type: Sequelize.STRING
     // enum
   },
-  InstructorId: {
-    type: Sequelize.INTEGER
+  instructorId: {
+    type: Sequelize.STRING
   }
 })
 

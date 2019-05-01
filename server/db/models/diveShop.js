@@ -3,31 +3,30 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const DiveShop = db.define('diveshop', {
-    Location: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    Id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-    },
-    Name: {
+    name: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
             notEmpty: true
         }
     },
-    StoreFrontImgUrl: {
+    location: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    storeFrontImgUrl: {
         type: Sequelize.STRING,
     },
-    StampImgUrl: {
+    stampImgUrl: {
         type: Sequelize.STRING,
     },
     email: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            isEmail: true
+        }
     },
     password: {
         type: Sequelize.STRING,

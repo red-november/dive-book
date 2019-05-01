@@ -1,12 +1,12 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const OfferedDive = db.define('offeredDive',{
-  Name: {
+const OfferedDive = db.define('offeredDive', {
+  name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  Description: {
+  description: {
     type: Sequelize.TEXT
   }
 })

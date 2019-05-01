@@ -18,8 +18,8 @@ User.hasMany(Log)
 Certification.belongsTo(User)
 User.hasMany(Certification)
 
-OfferedDive.belongsToMany(Log, { through: 'logoffereddive' })
-Log.belongsToMany(OfferedDive, { through: 'logoffereddive' })
+OfferedDive.hasMany(Log)
+Log.belongsTo(OfferedDive)
 
 DiveShop.belongsToMany(OfferedDive, { through: 'divesofferedbyshop' })
 OfferedDive.belongsToMany(DiveShop, { through: 'divesofferedbyshop' })
