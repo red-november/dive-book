@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {getShopsThunk} from '../store/index'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { getShopsThunk } from '../store/index'
 
 class AllShops extends Component {
   componentDidMount() {
@@ -8,6 +8,7 @@ class AllShops extends Component {
   }
 
   render() {
+    if (!this.props.allShops.length) return <h1>Loading...</h1>
     return (
       <div>
         <h1>All Shops:</h1>
