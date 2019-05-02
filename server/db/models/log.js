@@ -1,69 +1,65 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Log = db.define('log',{
-  DiveName: {
+const Log = db.define('log', {
+  diveName: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  DiveId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  IsVerified: {
+  isVerified: {
     type: Sequelize.BOOLEAN
   },
 
   // Experience Props
 
-  TimeIn: {
+  timeIn: {
     type: Sequelize.DATE
   },
-  TimeOut: {
+  timeOut: {
     type: Sequelize.DATE
   },
-  Location: {
+  location: {
     type: Sequelize.STRING
   },
-  MaxDepth: {
+  maxDepth: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0
+  },
+  tankPressureStart: {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },
-  TankPressureStart: {
+  tankPressureEnd: {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },
-  TankPressureEnd: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0
-  },
-  TankType: {
-    type: Sequelize.STRING
-    // enum, but string for now
-  },
-  BeltWeight: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0
-  },
-  WetSuitType: {
+  tankType: {
     type: Sequelize.STRING
     // enum, but string for now
   },
-  WetSuitThickness: {
+  beltWeight: {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },
-  AirMixture: {
+  wetSuitType: {
     type: Sequelize.STRING
     // enum, but string for now
   },
-  Description: {
+  wetSuitThickness: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  airMixture: {
+    type: Sequelize.STRING
+    // enum, but string for now
+  },
+  description: {
     type: Sequelize.TEXT
   },
-  HasStrongCurrent: {
+  hasStrongCurrent: {
     type: Sequelize.BOOLEAN
   },
-  Visibility: {
+  visibility: {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },

@@ -3,6 +3,7 @@ const DiveShop = require('./diveShop')
 const Log = require('./log')
 const Certification = require('./certification')
 const OfferedDive = require('./offeredDive')
+const DivesOfferedByShops = require('./divesOfferedByShops')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -11,18 +12,19 @@ const OfferedDive = require('./offeredDive')
  *    BlogPost.belongsTo(User)
  */
 
-DiveShop.belongsToMany(User, {through: 'usershops'})
-User.belongsToMany(DiveShop, {through: 'usershops'})
 Log.belongsTo(User)
 User.hasMany(Log)
 Certification.belongsTo(User)
 User.hasMany(Certification)
 
-OfferedDive.belongsToMany(Log, {through: 'logoffereddive'})
-Log.belongsToMany(OfferedDive, {through: 'logoffereddive'})
+OfferedDive.hasMany(Log)
+Log.belongsTo(OfferedDive)
 
-DiveShop.belongsToMany(OfferedDive, {through: 'divesofferedbyshop'})
-OfferedDive.belongsToMany(DiveShop, {through: 'divesofferedbyshop'})
+Log.belongsTo(DiveShop)
+DiveShop.hasMany(Log)
+
+DiveShop.belongsToMany(OfferedDive, { through: DivesOfferedByShops })
+OfferedDive.belongsToMany(DiveShop, { through: DivesOfferedByShops })
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -35,5 +37,6 @@ module.exports = {
   DiveShop,
   Log,
   Certification,
-  OfferedDive
+  OfferedDive,
+  DivesOfferedByShops,
 }
