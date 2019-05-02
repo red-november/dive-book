@@ -16,14 +16,14 @@ install:
 before_script:
   - psql -c 'create database "divebook-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
-  - npm test             # test the code
+  - npm test # test the code
   - npm run build-client # make the bundle
 
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: thedivebook # see README
+  api_key:
+    secure: 'wFu9Au33H5j0AZRoFPBu+YNMxT2+9/Oo6PZ3QpDqgofEnSxpVBYQJtyfn4w3yQxmRMN4Fy00Ya54J/TVKStQj0aLSDN3VeYI9ypVHp0Hg19htUXHikqNgYAObUO1JaSHNUshZiy5s8IYLzBUb9lkFJcF9YqUkYUHtcp1Kqp2rYsKmyEIUQI7Lr2VDfd2TZNSVjdEStkTwxjrWmgY8aZVUGllqXGDNxNl2RKl0oVNpQI1vv9svFuyCYQtv++h15uQbVh6uJp5YWV5rqDa+sWVcHcBZa9A2RdLnfmW4N6bNsQBEklEJ4ECJBU75FS36KL+PBxd4bKYmhqSt+lf+WDAHVnPxn4Xr7lEEzLnSDrd+YDUqDUxzGp401/TKhth+tDpabDA25ThW7+78mhq/1t/OuBC6rE1rldduQfyBtabL4agFq1v9lBapx0/a0L9pwRysgR2IqbN/LPaRQx95YTfHAIqcopy476afh5GB0RVF58BwgKGCKaUZTPlLRkX3eUloQow+LFKWfgqHJDU/01/IfAV2DWzghO16yivRy/bPPlgZzso2g3GfpoioFDAto0JEObTtXDfD3ZVd+6OegJWBxQ9GjCdS3E26EmOZwKDaTzlbPkWnKfyTXUs/F/WvVZiWOAX6U1w/wyiH34lyCugf/IOpteLtdhOpTZtt/V5HxA=' # see README
