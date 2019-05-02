@@ -1,4 +1,4 @@
-const User = require('./user')
+const Diver = require('./diver')
 const DiveShop = require('./diveShop')
 const Log = require('./log')
 const Certification = require('./certification')
@@ -12,10 +12,10 @@ const DivesOfferedByShops = require('./divesOfferedByShops')
  *    BlogPost.belongsTo(User)
  */
 
-Log.belongsTo(User)
-User.hasMany(Log)
-Certification.belongsTo(User)
-User.hasMany(Certification)
+Log.belongsTo(Diver)
+Diver.hasMany(Log)
+Certification.belongsTo(Diver)
+Diver.hasMany(Certification)
 
 OfferedDive.hasMany(Log)
 Log.belongsTo(OfferedDive)
@@ -23,8 +23,8 @@ Log.belongsTo(OfferedDive)
 Log.belongsTo(DiveShop)
 DiveShop.hasMany(Log)
 
-DiveShop.belongsToMany(OfferedDive, { through: DivesOfferedByShops })
-OfferedDive.belongsToMany(DiveShop, { through: DivesOfferedByShops })
+DiveShop.belongsToMany(OfferedDive, {through: DivesOfferedByShops})
+OfferedDive.belongsToMany(DiveShop, {through: DivesOfferedByShops})
 
 // removed shops-to-divers direct relationships
 
@@ -35,10 +35,10 @@ OfferedDive.belongsToMany(DiveShop, { through: DivesOfferedByShops })
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-  User,
+  Diver,
   DiveShop,
   Log,
   Certification,
   OfferedDive,
-  DivesOfferedByShops,
+  DivesOfferedByShops
 }
