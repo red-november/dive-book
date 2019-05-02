@@ -22,7 +22,7 @@ export const getShopsThunk = () => async dispatch => {
 
 const initialState = []
 
-const shopReducer = (state = initialState, action) => {
+const allShopReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SHOPS:
       return action.shops
@@ -31,4 +31,4 @@ const shopReducer = (state = initialState, action) => {
   }
 }
 
-export default shopReducer
+export default allShopReducer
