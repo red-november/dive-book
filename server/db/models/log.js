@@ -6,10 +6,6 @@ const Log = db.define('log', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  diveId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
   isVerified: {
     type: Sequelize.BOOLEAN
   },
