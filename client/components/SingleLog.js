@@ -13,6 +13,10 @@ class SingleLog extends Component {
   render() {
     const {singleLog} = this.props
 
+    if (!singleLog.id) {
+      return <h1>LOADING</h1>
+    }
+
     return <div>{singleLog.diveName}</div>
   }
 }

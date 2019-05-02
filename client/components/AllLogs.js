@@ -13,7 +13,7 @@ class AllLogs extends Component {
   render() {
     const {logs} = this.props
 
-    if (logs === undefined) {
+    if (logs.length === 0) {
       return <h1>LOADING</h1>
     }
 
