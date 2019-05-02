@@ -13,10 +13,10 @@ const setShops = shops => ({
 
 export const getShopsThunk = () => async dispatch => {
   try {
-    const {data} = await axios.get('/api/diveshops')
+    const { data } = await axios.get('/api/diveshops')
     dispatch(setShops(data))
   } catch (error) {
-    console.error('error in thunk')
+    console.error('error in allShops thunk')
   }
 }
 
