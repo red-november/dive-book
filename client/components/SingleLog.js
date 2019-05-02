@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {getSingleLogThunk} from '../store/logs'
+import {getSingleLogThunk} from '../store/singleLogReducer'
 import {connect} from 'react-redux'
 
 class SingleLog extends Component {
@@ -18,7 +18,7 @@ class SingleLog extends Component {
 }
 
 const mapStateToProps = state => ({
-  singleLog: state.logs.singleLog
+  singleLog: state.singleLog
 })
 
 const mapDispatchToProps = dispatch => ({
