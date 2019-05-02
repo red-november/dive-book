@@ -13,8 +13,8 @@ const OfferedDive = require('./offeredDive')
 
 DiveShop.belongsToMany(User, {through: 'usershops'})
 User.belongsToMany(DiveShop, {through: 'usershops'})
-Log.belongsToMany(User, {through: 'userlog'})
-User.belongsToMany(Log, {through: 'userlog'})
+Log.belongsTo(User)
+User.hasMany(Log)
 Certification.belongsTo(User)
 User.hasMany(Certification)
 
