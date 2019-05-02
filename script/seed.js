@@ -39,14 +39,16 @@ async function seed() {
       provider: 'PADI',
       date: '2019-05-01',
       level: 'Advanced Skills Diver',
-      instructorId: 'James9999'
+      instructorId: 'James9999',
+      userId: 1
     }),
     Certification.create({
       certId: '002SSI',
       provider: 'SSI',
       date: '2016-10-01',
       level: 'Underwater Navigation',
-      instructorId: 'Dan8888'
+      instructorId: 'Dan8888',
+      userId: 1
     }),
   ])
 
