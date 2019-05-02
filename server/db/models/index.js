@@ -26,6 +26,8 @@ DiveShop.hasMany(Log)
 DiveShop.belongsToMany(OfferedDive, { through: DivesOfferedByShops })
 OfferedDive.belongsToMany(DiveShop, { through: DivesOfferedByShops })
 
+// removed shops-to-divers direct relationships
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
