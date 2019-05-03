@@ -7,27 +7,14 @@ const {
   Certification,
   OfferedDive,
   Log,
-  DivesOfferedByShops
+  Badge,
+  EarnedBadge,
+  Observation,
+  Sighting
 } = require('../server/db/models')
-
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
-
-  const divers = await Promise.all([
-    Diver.create({
-      email: 'cody@email.com',
-      password: '123',
-      firstName: 'Cody',
-      lastName: 'De Coder'
-    }),
-    Diver.create({
-      email: 'murphy@email.com',
-      password: '123',
-      firstName: 'Murphy',
-      lastName: 'Law'
-    })
-  ])
 
   const diveShop = await Promise.all([
     DiveShop.create({
@@ -45,6 +32,22 @@ async function seed() {
       location: 'Maldives Street, Maldives',
       storeFrontImgUrl: 'public/pictures/diveshop/maldivesShop.jpeg',
       stampImgUrl: 'public/pictures/diveshop/maldivesShopSymbol.jpg'
+    })
+  ])
+
+  const divers = await Promise.all([
+    Diver.create({
+      email: 'cody@email.com',
+      password: '123',
+      firstName: 'Cody',
+      lastName: 'De Coder',
+      diveshopId: 1
+    }),
+    Diver.create({
+      email: 'murphy@email.com',
+      password: '123',
+      firstName: 'Murphy',
+      lastName: 'Law'
     })
   ])
 
@@ -71,17 +74,20 @@ async function seed() {
     OfferedDive.create({
       name: 'Barracuda Point',
       description:
-        'Sipadan is a world-class destination, long attracting divers from around the world. Barracuda Point is one of the standout dive sites among many.'
+        'Sipadan is a world-class destination, long attracting divers from around the world. Barracuda Point is one of the standout dive sites among many.',
+      diveshopId: 1
     }),
     OfferedDive.create({
       name: 'Blue Corner Wall',
       description:
-        'Blue Corner Palau is one of the most action-packed scuba dive sites in the world and up to 13 different species of sharks circling just beyond the plummeting reef wall.'
+        'Blue Corner Palau is one of the most action-packed scuba dive sites in the world and up to 13 different species of sharks circling just beyond the plummeting reef wall.',
+      diveshopId: 1
     }),
     OfferedDive.create({
       name: 'The Great Blue Hole',
       description:
-        'The Great Blue Hole is a giant marine sinkhole off the coast of Belize. It lies near the center of Lighthouse Reef.'
+        'The Great Blue Hole is a giant marine sinkhole off the coast of Belize. It lies near the center of Lighthouse Reef.',
+      diveshopId: 2
     })
   ])
 
@@ -153,24 +159,131 @@ async function seed() {
     })
   ])
 
+  const badges = await Promise.all([
+    Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
+    Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
+    Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
+    Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
+  ])
+
+  const observations = await Promise.all([
+    Observation.create({
+      name: 'Whale Shark',
+      category: 'fish',
+      description:
+        'slow-moving, filter-feeding carpet shark. the biggest fish in the sea!',
+      color: 'blue',
+      shape: 'bulbous'
+    }),
+    Observation.create({
+      name: 'Nudibranch',
+      category: 'mollusks',
+      description: 'Sea slug. Lives on coral. Can grow to 4 inches.',
+      color: 'red',
+      shape: 'oblong'
+    }),
+    Observation.create({
+      name: 'Psychedelic Frogfish',
+      category: 'fish',
+      description: 'Small, short, stocky, and masters of camoflage',
+      color: 'orange'
+    }),
+    Observation.create({
+      name: 'Seahorse',
+      category: 'fish',
+      description: 'Lives exclusively on coral. Masters of camoflage',
+      color: 'yellow'
+    }),
+    Observation.create({
+      name: 'Manta Ray',
+      category: 'fish',
+      description: 'Majestic creatures with a wingspan of 23 feet',
+      color: 'gray',
+      shape: 'diamond'
+    }),
+    Observation.create({
+      name: 'Caribbean Reef Shark',
+      category: 'fish',
+      description: 'Shark! Scary!',
+      color: 'gray'
+    }),
+    Observation.create({
+      name: 'Moray Eel',
+      category: 'fish',
+      description: 'Mostly seen in brackish water.',
+      color: 'green'
+    }),
+    Observation.create({
+      name: 'Cuttlefish',
+      category: 'mollusks',
+      description: 'Shape-shifting, color-changing, beast',
+      color: 'multicolored'
+    }),
+    Observation.create({
+      name: 'Barrel Sponge',
+      category: 'sponges',
+      description: 'barrel-shaped sponge',
+      color: 'pink'
+    }),
+    Observation.create({
+      name: 'whip coral',
+      category: 'coral',
+      description: 'vine-shaped coral',
+      color: 'white'
+    }),
+    Observation.create({
+      name: 'HMCS Yukon',
+      category: 'inanimate objects',
+      description: 'Ship off of San Diego, California.',
+      shape: 'shiplike'
+    })
+  ])
+
   // Relationships
 
-  const divesofferedbyshops = await Promise.all([
-    DivesOfferedByShops.create({
-      diveshopId: 1,
-      offeredDiveId: 1
+  const badgesEarned = await Promise.all([
+    EarnedBadge.create({
+      diverId: 1,
+      badgeId: 1
     }),
-    DivesOfferedByShops.create({
-      diveshopId: 1,
-      offeredDiveId: 2
+    EarnedBadge.create({
+      diverId: 1,
+      badgeId: 2
     }),
-    DivesOfferedByShops.create({
-      diveshopId: 2,
-      offeredDiveId: 2
+    EarnedBadge.create({
+      diverId: 2,
+      badgeId: 1
+    })
+  ])
+
+  const sightings = await Promise.all([
+    Sighting.create({
+      logId: 1,
+      observationId: 1
     }),
-    DivesOfferedByShops.create({
-      diveshopId: 2,
-      offeredDiveId: 3
+    Sighting.create({
+      logId: 1,
+      observationId: 2
+    }),
+    Sighting.create({
+      logId: 1,
+      observationId: 3
+    }),
+    Sighting.create({
+      logId: 2,
+      observationId: 4
+    }),
+    Sighting.create({
+      logId: 2,
+      observationId: 5
+    }),
+    Sighting.create({
+      logId: 3,
+      observationId: 6
+    }),
+    Sighting.create({
+      logId: 3,
+      observationId: 1
     })
   ])
 
