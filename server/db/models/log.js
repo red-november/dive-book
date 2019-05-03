@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-// const {Diver, Badge} = require('../db/models')
+const {Diver, Badge, EarnedBadge, Observation} = require('../models')
 
 const Log = db.define('log', {
   diveName: {
@@ -68,24 +68,65 @@ const Log = db.define('log', {
 
 //hooks
 
-// async function addBadge(logInstance) {
-//   const diverLogs = await Log.findAll({
-//     where: {
-//       userId: logInstance.userId
-//     }
-//   })
-//   const diverBadges = await Badge.findAll({
-//     include: [
-//       {
-//         model: Diver,
-//         where: {
-//           userId: logInstance.userId
-//         }
-//       }
-//     ]
-//   })
-// }
+async function addBadge(logInstance) {
+  //get all logs for diver
+  const diverLogs = await Log.findAll({
+    where: {
+      diverId: logInstance.diverId
+    },
+    include: [{model: Observation}]
+  })
 
-// Log.afterCreate(addBadge)
+  //get all badges for diver
+  const diverBadges = await Badge.findAll({
+    include: [
+      {
+        model: Diver,
+        where: {
+          id: logInstance.diverId
+        }
+      }
+    ]
+  })
+  //check for Juvenile Badge (more than 9 dives)
+  if (diverLogs.length > 9) {
+    const [instance, wasCreated] = await EarnedBadge.findOrCreate({
+      where: {
+        diverId: logInstance.diverId,
+        badgeId: 1
+      }
+    })
+  }
+
+  //check for aquaman badge (deeper than 30 meters)
+  if (hasDivedDeep(diverLogs, 30)) {
+    const [instance, wasCreated] = await EarnedBadge.findOrCreate({
+      where: {
+        diverId: logInstance.diverId,
+        badgeId: 2
+      }
+    })
+  }
+}
+
+//utility function
+function findMaxDepth(arrOfLogs) {
+  let result = 0
+  for (let i = 0; i < arrOfLogs.length; i++) {
+    let currentLog = arrOfLogs[i]
+    if (currentLog.maxDepth > result) {
+      result = currentLog.maxDepth
+    }
+  }
+  return result
+}
+
+function hasDivedDeep(arrOfLogs, depth) {
+  return !!arrOfLogs.find(log => log.maxDepth > depth)
+}
+
+// function numOfObservations(arrOfLogs, target) {}
+
+Log.afterCreate(addBadge)
 
 module.exports = Log
