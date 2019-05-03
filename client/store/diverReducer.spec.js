@@ -1,7 +1,7 @@
 /* global describe beforeEach afterEach it */
 
 import {expect} from 'chai'
-import {me, logout} from './user'
+import {me, logout} from './diverReducer'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import configureMockStore from 'redux-mock-store'
@@ -15,7 +15,7 @@ describe('thunk creators', () => {
   let store
   let mockAxios
 
-  const initialState = {user: {}}
+  const initialState = {diver: {}}
 
   beforeEach(() => {
     mockAxios = new MockAdapter(axios)
@@ -33,8 +33,8 @@ describe('thunk creators', () => {
       mockAxios.onGet('/auth/me').replyOnce(200, fakeUser)
       await store.dispatch(me())
       const actions = store.getActions()
-      expect(actions[0].type).to.be.equal('GET_USER')
-      expect(actions[0].user).to.be.deep.equal(fakeUser)
+      expect(actions[0].type).to.be.equal('GET_DIVER')
+      expect(actions[0].diver).to.be.deep.equal(fakeUser)
     })
   })
 
@@ -43,7 +43,7 @@ describe('thunk creators', () => {
       mockAxios.onPost('/auth/logout').replyOnce(204)
       await store.dispatch(logout())
       const actions = store.getActions()
-      expect(actions[0].type).to.be.equal('REMOVE_USER')
+      expect(actions[0].type).to.be.equal('REMOVE_DIVER')
       expect(history.location.pathname).to.be.equal('/login')
     })
   })
