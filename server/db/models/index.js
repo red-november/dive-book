@@ -3,7 +3,6 @@ const DiveShop = require('./diveShop')
 const Log = require('./log')
 const Certification = require('./certification')
 const OfferedDive = require('./offeredDive')
-const DivesOfferedByShops = require('./divesOfferedByShops')
 const Badge = require('./badge')
 const EarnedBadge = require('./earnedBadge')
 
@@ -28,8 +27,8 @@ Log.belongsTo(OfferedDive)
 Log.belongsTo(DiveShop)
 DiveShop.hasMany(Log)
 
-DiveShop.belongsToMany(OfferedDive, {through: DivesOfferedByShops})
-OfferedDive.belongsToMany(DiveShop, {through: DivesOfferedByShops})
+OfferedDive.belongsTo(DiveShop)
+DiveShop.hasMany(OfferedDive)
 
 // removed shops-to-divers direct relationships
 
@@ -45,7 +44,6 @@ module.exports = {
   Log,
   Certification,
   OfferedDive,
-  DivesOfferedByShops,
   Badge,
   EarnedBadge
 }

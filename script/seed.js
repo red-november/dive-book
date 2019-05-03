@@ -7,7 +7,6 @@ const {
   Certification,
   OfferedDive,
   Log,
-  DivesOfferedByShops,
   Badge,
   EarnedBadge
 } = require('../server/db/models')
@@ -73,17 +72,20 @@ async function seed() {
     OfferedDive.create({
       name: 'Barracuda Point',
       description:
-        'Sipadan is a world-class destination, long attracting divers from around the world. Barracuda Point is one of the standout dive sites among many.'
+        'Sipadan is a world-class destination, long attracting divers from around the world. Barracuda Point is one of the standout dive sites among many.',
+      diveshopId: 1
     }),
     OfferedDive.create({
       name: 'Blue Corner Wall',
       description:
-        'Blue Corner Palau is one of the most action-packed scuba dive sites in the world and up to 13 different species of sharks circling just beyond the plummeting reef wall.'
+        'Blue Corner Palau is one of the most action-packed scuba dive sites in the world and up to 13 different species of sharks circling just beyond the plummeting reef wall.',
+      diveshopId: 1
     }),
     OfferedDive.create({
       name: 'The Great Blue Hole',
       description:
-        'The Great Blue Hole is a giant marine sinkhole off the coast of Belize. It lies near the center of Lighthouse Reef.'
+        'The Great Blue Hole is a giant marine sinkhole off the coast of Belize. It lies near the center of Lighthouse Reef.',
+      diveshopId: 2
     })
   ])
 
@@ -176,25 +178,6 @@ async function seed() {
     EarnedBadge.create({
       diverId: 2,
       badgeId: 1
-    })
-  ])
-
-  const divesofferedbyshops = await Promise.all([
-    DivesOfferedByShops.create({
-      diveshopId: 1,
-      offeredDiveId: 1
-    }),
-    DivesOfferedByShops.create({
-      diveshopId: 1,
-      offeredDiveId: 2
-    }),
-    DivesOfferedByShops.create({
-      diveshopId: 2,
-      offeredDiveId: 2
-    }),
-    DivesOfferedByShops.create({
-      diveshopId: 2,
-      offeredDiveId: 3
     })
   ])
 
