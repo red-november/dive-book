@@ -166,23 +166,6 @@ async function seed() {
     Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
   ])
 
-  // Relationships
-
-  const badgesEarned = await Promise.all([
-    EarnedBadge.create({
-      diverId: 1,
-      badgeId: 1
-    }),
-    EarnedBadge.create({
-      diverId: 1,
-      badgeId: 2
-    }),
-    EarnedBadge.create({
-      diverId: 2,
-      badgeId: 1
-    })
-  ])
-
   const observations = await Promise.all([
     Observation.create({
       name: 'Whale Shark',
@@ -239,6 +222,54 @@ async function seed() {
       name: 'HMCS Yukon',
       category: 'inanimate objects',
       description: 'Ship off of San Diego, California.'
+    })
+  ])
+
+  // Relationships
+
+  const badgesEarned = await Promise.all([
+    EarnedBadge.create({
+      diverId: 1,
+      badgeId: 1
+    }),
+    EarnedBadge.create({
+      diverId: 1,
+      badgeId: 2
+    }),
+    EarnedBadge.create({
+      diverId: 2,
+      badgeId: 1
+    })
+  ])
+
+  const sightings = await Promise.all([
+    Sighting.create({
+      logId: 1,
+      observationId: 1
+    }),
+    Sighting.create({
+      logId: 1,
+      observationId: 2
+    }),
+    Sighting.create({
+      logId: 1,
+      observationId: 3
+    }),
+    Sighting.create({
+      logId: 2,
+      observationId: 4
+    }),
+    Sighting.create({
+      logId: 2,
+      observationId: 5
+    }),
+    Sighting.create({
+      logId: 3,
+      observationId: 6
+    }),
+    Sighting.create({
+      logId: 3,
+      observationId: 1
     })
   ])
 
