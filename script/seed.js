@@ -8,7 +8,9 @@ const {
   OfferedDive,
   Log,
   Badge,
-  EarnedBadge
+  EarnedBadge,
+  Observation,
+  Sighting
 } = require('../server/db/models')
 async function seed() {
   await db.sync({force: true})
@@ -178,6 +180,65 @@ async function seed() {
     EarnedBadge.create({
       diverId: 2,
       badgeId: 1
+    })
+  ])
+
+  const observations = await Promise.all([
+    Observation.create({
+      name: 'Whale Shark',
+      category: 'fish',
+      description:
+        'slow-moving, filter-feeding carpet shark. the biggest fish in the sea!'
+    }),
+    Observation.create({
+      name: 'Nudibranch',
+      category: 'mollusks',
+      description: 'Sea slug. Lives on coral. Can grow to 4 inches.'
+    }),
+    Observation.create({
+      name: 'Psychedelic Frogfish',
+      category: 'fish',
+      description: 'Small, short, stocky, and masters of camoflage'
+    }),
+    Observation.create({
+      name: 'Seahorse',
+      category: 'fish',
+      description: 'Lives exclusively on coral. Masters of camoflage'
+    }),
+    Observation.create({
+      name: 'Manta Ray',
+      category: 'fish',
+      description: 'Majestic creatures with a wingspan of 23 feet'
+    }),
+    Observation.create({
+      name: 'Caribbean Reef Shark',
+      category: 'fish',
+      description: 'Shark! Scary!'
+    }),
+    Observation.create({
+      name: 'Moray Eel',
+      category: 'fish',
+      description: 'Mostly seen in brackish water.'
+    }),
+    Observation.create({
+      name: 'Cuttlefish',
+      category: 'mollusks',
+      description: 'Shape-shifting, color-changing, beast'
+    }),
+    Observation.create({
+      name: 'Barrel Sponge',
+      category: 'sponges',
+      description: 'barrel-shaped sponge'
+    }),
+    Observation.create({
+      name: 'whip coral',
+      category: 'coral',
+      description: 'vine-shaped coral'
+    }),
+    Observation.create({
+      name: 'HMCS Yukon',
+      category: 'inanimate objects',
+      description: 'Ship off of San Diego, California.'
     })
   ])
 
