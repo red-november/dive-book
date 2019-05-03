@@ -2,13 +2,9 @@ const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const User = db.define('user', {
-  // id: {
-  //   type: Sequelize.INTEGER,
-  //   primaryKey: true
-  // },
+const Diver = db.define('diver', {
   firstName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
     // allowNull: false,
     // validate: {
     //   notEmpty: true
@@ -16,9 +12,13 @@ const User = db.define('user', {
   },
   lastName: {
     type: Sequelize.STRING
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // }
   },
   profileImgUrl: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   email: {
     type: Sequelize.STRING,
@@ -27,6 +27,12 @@ const User = db.define('user', {
     validate: {
       isEmail: true
     }
+  },
+  birthday: {
+    type: Sequelize.DATEONLY
+  },
+  weight: {
+    type: Sequelize.INTEGER
   },
   password: {
     type: Sequelize.STRING,
@@ -49,23 +55,23 @@ const User = db.define('user', {
   }
 })
 
-module.exports = User
+module.exports = Diver
 
 /**
-* instanceMethods
-*/
-User.prototype.correctPassword = function (candidatePwd) {
-  return User.encryptPassword(candidatePwd, this.salt()) === this.password()
+ * instanceMethods
+ */
+Diver.prototype.correctPassword = function(candidatePwd) {
+  return Diver.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
 /**
-* classMethods
-*/
-User.generateSalt = function () {
+ * classMethods
+ */
+Diver.generateSalt = function() {
   return crypto.randomBytes(16).toString('base64')
 }
 
-User.encryptPassword = function (plainText, salt) {
+Diver.encryptPassword = function(plainText, salt) {
   return crypto
     .createHash('RSA-SHA256')
     .update(plainText)
@@ -74,17 +80,17 @@ User.encryptPassword = function (plainText, salt) {
 }
 
 /**
-* hooks
-*/
-const setSaltAndPassword = user => {
-  if (user.changed('password')) {
-    user.salt = User.generateSalt()
-    user.password = User.encryptPassword(user.password(), user.salt())
+ * hooks
+ */
+const setSaltAndPassword = diver => {
+  if (diver.changed('password')) {
+    diver.salt = Diver.generateSalt()
+    diver.password = Diver.encryptPassword(diver.password(), diver.salt())
   }
 }
 
-User.beforeCreate(setSaltAndPassword)
-User.beforeUpdate(setSaltAndPassword)
-User.beforeBulkCreate(users => {
-  users.forEach(setSaltAndPassword)
+Diver.beforeCreate(setSaltAndPassword)
+Diver.beforeUpdate(setSaltAndPassword)
+Diver.beforeBulkCreate(divers => {
+  divers.forEach(setSaltAndPassword)
 })

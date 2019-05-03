@@ -4,19 +4,19 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
-const GET_USER = 'GET_USER'
-const REMOVE_USER = 'REMOVE_USER'
+const GET_DIVER = 'GET_DIVER'
+const REMOVE_DIVER = 'REMOVE_DIVER'
 
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const defaultDiver = {}
 
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({type: GET_USER, user})
-const removeUser = () => ({type: REMOVE_USER})
+const getDiver = diver => ({type: GET_DIVER, diver})
+const removeDiver = () => ({type: REMOVE_DIVER})
 
 /**
  * THUNK CREATORS
@@ -24,7 +24,7 @@ const removeUser = () => ({type: REMOVE_USER})
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    dispatch(getUser(res.data || defaultUser))
+    dispatch(getDiver(res.data || defaultDiver))
   } catch (err) {
     console.error(err)
   }
@@ -35,11 +35,11 @@ export const auth = (email, password, method) => async dispatch => {
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
-    return dispatch(getUser({error: authError}))
+    return dispatch(getDiver({error: authError}))
   }
 
   try {
-    dispatch(getUser(res.data))
+    dispatch(getDiver(res.data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
@@ -49,7 +49,7 @@ export const auth = (email, password, method) => async dispatch => {
 export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
-    dispatch(removeUser())
+    dispatch(removeDiver())
     history.push('/login')
   } catch (err) {
     console.error(err)
@@ -59,12 +59,12 @@ export const logout = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function(state = defaultDiver, action) {
   switch (action.type) {
-    case GET_USER:
-      return action.user
-    case REMOVE_USER:
-      return defaultUser
+    case GET_DIVER:
+      return action.diver
+    case REMOVE_DIVER:
+      return defaultDiver
     default:
       return state
   }
