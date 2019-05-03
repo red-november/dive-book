@@ -10,25 +10,9 @@ const {
   Badge,
   EarnedBadge
 } = require('../server/db/models')
-
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
-
-  const divers = await Promise.all([
-    Diver.create({
-      email: 'cody@email.com',
-      password: '123',
-      firstName: 'Cody',
-      lastName: 'De Coder'
-    }),
-    Diver.create({
-      email: 'murphy@email.com',
-      password: '123',
-      firstName: 'Murphy',
-      lastName: 'Law'
-    })
-  ])
 
   const diveShop = await Promise.all([
     DiveShop.create({
@@ -46,6 +30,22 @@ async function seed() {
       location: 'Maldives Street, Maldives',
       storeFrontImgUrl: 'public/pictures/diveshop/maldivesShop.jpeg',
       stampImgUrl: 'public/pictures/diveshop/maldivesShopSymbol.jpg'
+    })
+  ])
+
+  const divers = await Promise.all([
+    Diver.create({
+      email: 'cody@email.com',
+      password: '123',
+      firstName: 'Cody',
+      lastName: 'De Coder',
+      diveshopId: 1
+    }),
+    Diver.create({
+      email: 'murphy@email.com',
+      password: '123',
+      firstName: 'Murphy',
+      lastName: 'Law'
     })
   ])
 

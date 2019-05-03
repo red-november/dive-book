@@ -16,6 +16,9 @@ const EarnedBadge = require('./earnedBadge')
 Diver.belongsToMany(Badge, {through: EarnedBadge})
 Badge.belongsToMany(Diver, {through: EarnedBadge})
 
+Diver.belongsTo(DiveShop)
+DiveShop.hasMany(Diver)
+
 Log.belongsTo(Diver)
 Diver.hasMany(Log)
 Certification.belongsTo(Diver)
