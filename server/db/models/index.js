@@ -5,6 +5,7 @@ const Certification = require('./certification')
 const OfferedDive = require('./offeredDive')
 const DivesOfferedByShops = require('./divesOfferedByShops')
 const Badge = require('./badge')
+const EarnedBadge = require('./earnedBadge')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -13,8 +14,8 @@ const Badge = require('./badge')
  *    BlogPost.belongsTo(User)
  */
 
-Diver.belongsToMany(Badge, {through: 'badgesEarned'})
-Badge.belongsToMany(Diver, {through: 'badgesEarned'})
+Diver.belongsToMany(Badge, {through: EarnedBadge})
+Badge.belongsToMany(Diver, {through: EarnedBadge})
 
 Log.belongsTo(Diver)
 Diver.hasMany(Log)
@@ -44,5 +45,7 @@ module.exports = {
   Log,
   Certification,
   OfferedDive,
-  DivesOfferedByShops
+  DivesOfferedByShops,
+  Badge,
+  EarnedBadge
 }
