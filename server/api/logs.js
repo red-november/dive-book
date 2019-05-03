@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Log, Diver} = require('../db/models')
+const { Log } = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -15,6 +15,6 @@ router.get('/:logId', async (req, res, next) => {
 
 router.get('/diver/:diverId', async (req, res, next) => {
   const diverId = Number(req.params.diverId)
-  const logs = await Log.findAll({where: {diverId: diverId}})
+  const logs = await Log.findAll({ where: { diverId: diverId } })
   res.status(200).send(logs)
 })
