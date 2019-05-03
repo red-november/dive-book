@@ -4,13 +4,18 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await Diver.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ['id', 'email']
-    })
-    res.json(users)
+    const divers = await Diver.findAll()
+    res.send(divers)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:diverId', async (req, res, next) => {
+  try {
+    const diverId = Number(req.params.diverId)
+    const diver = await Diver.findByPk(diverId)
+    res.send(diver)
   } catch (err) {
     next(err)
   }
