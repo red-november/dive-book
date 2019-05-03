@@ -171,57 +171,71 @@ async function seed() {
       name: 'Whale Shark',
       category: 'fish',
       description:
-        'slow-moving, filter-feeding carpet shark. the biggest fish in the sea!'
+        'slow-moving, filter-feeding carpet shark. the biggest fish in the sea!',
+      color: 'blue',
+      shape: 'bulbous'
     }),
     Observation.create({
       name: 'Nudibranch',
       category: 'mollusks',
-      description: 'Sea slug. Lives on coral. Can grow to 4 inches.'
+      description: 'Sea slug. Lives on coral. Can grow to 4 inches.',
+      color: 'red',
+      shape: 'oblong'
     }),
     Observation.create({
       name: 'Psychedelic Frogfish',
       category: 'fish',
-      description: 'Small, short, stocky, and masters of camoflage'
+      description: 'Small, short, stocky, and masters of camoflage',
+      color: 'orange'
     }),
     Observation.create({
       name: 'Seahorse',
       category: 'fish',
-      description: 'Lives exclusively on coral. Masters of camoflage'
+      description: 'Lives exclusively on coral. Masters of camoflage',
+      color: 'yellow'
     }),
     Observation.create({
       name: 'Manta Ray',
       category: 'fish',
-      description: 'Majestic creatures with a wingspan of 23 feet'
+      description: 'Majestic creatures with a wingspan of 23 feet',
+      color: 'gray',
+      shape: 'diamond'
     }),
     Observation.create({
       name: 'Caribbean Reef Shark',
       category: 'fish',
-      description: 'Shark! Scary!'
+      description: 'Shark! Scary!',
+      color: 'gray'
     }),
     Observation.create({
       name: 'Moray Eel',
       category: 'fish',
-      description: 'Mostly seen in brackish water.'
+      description: 'Mostly seen in brackish water.',
+      color: 'green'
     }),
     Observation.create({
       name: 'Cuttlefish',
       category: 'mollusks',
-      description: 'Shape-shifting, color-changing, beast'
+      description: 'Shape-shifting, color-changing, beast',
+      color: 'multicolored'
     }),
     Observation.create({
       name: 'Barrel Sponge',
       category: 'sponges',
-      description: 'barrel-shaped sponge'
+      description: 'barrel-shaped sponge',
+      color: 'pink'
     }),
     Observation.create({
       name: 'whip coral',
       category: 'coral',
-      description: 'vine-shaped coral'
+      description: 'vine-shaped coral',
+      color: 'white'
     }),
     Observation.create({
       name: 'HMCS Yukon',
       category: 'inanimate objects',
-      description: 'Ship off of San Diego, California.'
+      description: 'Ship off of San Diego, California.',
+      shape: 'shiplike'
     })
   ])
 

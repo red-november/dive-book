@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+// const {Diver, Badge} = require('../db/models')
 
 const Log = db.define('log', {
   diveName: {
@@ -62,7 +63,29 @@ const Log = db.define('log', {
   visibility: {
     type: Sequelize.INTEGER,
     defaultValue: 0
-  },
+  }
 })
+
+//hooks
+
+// async function addBadge(logInstance) {
+//   const diverLogs = await Log.findAll({
+//     where: {
+//       userId: logInstance.userId
+//     }
+//   })
+//   const diverBadges = await Badge.findAll({
+//     include: [
+//       {
+//         model: Diver,
+//         where: {
+//           userId: logInstance.userId
+//         }
+//       }
+//     ]
+//   })
+// }
+
+// Log.afterCreate(addBadge)
 
 module.exports = Log

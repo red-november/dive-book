@@ -35,6 +35,12 @@ const Observation = db.define('observation', {
   },
   imageUrl: {
     type: Sequelize.STRING
+  },
+  color: {
+    type: Sequelize.STRING
+  },
+  shape: {
+    type: Sequelize.STRING
   }
 })
 
