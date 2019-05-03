@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getDiverLogsThunk } from '../store/diverProfileReducer'
-import { getDiverCertsThunk } from '../store/diverCertsReducer'
-import { Certificate } from 'crypto';
+import { getDiverLogsThunk, getDiverCertsThunk, getBadgesThunk } from '../store'
+import { getDiverBadgesThunk } from '../store/diverBadgesReducer';
 
 /**
  * COMPONENT
@@ -12,12 +11,15 @@ class DiverHome extends Component {
   componentDidMount() {
     this.props.loadDiverLogs(this.props.diver.id)
     this.props.loadDiverCerts(this.props.diver.id)
+    this.props.loadDiverBadges(this.props.diver.id)
+
   }
   render() {
 
     const { firstName } = this.props.diver
-    const { diverProfile, diverCerts } = this.props
-    console.log(this.props.diverCerts)
+    const { diverProfile, diverCerts, diverBadges } = this.props
+
+
 
     if (diverProfile.length === 0) {
       return <h1>LOADING</h1>
@@ -44,6 +46,15 @@ class DiverHome extends Component {
             </ul>
           ))}
         </div>
+        <div>
+          {' '}
+          <h3>Badges:</h3>
+          {diverBadges.map(badge => (
+            <ul key={badge.id}>
+              <li>{badge.name} {badge.description}</li>
+            </ul>
+          ))}
+        </div>
       </div>
     )
   }
@@ -56,7 +67,8 @@ const mapStateToProps = state => {
   return {
     diver: state.diver,
     diverProfile: state.diverProfile,
-    diverCerts: state.diverCerts
+    diverCerts: state.diverCerts,
+    diverBadges: state.diverBadges
   }
 }
 
@@ -66,6 +78,9 @@ const mapDispatchToProps = dispatch => ({
   },
   loadDiverCerts: diverId => {
     dispatch(getDiverCertsThunk(diverId))
+  },
+  loadDiverBadges: diverId => {
+    dispatch(getDiverBadgesThunk(diverId))
   }
 })
 
