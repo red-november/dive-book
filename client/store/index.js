@@ -7,8 +7,16 @@ import shops from './diveShopsReduder'
 import singleShop from './singleShopReducer'
 import logs from './allLogsReducer'
 import singleLog from './singleLogReducer'
+import diverProfile from './diverProfileReducer'
 
-const reducer = combineReducers({diver, shops, singleShop, logs, singleLog})
+const reducer = combineReducers({
+  diver,
+  shops,
+  singleShop,
+  logs,
+  singleLog,
+  diverProfile
+})
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
@@ -21,3 +29,4 @@ export * from './diveShopsReduder'
 export * from './singleShopReducer'
 export * from './allLogsReducer'
 export * from './singleLogReducer'
+export * from './diverProfileReducer'
