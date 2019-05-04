@@ -66,6 +66,29 @@ const Log = db.define('log', {
   }
 })
 
+//class methods
+
+//returns a nested object of all unique observations where the key is the observation id
+Log.getAllObservations = async function(diverId) {
+  const unique = {}
+  const diverLogs = await Log.findAll({
+    where: {
+      diverId: diverId
+    },
+    include: [{model: Observation}]
+  })
+  for (let i = 0; i < diverLogs.length; i++) {
+    let obsArr = diverLogs[i].observations
+    for (let j = 0; j < obsArr.length; j++) {
+      let currentObs = obsArr[j]
+      if (!unique[currentObs.id]) {
+        unique[currentObs.id] = currentObs
+      }
+    }
+  }
+  return unique
+}
+
 //hooks
 
 async function addBadge(logInstance) {

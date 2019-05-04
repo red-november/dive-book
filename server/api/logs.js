@@ -7,30 +7,30 @@ router.get('/', async (req, res, next) => {
   res.status(200).send(allLogs)
 })
 
-// router.get('/test', async (req, res, next) => {
-//   try {
-//     const diverLogs = await Log.findAll({
-//       where: {
-//         diverId: 1
-//       },
-//       include: [{model: Observation}]
-//     })
-//     const diverBadges = await Badge.findAll({
-//       include: [
-//         {
-//           model: Diver,
-//           where: {
-//             id: 1
-//           }
-//         }
-//       ]
-//     })
+router.get('/test', async (req, res, next) => {
+  try {
+    const diverLogs = await Log.findAll({
+      where: {
+        diverId: 1
+      },
+      include: [{model: Observation}]
+    })
+    const diverBadges = await Badge.findAll({
+      include: [
+        {
+          model: Diver,
+          where: {
+            id: 1
+          }
+        }
+      ]
+    })
 
-//     res.json({diverLogs, diverBadges})
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+    res.json({diverLogs, diverBadges})
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.get('/:logId', async (req, res, next) => {
   const id = Number(req.params.logId)
