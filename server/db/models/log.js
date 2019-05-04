@@ -125,7 +125,19 @@ function hasDivedDeep(arrOfLogs, depth) {
   return !!arrOfLogs.find(log => log.maxDepth > depth)
 }
 
-// function numOfObservations(arrOfLogs, target) {}
+// function numOfObservations(arrOfLogs, target) {
+//
+//  Pseudo Code
+//
+//  let unique = []
+//  for all arrOfLogs
+//    for all arrOfLogs[i].observations
+//      if(unique.indexOf(arrOfLogs[i].observations[j]) === -1)
+//        unique.push(arrOfLogs[i].observations[j])
+//        if(unique.length === target)
+//          return true
+//  return false
+//}
 
 // Log.afterCreate(addBadge)
 

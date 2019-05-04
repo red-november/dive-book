@@ -38,8 +38,8 @@ router.get('/:logId', async (req, res, next) => {
   res.status(200).send(log)
 })
 
-router.get('/user/:userId', async (req, res, next) => {
-  const userId = Number(req.params.userId)
-  const logs = await Log.findAll({where: userId})
+router.get('/diver/:diverId', async (req, res, next) => {
+  const diverId = Number(req.params.diverId)
+  const logs = await Log.findAll({ where: { diverId: diverId } })
   res.status(200).send(logs)
 })
