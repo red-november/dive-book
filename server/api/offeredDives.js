@@ -10,8 +10,8 @@ router.get('/', async (req, res, next) => {
 router.get('/diveshops/:diveshopId', async (req, res, next) => {
   const diveShopId = Number(req.params.diveshopId)
 
-  const OfferedDive = await OfferedDive.findAll({
+  const OfferedDives = await OfferedDive.findAll({
     where: {diveshopId: diveShopId}
   })
-  res.status(200).send(OfferedDive)
+  res.status(200).send(OfferedDives)
 })
