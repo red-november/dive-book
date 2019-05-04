@@ -40,7 +40,7 @@ router.get('/:logId', async (req, res, next) => {
 
 router.get('/diver/:diverId', async (req, res, next) => {
   const diverId = Number(req.params.diverId)
-  const logs = await Log.findAll({ where: { diverId: diverId } })
+  const logs = await Log.findAll({where: {diverId: diverId}})
   res.status(200).send(logs)
 })
 
