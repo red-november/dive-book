@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const {Diver, Badge, EarnedBadge, Observation} = require('../models')
 
 const Log = db.define('log', {
   diveName: {
@@ -93,67 +92,100 @@ Log.getAllObservations = async function(diverId) {
   }
 }
 
+Log.findDiverLogs = async function(diverId) {
+  const diverLogs = await this.findAll({
+    where: {
+      diverId: diverId
+    }
+  })
+
+  return diverLogs
+}
+
+//instance methods
+
+Log.prototype.getDiverBadges = async function(diverId) {
+  const badges = await this.sequelize.models.earnedBadge.findAll({
+    where: {
+      diverId: diverId
+    }
+  })
+  return badges
+}
+
 //hooks
 
-async function addBadge(logInstance) {
+async function addBadges(logInstance) {
+  const diverId = logInstance.diverId
   //get all logs for diver
-  const diverLogs = await Log.findAll({
-    where: {
-      diverId: logInstance.diverId
-    },
-    include: [{model: Observation}]
-  })
+  const diverLogs = await Log.findDiverLogs(diverId)
 
   //get all badges for diver
-  const diverBadges = await Badge.findAll({
-    include: [
-      {
-        model: Diver,
-        where: {
-          id: logInstance.diverId
-        }
-      }
-    ]
-  })
-  //check for Juvenile Badge (more than 9 dives)
-  if (diverLogs.length > 9) {
-    const [instance, wasCreated] = await EarnedBadge.findOrCreate({
-      where: {
-        diverId: logInstance.diverId,
-        badgeId: 1
-      }
-    })
+  const diverBadges = await logInstance.getDiverBadges(diverId)
+
+  //set default statuses for all badges
+
+  let [juvenile, aquaman, discoverer, voyager] = badgesPresent(
+    diverBadges,
+    false,
+    false,
+    false,
+    false
+  )
+
+  const diverInstance = await logInstance.sequelize.models.diver.findByPk(
+    diverId
+  )
+
+  // check for Juvenile Badge (more than 9 dives)
+  if (!juvenile && diverLogs.length > 9) {
+    diverInstance.addBadge(1)
   }
 
   //check for aquaman badge (deeper than 30 meters)
-  if (hasDivedDeep(diverLogs, 30)) {
-    const [instance, wasCreated] = await EarnedBadge.findOrCreate({
-      where: {
-        diverId: logInstance.diverId,
-        badgeId: 2
-      }
-    })
-  }
+  // if (hasDivedDeep(diverLogs, 30)) {
+  //   const [
+  //     instance,
+  //     wasCreated
+  //   ] = await logInstance.sequelize.models.earnedBadge.findOrCreate({
+  //     where: {
+  //       diverId: logInstance.diverId,
+  //       badgeId: 2
+  //     }
+  //   })
+  // }
+
+  console.log('diver badges', diverBadges)
 }
 
 //utility function
-function findMaxDepth(arrOfLogs) {
-  let result = 0
-  for (let i = 0; i < arrOfLogs.length; i++) {
-    let currentLog = arrOfLogs[i]
-    if (currentLog.maxDepth > result) {
-      result = currentLog.maxDepth
-    }
-  }
-  return result
-}
+// function findMaxDepth(arrOfLogs) {
+//   let result = 0
+//   for (let i = 0; i < arrOfLogs.length; i++) {
+//     let currentLog = arrOfLogs[i]
+//     if (currentLog.maxDepth > result) {
+//       result = currentLog.maxDepth
+//     }
+//   }
+//   return result
+// }
 
 function hasDivedDeep(arrOfLogs, depth) {
   return !!arrOfLogs.find(log => log.maxDepth > depth)
 }
 
+function badgesPresent(arrOfBadges, ...badgeBooleans) {
+  //loop through badges, return true at index of present badge
+  for (let i = 0; i < arrOfBadges.length; i++) {
+    let currentBadge = arrOfBadges[i]
+    badgeBooleans[currentBadge.id - 1] = true
+  }
+
+  return badgeBooleans
+}
+
 // function numOfObservations(arrOfLogs, target) {}
 
-// Log.afterCreate(addBadge)
+Log.afterCreate(addBadges)
 
 module.exports = Log

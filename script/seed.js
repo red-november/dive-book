@@ -91,6 +91,13 @@ async function seed() {
     })
   ])
 
+  const badges = await Promise.all([
+    Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
+    Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
+    Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
+    Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
+  ])
+
   const logs = await Promise.all([
     Log.create({
       diveName: `Barracuda Point`,
@@ -157,13 +164,6 @@ async function seed() {
       hasStrongCurrent: false,
       visibility: 23
     })
-  ])
-
-  const badges = await Promise.all([
-    Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
-    Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
-    Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
-    Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
   ])
 
   const observations = await Promise.all([
