@@ -68,17 +68,16 @@ const Log = db.define('log', {
 
 //class methods
 
-//returns a nested object of all unique observations where the key is the observation id
+//returns an array of all unique observations
 Log.getAllObservations = async function(diverId) {
-  const unique = {}
-  const diverLogs = await Log.findAll({
+  const diverLogs = await this.findAll({
     where: {
       diverId: diverId
-    },
-    include: [{model: Observation}]
+    }
   })
+  const unique = {}
   for (let i = 0; i < diverLogs.length; i++) {
-    let obsArr = diverLogs[i].observations
+    let obsArr = await diverLogs[i].getObservations()
     for (let j = 0; j < obsArr.length; j++) {
       let currentObs = obsArr[j]
       if (!unique[currentObs.id]) {
@@ -86,7 +85,8 @@ Log.getAllObservations = async function(diverId) {
       }
     }
   }
-  return unique
+
+  return Object.values(unique)
 }
 
 //hooks

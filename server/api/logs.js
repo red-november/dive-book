@@ -9,24 +9,26 @@ router.get('/', async (req, res, next) => {
 
 router.get('/test', async (req, res, next) => {
   try {
-    const diverLogs = await Log.findAll({
-      where: {
-        diverId: 1
-      },
-      include: [{model: Observation}]
-    })
-    const diverBadges = await Badge.findAll({
-      include: [
-        {
-          model: Diver,
-          where: {
-            id: 1
-          }
-        }
-      ]
-    })
+    // const diverLogs = await Log.findAll({
+    //   include: [{model: Observation}],
+    //   where: {
+    //     diverId: 1
+    //   }
+    // })
+    // const diverBadges = await Badge.findAll({
+    //   include: [
+    //     {
+    //       model: Diver,
+    //       where: {
+    //         id: 1
+    //       }
+    //     }
+    //   ]
+    // })
 
-    res.json({diverLogs, diverBadges})
+    const diverLogs = await Log.getAllObservations(1)
+
+    res.json({diverLogs})
   } catch (error) {
     next(error)
   }
