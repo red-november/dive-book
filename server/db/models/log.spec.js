@@ -19,6 +19,13 @@ describe('Log model', () => {
       password: 'bones'
     })
 
+    await Promise.all([
+      Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
+      Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
+      Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
+      Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
+    ])
+
     await Log.create({
       diveName: `Barracuda Point`,
       location: `Sipadan Island, Malaysia`,
@@ -37,13 +44,6 @@ describe('Log model', () => {
       hasStrongCurrent: false,
       visibility: 15
     })
-
-    await Promise.all([
-      Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
-      Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
-      Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
-      Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
-    ])
 
     await Promise.all([
       Observation.create({
@@ -77,6 +77,25 @@ describe('Log model', () => {
     await EarnedBadge.create({
       diverId: 1,
       badgeId: 2
+    })
+
+    await Log.create({
+      diveName: `Great Big Hole`,
+      location: `Sipadan Island, Malaysia`,
+      diverId: 1 /* Cody */,
+      timeIn: `2019-05-01 08:00:00`,
+      timeOut: `2019-05-01 09:00:00`,
+      maxDepth: 20,
+      tankPressureStart: 200,
+      tankPressureEnd: 50,
+      tankType: `Steel`,
+      beltWeight: 30,
+      airMixture: `Hydreliox`,
+      description: `Best dive ever!!!`,
+      wetSuitType: `The Full Wetsuit`,
+      wetSuitThickness: 2 /*mm*/,
+      hasStrongCurrent: false,
+      visibility: 15
     })
   })
 

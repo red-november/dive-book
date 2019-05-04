@@ -113,41 +113,53 @@ Log.prototype.getDiverBadges = async function(diverId) {
   return badges
 }
 
+Log.prototype.getAllBadges = async function() {
+  const badges = await this.sequelize.models.badge.findAll()
+  return badges
+}
+
 //hooks
 
 async function addBadges(logInstance) {
   const diverId = logInstance.diverId
   //get all logs for diver
-  const diverLogs = await Log.findDiverLogs(diverId)
 
-  //get all badges for diver
-  const diverBadges = await logInstance.getDiverBadges(diverId)
+  try {
+    const diverLogs = await Log.findDiverLogs(diverId)
+    //get all badges for diver
+    const diverBadges = await logInstance.getDiverBadges(diverId)
+    //set default statuses for all badges
 
-  //set default statuses for all badges
+    const allBadges = await logInstance.getAllBadges()
 
-  let [juvenile, aquaman, discoverer, voyager] = badgesPresent(
-    diverBadges,
-    false,
-    false,
-    false,
-    false
-  )
+    let [juvenile, aquaman, discoverer, voyager] = badgesPresent(
+      diverBadges,
+      false,
+      false,
+      false,
+      false
+    )
 
-  const diverInstance = await logInstance.sequelize.models.diver.findByPk(
-    diverId
-  )
+    const diverInstance = await logInstance.sequelize.models.diver.findByPk(
+      diverId
+    )
+    // check for Juvenile Badge (more than 9 dives)
+    if (!juvenile && diverLogs.length > 1) {
+      // await diverInstance.sequelize.models.earnedBadge.findOrCreate({
+      //   where: {
+      //     diverId: diverId,
+      //     badgeId: 1
+      //   }
+      // })
+    }
 
-  // check for Juvenile Badge (more than 9 dives)
-  if (!juvenile && diverLogs.length > 9) {
-    diverInstance.addBadge(1)
+    // check for aquaman badge (deeper than 30 meters)
+    if (!aquaman && hasDivedDeep(diverLogs, 30)) {
+      // await diverInstance.addBadge(2)
+    }
+  } catch (e) {
+    console.error(e)
   }
-
-  // check for aquaman badge (deeper than 30 meters)
-  if (!aquaman && hasDivedDeep(diverLogs, 30)) {
-    diverInstance.addBadge(2)
-  }
-
-  console.log('diver badges', diverBadges)
 }
 
 //utility function
@@ -170,7 +182,7 @@ function badgesPresent(arrOfBadges, ...badgeBooleans) {
   //loop through badges, return true at index of present badge
   for (let i = 0; i < arrOfBadges.length; i++) {
     let currentBadge = arrOfBadges[i]
-    badgeBooleans[currentBadge.id - 1] = true
+    badgeBooleans[currentBadge.badgeId - 1] = true
   }
 
   return badgeBooleans
@@ -178,6 +190,6 @@ function badgesPresent(arrOfBadges, ...badgeBooleans) {
 
 // function numOfObservations(arrOfLogs, target) {}
 
-// Log.afterCreate(addBadges)
+Log.afterCreate(addBadges)
 
 module.exports = Log
