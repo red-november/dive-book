@@ -34,9 +34,9 @@ class Routes extends Component {
         <Route exact path="/allshops" component={AllShops} />
 
         <Route path="/login" component={Login} />
-        <Route path="/badges/:userId" component={SingleBadge} />
+        <Route path="/badges/:diverId" component={SingleBadge} />
         <Route path="/signup" component={Signup} />
-        <Route path="/logs/:userId" component={SingleLog} />
+        <Route path="/logs/:id" component={SingleLog} />
         <Route path="/logs" component={AllLogs} />
         {isLoggedIn && (
           <Switch>

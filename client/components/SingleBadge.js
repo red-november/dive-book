@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getDiverLogsWithObservationsThunk, getDiverCertsThunk, getBadgesThunk} from '../store'
+import {getDiverLogsWithObservationsThunk, getDiverCertsThunk} from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
 import * as d3 from 'd3'
 import {GraphifyDiscoverer, FillDiscoverer} from '../../utilities/d3Utils'
@@ -14,9 +14,9 @@ class SingleBadge extends Component {
   }
 
   componentDidMount() {
-    this.props.loadDiverLogs(this.props.match.params.userId)
-    this.props.loadDiverCerts(this.props.match.params.userId)
-    this.props.loadDiverBadges(this.props.match.params.userId)
+    this.props.loadDiverLogs(this.props.match.params.diverId)
+    this.props.loadDiverCerts(this.props.match.params.diverId)
+    this.props.loadDiverBadges(this.props.match.params.diverId)
   }
 
   activateGraph = async () => {
