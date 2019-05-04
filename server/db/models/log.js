@@ -142,18 +142,10 @@ async function addBadges(logInstance) {
     diverInstance.addBadge(1)
   }
 
-  //check for aquaman badge (deeper than 30 meters)
-  // if (hasDivedDeep(diverLogs, 30)) {
-  //   const [
-  //     instance,
-  //     wasCreated
-  //   ] = await logInstance.sequelize.models.earnedBadge.findOrCreate({
-  //     where: {
-  //       diverId: logInstance.diverId,
-  //       badgeId: 2
-  //     }
-  //   })
-  // }
+  // check for aquaman badge (deeper than 30 meters)
+  if (!aquaman && hasDivedDeep(diverLogs, 30)) {
+    diverInstance.addBadge(2)
+  }
 
   console.log('diver badges', diverBadges)
 }
@@ -186,6 +178,6 @@ function badgesPresent(arrOfBadges, ...badgeBooleans) {
 
 // function numOfObservations(arrOfLogs, target) {}
 
-Log.afterCreate(addBadges)
+// Log.afterCreate(addBadges)
 
 module.exports = Log
