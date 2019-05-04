@@ -34,9 +34,6 @@ class SingleBadge extends Component {
       {height: 0, fill: 'white', text: 'inanimate objects'}
     ]
 
-    console.log(diverProfile)
-    console.log(data)
-
     await diverProfile.forEach(log => {
       log.observations.forEach(obs => {
         let {name, category} = obs
@@ -58,7 +55,7 @@ class SingleBadge extends Component {
 
     // GraphifyDiscoverer(canvas, data, dimensions, margin, axisIntervals)
 
-    await GraphifyDiscoverer(canvas, data, 600, 100, 4)
+    await GraphifyDiscoverer(canvas, data, 600  , 100, 5)
   }
 
   deactivateGraph = () => {
@@ -90,7 +87,6 @@ class SingleBadge extends Component {
 
 const mapStateToProps = state => {
   return {
-    diver: state.diver,
     diverProfile: state.diverProfile,
     diverCerts: state.diverCerts,
     diverBadges: state.diverBadges
