@@ -43,3 +43,14 @@ router.get('/diver/:diverId', async (req, res, next) => {
   const logs = await Log.findAll({ where: { diverId: diverId } })
   res.status(200).send(logs)
 })
+
+router.get('/diver/:diverId/addObservations', async (req, res, next) => {
+  const diverId = Number(req.params.diverId)
+  const logs = await Log.findAll({
+    where: {
+      diverId
+    },
+    include: [{model: Observation}]
+  })
+  res.status(200).send(logs)
+})
