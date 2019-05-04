@@ -70,23 +70,27 @@ const Log = db.define('log', {
 
 //returns an array of all unique observations
 Log.getAllObservations = async function(diverId) {
-  const diverLogs = await this.findAll({
-    where: {
-      diverId: diverId
-    }
-  })
-  const unique = {}
-  for (let i = 0; i < diverLogs.length; i++) {
-    let obsArr = await diverLogs[i].getObservations()
-    for (let j = 0; j < obsArr.length; j++) {
-      let currentObs = obsArr[j]
-      if (!unique[currentObs.id]) {
-        unique[currentObs.id] = currentObs
+  try {
+    const diverLogs = await this.findAll({
+      where: {
+        diverId: diverId
+      }
+    })
+    const unique = {}
+    for (let i = 0; i < diverLogs.length; i++) {
+      let obsArr = await diverLogs[i].getObservations()
+      for (let j = 0; j < obsArr.length; j++) {
+        let currentObs = obsArr[j]
+        if (!unique[currentObs.id]) {
+          unique[currentObs.id] = currentObs
+        }
       }
     }
-  }
 
-  return Object.values(unique)
+    return Object.values(unique)
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 //hooks

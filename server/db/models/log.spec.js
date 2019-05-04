@@ -70,13 +70,15 @@ describe('Log model', () => {
 
       it('returns an object with observations if there are observations', () => {
         return Log.getAllObservations(1).then(data =>
-          expect(data[1].tankType).to.equal('nude')
+          expect(data[1].name).to.equal('Nudibranch')
         )
       })
 
-      // it('returns false if the password is incorrect', () => {
-      //   expect(cody.correctPassword('bonez')).to.be.equal(false)
-      // })
+      it('returns an empty array if there are no observations', () => {
+        return Log.getAllObservations(2).then(data =>
+          expect(data).to.deep.equal([])
+        )
+      })
     }) // end describe('correctPassword')
   }) // end describe('instanceMethods')
 }) // end describe('User model')
