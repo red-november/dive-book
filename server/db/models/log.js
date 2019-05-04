@@ -127,6 +127,6 @@ function hasDivedDeep(arrOfLogs, depth) {
 
 // function numOfObservations(arrOfLogs, target) {}
 
-Log.afterCreate(addBadge)
+// Log.afterCreate(addBadge)
 
 module.exports = Log
