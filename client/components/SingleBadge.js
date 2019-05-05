@@ -20,7 +20,7 @@ class SingleBadge extends Component {
   }
 
   activateGraph = async () => {
-    const {diverProfile} = this.props
+    const {diverLogs} = this.props
     let discovered = []
 
     let data = [
@@ -34,7 +34,7 @@ class SingleBadge extends Component {
       {height: 0, fill: 'white', text: 'inanimate objects'}
     ]
 
-    await diverProfile.forEach(log => {
+    await diverLogs.forEach(log => {
       log.observations.forEach(obs => {
         let {name, category} = obs
         if(discovered.indexOf(name)) {
@@ -89,7 +89,7 @@ class SingleBadge extends Component {
 
 const mapStateToProps = state => {
   return {
-    diverProfile: state.diverProfile,
+    diverLogs: state.diverLogs,
     diverCerts: state.diverCerts,
     diverBadges: state.diverBadges
   }

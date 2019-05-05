@@ -33,7 +33,7 @@ export const getDiverLogsThunk = diverId => async dispatch => {
 export const getDiverLogsWithObservationsThunk = diverId => async dispatch => {
   try {
     const res = await axios.get(`/api/logs/diver/${diverId}/addObservations`)
-    dispatch(getDiverLogs(res.data))
+    dispatch(getDiverLogsIncludingObservations(res.data))
   } catch (err) {
     console.error(err)
   }
