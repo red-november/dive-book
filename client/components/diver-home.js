@@ -15,7 +15,7 @@ class DiverHome extends Component {
   }
   render() {
     const {firstName} = this.props.diver
-    const {diverProfile, diverCerts, diverBadges} = this.props
+    const {diverLogs, diverCerts, diverBadges} = this.props
 
     if (!this.props.diver.id) {
       return <h1>LOADING</h1>
@@ -27,7 +27,7 @@ class DiverHome extends Component {
         <div>
           {' '}
           <h3>Logs:</h3>
-          {diverProfile.map(log => (
+          {diverLogs.map(log => (
             <ul key={log.id}>
               <li>{log.diveName}</li>
             </ul>
@@ -69,7 +69,7 @@ class DiverHome extends Component {
 const mapStateToProps = state => {
   return {
     diver: state.diver,
-    diverProfile: state.diverProfile,
+    diverLogs: state.diverLogs,
     diverCerts: state.diverCerts,
     diverBadges: state.diverBadges
   }

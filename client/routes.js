@@ -12,7 +12,8 @@ import {
   AllLogs,
   SingleLog,
   SingleBadge,
-  AllObservations
+  AllObservations,
+  AllOfferedDives
 } from './components'
 import {me} from './store'
 
@@ -33,6 +34,7 @@ class Routes extends Component {
         <Route path="/qr" component={Scanner} />
         <Route exact path="/allshops/:shopId" component={SingleShop} />
         <Route exact path="/allshops" component={AllShops} />
+        <Route exact path="/alloffereddives" component={AllOfferedDives} />
 
         <Route path="/login" component={Login} />
         <Route path="/badges/:diverId" component={SingleBadge} />

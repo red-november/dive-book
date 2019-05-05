@@ -7,6 +7,7 @@ router.use('/logs', require('./logs'))
 router.use('/certs', require('./certifications'))
 router.use('/badges', require('./badges'))
 router.use('/observations', require('./observations'))
+router.use('/allofferedDives', require('./offeredDives'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
