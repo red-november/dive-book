@@ -1,7 +1,8 @@
 import React from 'react'
 
 const Form = props => {
-  const {handleChange, handleSubmit} = props
+  console.log('PROPS', props)
+  const {handleChange, handleSubmit, shops} = props
   const {
     diveName,
     timeIn,
@@ -22,7 +23,15 @@ const Form = props => {
     <div>
       <h2>New Log: </h2>
       <form onSubmit={handleSubmit}>
-        <label id="form" htmlFor="diveName">
+        <label id="form" htmlFor="diveShop">
+          Dive Shop:
+        </label>
+        <select>
+          {/* for(let i = 0; i < ) */}
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+        <label id="form" htmlFor="diveShop">
           Dive Name:
         </label>
         <input

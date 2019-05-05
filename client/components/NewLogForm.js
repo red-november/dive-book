@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {getShopsThunk} from '../store/index'
 import Form from './FormContainer'
 
 class AddLog extends Component {
@@ -24,6 +26,10 @@ class AddLog extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+  componentDidMount() {
+    this.props.fetchShops()
+  }
+
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -54,6 +60,7 @@ class AddLog extends Component {
     return (
       <Form
         log={this.state}
+        shops={this.props.allShops}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
       />
@@ -61,4 +68,12 @@ class AddLog extends Component {
   }
 }
 
-export default AddLog
+const mapStateToProps = state => ({
+  allShops: state.shops
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchShops: () => dispatch(getShopsThunk())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddLog)
