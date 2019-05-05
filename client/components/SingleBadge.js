@@ -68,18 +68,20 @@ class SingleBadge extends Component {
     let {activated} = this.state
     return (
       <div>
-        <div className="OptionComponent">
-          {activated ? (
+        {activated ? (
+          <div>
             <div className="SubmitOrder" onClick={this.deactivateGraph}>
               Deactivate D3
             </div>
-          ) : (
+            <div className="canva" />
+          </div>
+        ) : (
+          <div>
             <div className="SubmitOrder Ready" onClick={this.activateGraph}>
               Activate D3
             </div>
-          )}
-        </div>
-        <div className="canva" />
+          </div>
+        )}
       </div>
     )
   }

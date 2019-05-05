@@ -8,3 +8,15 @@ router.get('/', async (req, res, next) => {
   })
   res.status(200).json(allObservations)
 })
+
+router.get('/:obsId', async (req, res, next) => {
+  const obsId = Number(req.params.obsId)
+  const observation = await Observation.findOne({
+    where:{
+      id: obsId
+    },
+    include: [{model: Log}]
+  })
+  res.status(200).send(observation)
+
+})

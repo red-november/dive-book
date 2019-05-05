@@ -15,6 +15,7 @@ const GraphifyDiscoverer = (
   const barWidth = (max - axisLabelSpace) / data.length - barPadding
   const xStart = margin + axisLabelSpace
   const yStart = dimensions - margin
+  const titleMargin = margin / 2
   let high = 0
   let xAxisValues = []
 
@@ -68,9 +69,9 @@ const GraphifyDiscoverer = (
   const title = svg
     .append('text')
     .attr('x', xStart + barWidth * data.length / 3)
-    .attr('y', yStart - max - 0)
+    .attr('y', yStart - max - titleMargin)
     .attr('font-family', 'sans-serif')
-    .text(`Discoverer - Unique Observations`)
+    .text(`Discoverer - Total Observations`)
 
   const rect = svg.selectAll('rect')
   const line = svg.selectAll('line.xaxis')
