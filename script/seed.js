@@ -244,15 +244,15 @@ async function seed() {
   const badgesEarned = await Promise.all([
     EarnedBadge.create({
       diverId: 1,
-      badgeId: 1
+      badgeId: 3
     }),
     EarnedBadge.create({
       diverId: 1,
-      badgeId: 2
+      badgeId: 4
     }),
     EarnedBadge.create({
       diverId: 2,
-      badgeId: 1
+      badgeId: 3
     })
   ])
 

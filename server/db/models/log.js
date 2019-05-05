@@ -123,7 +123,6 @@ Log.prototype.getAllBadges = async function() {
 async function addBadges(logInstance) {
   const diverId = logInstance.diverId
   //get all logs for diver
-
   try {
     const diverLogs = await Log.findDiverLogs(diverId)
     //get all badges for diver
@@ -137,14 +136,16 @@ async function addBadges(logInstance) {
     const diverInstance = await logInstance.sequelize.models.diver.findByPk(
       diverId
     )
+
     // check for Juvenile Badge (more than 9 dives)
-    if (!juvenile && diverLogs.length > 9) {
-      // await diverInstance.sequelize.models.earnedBadge.findOrCreate({
-      //   where: {
-      //     diverId: diverId,
-      //     badgeId: 1
-      //   }
-      // })
+    if (!juvenile && diverLogs.length > 1) {
+      console.log('diver email:', diverInstance.email)
+      await diverInstance.sequelize.models.earnedBadge.findOrCreate({
+        where: {
+          diverId: diverId,
+          badgeId: 1
+        }
+      })
     }
 
     // check for aquaman badge (deeper than 30 meters)

@@ -11,95 +11,98 @@ const {
   EarnedBadge
 } = require('../models')
 
-describe('Log model', () => {
-  beforeEach(async () => {
-    await db.sync({force: true})
-    await Diver.create({
-      email: 'cody@puppybook.com',
-      password: 'bones'
-    })
-
-    await Promise.all([
-      Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
-      Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
-      Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
-      Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
-    ])
-
-    await Log.create({
-      diveName: `Barracuda Point`,
-      location: `Sipadan Island, Malaysia`,
-      diverId: 1 /* Cody */,
-      timeIn: `2019-05-01 08:00:00`,
-      timeOut: `2019-05-01 09:00:00`,
-      maxDepth: 100,
-      tankPressureStart: 200,
-      tankPressureEnd: 50,
-      tankType: `Steel`,
-      beltWeight: 30,
-      airMixture: `Hydreliox`,
-      description: `Best dive ever!!!`,
-      wetSuitType: `The Full Wetsuit`,
-      wetSuitThickness: 2 /*mm*/,
-      hasStrongCurrent: false,
-      visibility: 15
-    })
-
-    await Promise.all([
-      Observation.create({
-        name: 'Whale Shark',
-        category: 'fish',
-        description:
-          'slow-moving, filter-feeding carpet shark. the biggest fish in the sea!',
-        color: 'blue',
-        shape: 'bulbous'
-      }),
-      Observation.create({
-        name: 'Nudibranch',
-        category: 'mollusks',
-        description: 'Sea slug. Lives on coral. Can grow to 4 inches.',
-        color: 'red',
-        shape: 'oblong'
-      })
-    ])
-
-    await Promise.all([
-      Sighting.create({
-        logId: 1,
-        observationId: 1
-      }),
-      Sighting.create({
-        logId: 1,
-        observationId: 2
-      })
-    ])
-
-    await EarnedBadge.create({
-      diverId: 1,
-      badgeId: 2
-    })
-
-    await Log.create({
-      diveName: `Great Big Hole`,
-      location: `Sipadan Island, Malaysia`,
-      diverId: 1 /* Cody */,
-      timeIn: `2019-05-01 08:00:00`,
-      timeOut: `2019-05-01 09:00:00`,
-      maxDepth: 20,
-      tankPressureStart: 200,
-      tankPressureEnd: 50,
-      tankType: `Steel`,
-      beltWeight: 30,
-      airMixture: `Hydreliox`,
-      description: `Best dive ever!!!`,
-      wetSuitType: `The Full Wetsuit`,
-      wetSuitThickness: 2 /*mm*/,
-      hasStrongCurrent: false,
-      visibility: 15
-    })
+async function before() {
+  await db.sync({force: true})
+  await Diver.create({
+    email: 'cody@puppybook.com',
+    password: 'bones'
   })
 
+  await Promise.all([
+    Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
+    Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
+    Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
+    Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
+  ])
+
+  await EarnedBadge.create({
+    diverId: 1,
+    badgeId: 2
+  })
+
+  await Log.create({
+    diveName: `Barracuda Point`,
+    location: `Sipadan Island, Malaysia`,
+    diverId: 1 /* Cody */,
+    timeIn: `2019-05-01 08:00:00`,
+    timeOut: `2019-05-01 09:00:00`,
+    maxDepth: 100,
+    tankPressureStart: 200,
+    tankPressureEnd: 50,
+    tankType: `Steel`,
+    beltWeight: 30,
+    airMixture: `Hydreliox`,
+    description: `Best dive ever!!!`,
+    wetSuitType: `The Full Wetsuit`,
+    wetSuitThickness: 2 /*mm*/,
+    hasStrongCurrent: false,
+    visibility: 15
+  })
+
+  await Log.create({
+    diveName: `Great Big Hole`,
+    location: `Sipadan Island, Malaysia`,
+    diverId: 1 /* Cody */,
+    timeIn: `2019-05-01 08:00:00`,
+    timeOut: `2019-05-01 09:00:00`,
+    maxDepth: 20,
+    tankPressureStart: 200,
+    tankPressureEnd: 50,
+    tankType: `Steel`,
+    beltWeight: 30,
+    airMixture: `Hydreliox`,
+    description: `Best dive ever!!!`,
+    wetSuitType: `The Full Wetsuit`,
+    wetSuitThickness: 2 /*mm*/,
+    hasStrongCurrent: false,
+    visibility: 15
+  })
+
+  await Promise.all([
+    Observation.create({
+      name: 'Whale Shark',
+      category: 'fish',
+      description:
+        'slow-moving, filter-feeding carpet shark. the biggest fish in the sea!',
+      color: 'blue',
+      shape: 'bulbous'
+    }),
+    Observation.create({
+      name: 'Nudibranch',
+      category: 'mollusks',
+      description: 'Sea slug. Lives on coral. Can grow to 4 inches.',
+      color: 'red',
+      shape: 'oblong'
+    })
+  ])
+
+  await Promise.all([
+    Sighting.create({
+      logId: 1,
+      observationId: 1
+    }),
+    Sighting.create({
+      logId: 1,
+      observationId: 2
+    })
+  ])
+}
+
+describe('Log model', () => {
   describe('classMethods', () => {
+    beforeEach(async () => {
+      await before()
+    })
     describe('getAllObservations', () => {
       it('returns an object with observations if there are observations', () => {
         return Log.getAllObservations(1).then(data =>
@@ -128,6 +131,7 @@ describe('Log model', () => {
   describe('instanceMethods', () => {
     let log
     beforeEach(async () => {
+      await before()
       log = await Log.findByPk(1)
     })
     describe('getDiverBadges', () => {
