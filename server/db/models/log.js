@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 const Sequelize = require('sequelize')
 const db = require('../db')
 
@@ -138,7 +139,7 @@ async function addBadges(logInstance) {
     )
 
     // check for Juvenile Badge (more than 9 dives)
-    if (!juvenile && diverLogs.length > 1) {
+    if (!juvenile && diverLogs.length > 9) {
       console.log('diver email:', diverInstance.email)
       await diverInstance.sequelize.models.earnedBadge.findOrCreate({
         where: {
@@ -150,7 +151,18 @@ async function addBadges(logInstance) {
 
     // check for aquaman badge (deeper than 30 meters)
     if (!aquaman && hasDivedDeep(diverLogs, 30)) {
-      // await diverInstance.addBadge(2)
+      await diverInstance.addBadge(2)
+    }
+
+    //check for discoverer badge (more than 40 observations)
+    if (!discoverer) {
+      const observations = await Log.getAllObservations(diverId)
+      observations.length > 40 && (await diverInstance.addBadge(3))
+    }
+
+    //check for voyager badge (more than 10 places)
+    if (!voyager && hasTraveled(diverLogs, 10)) {
+      await diverInstance.addBadge(4)
     }
   } catch (e) {
     console.error(e)
@@ -182,6 +194,17 @@ function badgesPresent(arrOfBadges, numOfBadges) {
   }
 
   return badgeBooleans
+}
+
+function hasTraveled(arrOfLogs, numPlaces) {
+  const uniqueLocations = arrOfLogs.reduce((accum, log) => {
+    if (!accum[log.location]) {
+      accum[log.location] = log.location
+    }
+    return accum
+  }, {})
+
+  return Object.values(uniqueLocations).length > numPlaces
 }
 
 // function numOfObservations(arrOfLogs, target) {}
