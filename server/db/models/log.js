@@ -140,7 +140,6 @@ async function addBadges(logInstance) {
 
     // check for Juvenile Badge (more than 9 dives)
     if (!juvenile && diverLogs.length > 9) {
-      console.log('diver email:', diverInstance.email)
       await diverInstance.sequelize.models.earnedBadge.findOrCreate({
         where: {
           diverId: diverId,
