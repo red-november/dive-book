@@ -43,3 +43,14 @@ router.get('/diver/:diverId', async (req, res, next) => {
   const logs = await Log.findAll({where: {diverId: diverId}})
   res.status(200).send(logs)
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    if (req.user) {
+      const log = await Log.create(req.body)
+      res.status(201).send(log)
+    }
+  } catch (err) {
+    next(err)
+  }
+})

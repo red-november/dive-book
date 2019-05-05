@@ -10,7 +10,8 @@ import {
   AllShops,
   SingleShop,
   AllLogs,
-  SingleLog
+  SingleLog,
+  AddLog
 } from './components'
 import {me} from './store'
 
@@ -40,6 +41,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={DiverHome} />
+            <Route path="/create" component={AddLog} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

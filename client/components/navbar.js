@@ -15,6 +15,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <a href="#" onClick={handleClick}>
             Logout
           </a>
+          <Link id="newLog" to="/create">
+            Add a Log
+          </Link>
         </div>
       ) : (
         <div>
