@@ -10,8 +10,8 @@ import singleLog from './singleLogReducer'
 import diverProfile from './diverProfileReducer'
 import diverCerts from './diverCertsReducer'
 import diverBadges from './diverBadgesReducer'
-import allOfferedDives from './AllOfferedDives'
-import offeredDivesBySingleShop from './offeredDivesBySingleShop'
+import allOfferedDives from './AllOfferedDivesReducer'
+import offeredDivesBySingleShop from './offeredDivesBySingleShopReducer'
 
 const reducer = combineReducers({
   diver,
@@ -40,5 +40,5 @@ export * from './singleLogReducer'
 export * from './diverProfileReducer'
 export * from './diverCertsReducer'
 export * from './diverBadgesReducer'
-export * from './AllOfferedDives'
-export * from './offeredDivesBySingleShop'
+export * from './AllOfferedDivesReducer'
+export * from './offeredDivesBySingleShopReducer'

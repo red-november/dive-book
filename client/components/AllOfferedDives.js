@@ -9,7 +9,7 @@ class AllOfferedDives extends Component {
 
   render() {
     const {allOfferedDives} = this.props
-    if (!allOfferedDives) return <h1>Loading...</h1>
+    if (!allOfferedDives.length) return <h1>Loading...</h1>
     return (
       <div>
         <h1>All the Offered Dives:</h1>
