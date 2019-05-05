@@ -95,7 +95,7 @@ async function seed() {
     Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
     Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
     Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
-    Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
+    Badge.create({name: 'Voyager', description: 'Dived in over 10 places'})
   ])
 
   const logs = await Promise.all([
@@ -244,7 +244,7 @@ async function seed() {
   const badgesEarned = await Promise.all([
     EarnedBadge.create({
       diverId: 1,
-      badgeId: 3
+      badgeId: 1
     }),
     EarnedBadge.create({
       diverId: 1,

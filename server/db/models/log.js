@@ -151,40 +151,47 @@ async function addBadges(logInstance) {
 
     // check for aquaman badge (deeper than 30 meters)
     if (!aquaman && hasDivedDeep(diverLogs, 30)) {
-      await diverInstance.addBadge(2)
+      await await diverInstance.sequelize.models.earnedBadge.findOrCreate({
+        where: {
+          diverId: diverId,
+          badgeId: 2
+        }
+      })
     }
 
     //check for discoverer badge (more than 40 observations)
     if (!discoverer) {
       const observations = await Log.getAllObservations(diverId)
-      observations.length > 40 && (await diverInstance.addBadge(3))
+      observations.length > 40 &&
+        (await diverInstance.sequelize.models.earnedBadge.findOrCreate({
+          where: {
+            diverId: diverId,
+            badgeId: 3
+          }
+        }))
     }
 
     //check for voyager badge (more than 10 places)
     if (!voyager && hasTraveled(diverLogs, 10)) {
-      await diverInstance.addBadge(4)
+      await diverInstance.sequelize.models.earnedBadge.findOrCreate({
+        where: {
+          diverId: diverId,
+          badgeId: 4
+        }
+      })
     }
   } catch (e) {
     console.error(e)
   }
 }
 
-//utility function
-// function findMaxDepth(arrOfLogs) {
-//   let result = 0
-//   for (let i = 0; i < arrOfLogs.length; i++) {
-//     let currentLog = arrOfLogs[i]
-//     if (currentLog.maxDepth > result) {
-//       result = currentLog.maxDepth
-//     }
-//   }
-//   return result
-// }
+//utility functionas
 
 function hasDivedDeep(arrOfLogs, depth) {
   return !!arrOfLogs.find(log => log.maxDepth > depth)
 }
 
+//returns an array of booleans representing badges present in order
 function badgesPresent(arrOfBadges, numOfBadges) {
   const badgeBooleans = Array(numOfBadges).fill(false)
   //loop through badges, return true at index of present badge
@@ -206,8 +213,6 @@ function hasTraveled(arrOfLogs, numPlaces) {
 
   return Object.values(uniqueLocations).length > numPlaces
 }
-
-// function numOfObservations(arrOfLogs, target) {}
 
 Log.afterCreate(addBadges)
 

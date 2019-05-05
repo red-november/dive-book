@@ -25,11 +25,6 @@ async function before() {
     Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
   ])
 
-  // await EarnedBadge.create({
-  //   diverId: 1,
-  //   badgeId: 2
-  // })
-
   await Log.create({
     diveName: `Barracuda Point`,
     location: `Sipadan Island, Malaysia`,
