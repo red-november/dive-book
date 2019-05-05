@@ -36,17 +36,16 @@ const Form = props => {
           Time In:
         </label>
         <input
-          type="text"
+          type="datetime-local"
           name="timeIn"
           value={timeIn}
           onChange={handleChange}
-          placeholder="yyyy-mm-dd 00:00:00-00"
         />
         <label id="form" htmlFor="timeOut">
           Time Out:
         </label>
         <input
-          type="text"
+          type="datetime-local"
           name="timeOut"
           value={timeOut}
           onChange={handleChange}

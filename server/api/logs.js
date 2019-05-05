@@ -48,6 +48,7 @@ router.post('/', async (req, res, next) => {
   try {
     if (req.user) {
       const log = await Log.create(req.body)
+      await log.setDiver(req.user.id)
       res.status(201).send(log)
     }
   } catch (err) {
