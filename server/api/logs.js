@@ -3,8 +3,12 @@ const {Log, Badge, Diver, Observation} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-  const allLogs = await Log.findAll()
-  res.status(200).send(allLogs)
+  try {
+    const allLogs = await Log.findAll()
+    res.status(200).json(allLogs)
+  } catch (error) {
+    next(error)
+  }
 })
 
 // router.get('/test', async (req, res, next) => {
