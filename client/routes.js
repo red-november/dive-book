@@ -11,7 +11,8 @@ import {
   SingleShop,
   AllLogs,
   SingleLog,
-  SingleBadge
+  SingleBadge,
+  AllObservations
 } from './components'
 import {me} from './store'
 
@@ -38,6 +39,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/logs/:id" component={SingleLog} />
         <Route path="/logs" component={AllLogs} />
+        <Route path="/observations" component={AllObservations} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
