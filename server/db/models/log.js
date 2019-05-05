@@ -132,19 +132,13 @@ async function addBadges(logInstance) {
 
     const allBadges = await logInstance.getAllBadges()
 
-    let [juvenile, aquaman, discoverer, voyager] = badgesPresent(
-      diverBadges,
-      false,
-      false,
-      false,
-      false
-    )
+    let [juvenile, aquaman, discoverer, voyager] = badgesPresent(diverBadges, 4)
 
     const diverInstance = await logInstance.sequelize.models.diver.findByPk(
       diverId
     )
     // check for Juvenile Badge (more than 9 dives)
-    if (!juvenile && diverLogs.length > 1) {
+    if (!juvenile && diverLogs.length > 9) {
       // await diverInstance.sequelize.models.earnedBadge.findOrCreate({
       //   where: {
       //     diverId: diverId,
@@ -178,7 +172,8 @@ function hasDivedDeep(arrOfLogs, depth) {
   return !!arrOfLogs.find(log => log.maxDepth > depth)
 }
 
-function badgesPresent(arrOfBadges, ...badgeBooleans) {
+function badgesPresent(arrOfBadges, numOfBadges) {
+  const badgeBooleans = Array(numOfBadges).fill(false)
   //loop through badges, return true at index of present badge
   for (let i = 0; i < arrOfBadges.length; i++) {
     let currentBadge = arrOfBadges[i]
