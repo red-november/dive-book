@@ -21,7 +21,7 @@ router.get('/diver/:diverId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const {
+    let {
       date,
       diveshopId,
       diveName,
@@ -41,6 +41,9 @@ router.post('/', async (req, res, next) => {
       hasStrongCurrent,
       offeredDiveId
     } = req.body
+
+    if (typeof diveshopId !== 'number') diveshopId = null
+    if (typeof offeredDiveId !== 'number') offeredDiveId = null
 
     if (req.user) {
       const log = await Log.create({

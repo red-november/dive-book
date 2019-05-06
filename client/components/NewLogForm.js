@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
@@ -43,7 +44,10 @@ class AddLog extends Component {
       this.setState({displayText: false})
     }
 
-    if (evt.target.name === 'diveName' && evt.target.value === 'Other') {
+    if (
+      (evt.target.name === 'diveName' && evt.target.value === 'Other') ||
+      (evt.target.name === 'diveshopId' && evt.target.value === '')
+    ) {
       this.setState({displayText: true})
     }
     if (evt.target.name === 'diveName' && !this.state.displayText) {

@@ -27,7 +27,7 @@ const Form = props => {
       <form onSubmit={handleSubmit}>
         <label htmlFor="diveshopId">Dive Shop:</label>
         <select name="diveshopId" onChange={handleChange}>
-          <option value={null}>Select dive shop</option>
+          <option value="">Select dive shop</option>
           {shops.map(shop => {
             return (
               <option key={shop.id} value={shop.id}>
@@ -39,7 +39,7 @@ const Form = props => {
         <label htmlFor="diveName">Dive Name:</label>
         {singleShop.offeredDives && !displayText ? (
           <select name="diveName" onChange={handleChange}>
-            <option value={null}>Select dive</option>
+            <option value="Other">Select dive</option>
             {singleShop.offeredDives.map(dive => {
               return (
                 <option key={dive.id} value={`${dive.name}^${dive.id}`}>
@@ -47,7 +47,7 @@ const Form = props => {
                 </option>
               )
             })}
-            <option value={null}>Other</option>
+            <option value="Other">Other</option>
           </select>
         ) : (
           <input
