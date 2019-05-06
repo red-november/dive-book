@@ -42,7 +42,7 @@ const Form = props => {
             <option value={null}>Select dive</option>
             {singleShop.offeredDives.map(dive => {
               return (
-                <option key={dive.id} value={dive.id}>
+                <option key={dive.id} value={`${dive.name}^${dive.id}`}>
                   {dive.name}
                 </option>
               )

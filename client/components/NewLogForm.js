@@ -25,7 +25,8 @@ class AddLog extends Component {
       description: '',
       visibility: 0,
       hasStrongCurrent: false,
-      displayText: false
+      displayText: false,
+      offeredDiveId: null
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -35,17 +36,27 @@ class AddLog extends Component {
   }
 
   handleChange(evt) {
+    console.log('target value:', evt.target.value)
     if (evt.target.name === 'diveshopId') {
       //fetch single shop if id is not null
       evt.target.value && this.props.fetchSingleShop(evt.target.value)
       this.setState({displayText: false})
     }
+
     if (evt.target.name === 'diveName' && evt.target.value === 'Other') {
       this.setState({displayText: true})
     }
-    this.setState({
-      [evt.target.name]: evt.target.value
-    })
+    if (evt.target.name === 'diveName' && !this.state.displayText) {
+      let [diveName, offeredDiveId] = evt.target.value.split('^')
+      this.setState({
+        diveName,
+        offeredDiveId
+      })
+    } else {
+      this.setState({
+        [evt.target.name]: evt.target.value
+      })
+    }
   }
 
   handleSubmit(evt) {
@@ -69,7 +80,8 @@ class AddLog extends Component {
       visibility: 0,
       hasStrongCurrent: false,
       date: '',
-      displayText: false
+      displayText: false,
+      offeredDiveId: null
     })
   }
   render() {

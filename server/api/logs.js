@@ -38,7 +38,8 @@ router.post('/', async (req, res, next) => {
       airMixture,
       description,
       visibility,
-      hasStrongCurrent
+      hasStrongCurrent,
+      offeredDiveId
     } = req.body
 
     if (req.user) {
@@ -60,6 +61,7 @@ router.post('/', async (req, res, next) => {
         visibility,
         date,
         hasStrongCurrent,
+        offeredDiveId,
         diverId: req.user.id
       })
       // await log.setDiver(req.user.id)
