@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getCertificationThunk, updateCertificationThunk} from '../store'
-
+import {
+  getCertificationThunk,
+  updateCertificationThunk,
+  deleteCertificationThunk
+} from '../store'
 
 class SingleCert extends Component {
   constructor() {
@@ -30,8 +33,8 @@ class SingleCert extends Component {
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
-    });
-  };
+    })
+  }
 
   handleSubmit = async event => {
     event.preventDefault()
@@ -42,58 +45,64 @@ class SingleCert extends Component {
       provider: event.target.provider.value,
       date: event.target.date.value,
       level: event.target.level.value,
-      instructorId: event.target.instructorId.value,
+      instructorId: event.target.instructorId.value
     }
 
-    await this.props.updateSingleCart(this.props.SingleCert.id,data)
+    await this.props.updateSingleCert(this.props.SingleCert.id, data)
+  }
 
+  handleDelete = async () => {
+    await this.props.deleteSingleCert(this.props.SingleCert.id)
   }
 
   render() {
     const {certId, provider, date, level, instructorId} = this.state
     return (
-      <form className = "InputForm" onSubmit={this.handleSubmit}>
-          <label htmlFor="certId">Certification ID: </label>
-          <input
-            type="text"
-            name="certId"
-            value={certId}
-            onChange={this.handleChange}
-          />
+      <form className="InputForm" onSubmit={this.handleSubmit}>
+        <label htmlFor="certId">Certification ID: </label>
+        <input
+          type="text"
+          name="certId"
+          value={certId}
+          onChange={this.handleChange}
+        />
 
-          <label htmlFor="provider">Provider: </label>
-          <input
-            type="text"
-            name="provider"
-            value={provider}
-            onChange={this.handleChange}
-          />
+        <label htmlFor="provider">Provider: </label>
+        <input
+          type="text"
+          name="provider"
+          value={provider}
+          onChange={this.handleChange}
+        />
 
-          <label htmlFor="date">Date Obtained: </label>
-          <input
-            type="text"
-            name="date"
-            value={date}
-            onChange={this.handleChange}
-          />
+        <label htmlFor="date">Date Obtained: </label>
+        <input
+          type="text"
+          name="date"
+          value={date}
+          onChange={this.handleChange}
+        />
 
-          <label htmlFor="level">Level: </label>
-          <input
-            type="text"
-            name="level"
-            value={level}
-            onChange={this.handleChange}
-          />
+        <label htmlFor="level">Level: </label>
+        <input
+          type="text"
+          name="level"
+          value={level}
+          onChange={this.handleChange}
+        />
 
-          <label htmlFor="instructorId">Instructor ID: </label>
-          <input
-            type="text"
-            name="instructorId"
-            value={instructorId}
-            onChange={this.handleChange}
-          />
+        <label htmlFor="instructorId">Instructor ID: </label>
+        <input
+          type="text"
+          name="instructorId"
+          value={instructorId}
+          onChange={this.handleChange}
+        />
 
-          <button type="submit">Update Certification</button>
+        <button type="submit">Update Certification</button>
+        <button type="button" onClick={this.handleDelete}>
+          Delete Certification
+        </button>
       </form>
     )
   }
@@ -105,7 +114,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchSingleCert: id => dispatch(getCertificationThunk(id)),
-  updateSingleCart: (id, data) => dispatch(updateCertificationThunk(id, data))
+  updateSingleCert: (id, data) => dispatch(updateCertificationThunk(id, data)),
+  deleteSingleCert: id => dispatch(deleteCertificationThunk(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleCert)

@@ -6,6 +6,7 @@ const initialState = {}
 const GET_CERTIFICATION = 'GET_CERTIFICATION'
 const UPDATE_CERTIFICATION = 'UPDATE_CERTIFICATION'
 const CREATE_CERTIFICATION = 'CREATE_CERTIFICATION'
+const DELETE_CERTIFICATION = 'DELETE_CERTIFICATION'
 
 const updateCertification = cert => ({
   type: UPDATE_CERTIFICATION,
@@ -19,6 +20,11 @@ const getCertification = cert => ({
 
 const createCertification = cert => ({
   type: CREATE_CERTIFICATION,
+  cert
+})
+
+const deleteCertification = cert => ({
+  type: DELETE_CERTIFICATION,
   cert
 })
 
@@ -50,12 +56,22 @@ export const createCertificationThunk = newData => async dispatch => {
     console.log('error in createCertificationThunk')
   }
 }
+export const deleteCertificationThunk = id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/certs/${id}`)
+    dispatch(deleteCertification(res.data))
+    history.push('/home')
+  } catch (error) {
+    console.log('error in deleteCertificationThunk')
+  }
+}
 
 export default function(state = initialState, action) {
   let newState = {...state}
   switch (action.type) {
     case UPDATE_CERTIFICATION:
     case CREATE_CERTIFICATION:
+    case DELETE_CERTIFICATION:
     case GET_CERTIFICATION:
       newState = action.cert
       return newState
