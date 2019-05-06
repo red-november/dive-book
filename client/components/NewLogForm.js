@@ -9,7 +9,7 @@ class AddLog extends Component {
     super()
     this.state = {
       date: '',
-      diveShopId: null,
+      diveshopId: null,
       diveName: '',
       timeIn: '',
       timeOut: '',
@@ -24,7 +24,8 @@ class AddLog extends Component {
       airMixture: 'air',
       description: '',
       visibility: 0,
-      hasStrongCurrent: false
+      hasStrongCurrent: false,
+      displayText: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -34,9 +35,13 @@ class AddLog extends Component {
   }
 
   handleChange(evt) {
-    console.log('in change event:')
-    console.log('value:', evt.target.value)
-
+    if (evt.target.name === 'diveshopId') {
+      //fetch single shop if id is not null
+      evt.target.value && this.props.fetchSingleShop(evt.target.value)
+    }
+    if (evt.target.name === 'diveName' && evt.target.value === 'Other') {
+      this.setState({displayText: true})
+    }
     this.setState({
       [evt.target.name]: evt.target.value
     })
@@ -62,7 +67,8 @@ class AddLog extends Component {
       description: '',
       visibility: 0,
       hasStrongCurrent: false,
-      date: ''
+      date: '',
+      displayText: false
     })
   }
   render() {
@@ -70,8 +76,10 @@ class AddLog extends Component {
       <Form
         log={this.state}
         shops={this.props.allShops}
+        singleShop={this.props.singleShop}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
+        displayText={this.state.displayText}
       />
     )
   }

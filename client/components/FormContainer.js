@@ -1,10 +1,10 @@
 import React from 'react'
 
 const Form = props => {
-  const {handleChange, handleSubmit, shops} = props
+  const {handleChange, handleSubmit, shops, singleShop, displayText} = props
   const {
     date,
-    diveShopId,
+    diveshopId,
     diveName,
     timeIn,
     timeOut,
@@ -25,10 +25,10 @@ const Form = props => {
     <div>
       <h2>New Log: </h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="diveShop">Dive Shop:</label>
+        <label htmlFor="diveshopId">Dive Shop:</label>
         <select name="diveshopId" onChange={handleChange}>
           <option value={null}>Select dive shop</option>
-          {shops.map((shop, idx) => {
+          {shops.map(shop => {
             return (
               <option key={shop.id} value={shop.id}>
                 {shop.id}. {shop.name}
@@ -37,13 +37,28 @@ const Form = props => {
           })}
         </select>
         <label htmlFor="diveName">Dive Name:</label>
-        <input
-          type="text"
-          name="diveName"
-          value={diveName}
-          onChange={handleChange}
-          placeholder="Enter dive here..."
-        />
+        {singleShop.offeredDives && !displayText ? (
+          <select name="diveName" onChange={handleChange}>
+            <option value={null}>Select dive</option>
+            {singleShop.offeredDives.map(dive => {
+              return (
+                <option key={dive.id} value={dive.id}>
+                  {dive.name}
+                </option>
+              )
+            })}
+            <option value={null}>Other</option>
+          </select>
+        ) : (
+          <input
+            type="text"
+            name="diveName"
+            value={diveName}
+            onChange={handleChange}
+            placeholder="Enter dive here..."
+          />
+        )}
+
         <label htmlFor="date">Date:</label>
         <input type="date" name="date" value={date} onChange={handleChange} />
 
