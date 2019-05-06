@@ -3,6 +3,7 @@ import React from 'react'
 const Form = props => {
   const {handleChange, handleSubmit, shops} = props
   const {
+    date,
     diveShopId,
     diveName,
     timeIn,
@@ -42,19 +43,23 @@ const Form = props => {
           onChange={handleChange}
           placeholder="Enter dive here..."
         />
+        <label htmlFor="date">Date:</label>
+        <input type="date" name="date" value={date} onChange={handleChange} />
+
         <label htmlFor="timeIn">Time In:</label>
         <input
-          type="datetime-local"
+          type="time"
           name="timeIn"
           value={timeIn}
+          defaultValue={timeIn}
           onChange={handleChange}
         />
         <label htmlFor="timeOut">Time Out:</label>
         <input
-          type="datetime-local"
+          type="time"
           name="timeOut"
           value={timeOut}
-          defaultValue={new Date()}
+          defaultValue={timeOut}
           onChange={handleChange}
         />
         <label htmlFor="location">Location:</label>

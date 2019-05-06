@@ -7,36 +7,6 @@ router.get('/', async (req, res, next) => {
   res.status(200).send(allLogs)
 })
 
-router.get('/test', async (req, res, next) => {
-  try {
-    // const diverLogs = await Log.findAll({
-    //   include: [{model: Observation}],
-    //   where: {
-    //     diverId: 1
-    //   }
-    // })
-    // const diverBadges = await Badge.findAll({
-    //   include: [
-    //     {
-    //       model: Diver,
-    //       where: {
-    //         id: 1
-    //       }
-    //     }
-    //   ]
-    // })
-
-    let diverBadges = await EarnedBadge.findAll({where: {diverId: 1}})
-    diverBadges = diverBadges.find(b => b.badgeId === 1)
-
-    // const diverLogs = await Log.getAllObservations(1)
-
-    res.json({diverBadges})
-  } catch (error) {
-    next(error)
-  }
-})
-
 router.get('/:logId', async (req, res, next) => {
   const id = Number(req.params.logId)
   const log = await Log.findByPk(id)
@@ -52,6 +22,7 @@ router.get('/diver/:diverId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const {
+      date,
       diveshopId,
       diveName,
       timeIn,
@@ -86,6 +57,7 @@ router.post('/', async (req, res, next) => {
         airMixture,
         description,
         visibility,
+        date,
         diverId: req.user.id
       })
       // await log.setDiver(req.user.id)

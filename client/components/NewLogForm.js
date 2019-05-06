@@ -8,10 +8,11 @@ class AddLog extends Component {
   constructor() {
     super()
     this.state = {
+      date: '',
       diveShopId: 0,
       diveName: '',
-      timeIn: 0,
-      timeOut: 0,
+      timeIn: '9:00',
+      timeOut: '10:00',
       location: '',
       maxDepth: 0,
       tankPressureStart: 0,
@@ -34,26 +35,10 @@ class AddLog extends Component {
   handleChange(evt) {
     console.log('in change event:')
     console.log('value:', evt.target.value)
-    if (evt.target.name === 'timeIn' || evt.target.name === 'timeOut') {
-      let formattedtime = evt.target.value.split('T')
-      formattedtime[1] = formattedtime[1] + ':00'
-      formattedtime = formattedtime.join(' ')
-      console.log('formatted time:', formattedtime)
-      if (evt.target.name === 'timeIn') {
-        this.setState({
-          timeIn: formattedtime,
-          timeOut: formattedtime
-        })
-      } else {
-        this.setState({
-          timeOut: formattedtime
-        })
-      }
-    } else {
-      this.setState({
-        [evt.target.name]: evt.target.value
-      })
-    }
+
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
   }
 
   handleSubmit(evt) {

@@ -32,7 +32,7 @@ const Log = db.define('log', {
     }
   },
   date: {
-    type: Sequelize.DATEONLY,
+    type: Sequelize.DATE,
     allowNull: false,
     validate: {
       notEmpty: true

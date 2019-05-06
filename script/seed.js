@@ -106,7 +106,7 @@ async function seed() {
       location: `Sipadan Island, Malaysia`,
       isVerified: true,
       diverId: 1 /* Cody */,
-      timeIn: `08:00:00`,
+      timeIn: `08:00`,
       timeOut: `09:00:00`,
       date: `2019-05-01`,
       maxDepth: 100,
