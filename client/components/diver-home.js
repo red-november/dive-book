@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {getDiverLogsThunk, getDiverCertsThunk, getBadgesThunk} from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
 
@@ -39,7 +40,9 @@ class DiverHome extends Component {
           {diverCerts.map(cert => (
             <ul key={cert.id}>
               <li>
+                <Link to={`/certs/${cert.id}`}>
                 {cert.provider} {cert.level}
+                </Link>
               </li>
             </ul>
           ))}
