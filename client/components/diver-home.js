@@ -41,11 +41,14 @@ class DiverHome extends Component {
             <ul key={cert.id}>
               <li>
                 <Link to={`/certs/${cert.id}`}>
-                {cert.provider} {cert.level}
+                  {cert.provider} {cert.level}
                 </Link>
               </li>
             </ul>
           ))}
+          <button type="button">
+            <Link to="/certs/create">Create New Certification</Link>
+          </button>
         </div>
         <div>
           {' '}
@@ -58,9 +61,7 @@ class DiverHome extends Component {
             </ul>
           ))}
         </div>
-        <div className = "canva">
-
-        </div>
+        <div className="canva" />
       </div>
     )
   }

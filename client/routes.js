@@ -14,7 +14,8 @@ import {
   SingleBadge,
   AllObservations,
   AllOfferedDives,
-  SingleCert
+  SingleCert,
+  CreateCert
 } from './components'
 import {me} from './store'
 
@@ -43,6 +44,7 @@ class Routes extends Component {
         <Route path="/logs/:id" component={SingleLog} />
         <Route path="/logs" component={AllLogs} />
         <Route path="/observations" component={AllObservations} />
+        <Route path="/certs/create" component={CreateCert} />
         <Route path="/certs/:id" component={SingleCert} />
         {isLoggedIn && (
           <Switch>
