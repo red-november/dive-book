@@ -52,6 +52,7 @@ router.get('/diver/:diverId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const {
+      diveshopId,
       diveName,
       timeIn,
       timeOut,
@@ -69,10 +70,25 @@ router.post('/', async (req, res, next) => {
     } = req.body
 
     if (req.user) {
-      console.log(req.body)
-      const log = await Log.create(req.body)
-      await log.setDiver(req.user.id)
-      // await log.setDiveShop(req.user.diveshopId)
+      const log = await Log.create({
+        diveshopId,
+        diveName,
+        timeIn,
+        timeOut,
+        location,
+        maxDepth,
+        tankPressureStart,
+        tankPressureEnd,
+        tankType,
+        beltWeight,
+        wetSuitThickness,
+        wetSuitType,
+        airMixture,
+        description,
+        visibility,
+        diverId: req.user.id
+      })
+      // await log.setDiver(req.user.id)
       res.status(201).send(log)
     }
   } catch (err) {
@@ -80,21 +96,62 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/diver/:diverId', async (req, res, next) => {
-  const diverId = req.params.diverId
-  const log = await Log.findByPk(diverId)
-  if (!log) {
-    res.send(404)
+router.put('/diver/:logId', async (req, res, next) => {
+  const {
+    diveName,
+    timeIn,
+    timeOut,
+    location,
+    maxDepth,
+    tankPressureStart,
+    tankPressureEnd,
+    tankType,
+    beltWeight,
+    wetSuitType,
+    wetSuitThickness,
+    airMixture,
+    description,
+    visibility
+  } = req.body
+  try {
+    const logId = req.params.logId
+    const log = await Log.findByPk(logId)
+    if (!log) {
+      res.send(404)
+    }
+    let logUpdate = await log.update({
+      diveName,
+      timeIn,
+      timeOut,
+      location,
+      maxDepth,
+      tankPressureStart,
+      tankPressureEnd,
+      tankType,
+      beltWeight,
+      wetSuitThickness,
+      wetSuitType,
+      airMixture,
+      description,
+      visibility
+    })
+    res.status(200).send(logUpdate)
+  } catch (err) {
+    next(err)
   }
-  let logUpdate = await log.update(req.body)
-  res.status(200).send(logUpdate)
+})
+
 router.get('/diver/:diverId/addObservations', async (req, res, next) => {
-  const diverId = Number(req.params.diverId)
-  const logs = await Log.findAll({
-    where: {
-      diverId
-    },
-    include: [{model: Observation}]
-  })
-  res.status(200).send(logs)
+  try {
+    const diverId = Number(req.params.diverId)
+    const logs = await Log.findAll({
+      where: {
+        diverId
+      },
+      include: [{model: Observation}]
+    })
+    res.status(200).send(logs)
+  } catch (err) {
+    next(err)
+  }
 })

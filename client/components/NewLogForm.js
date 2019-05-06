@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {getShopsThunk} from '../store/index'
+import {getShopsThunk, addLogThunk} from '../store/index'
 import Form from './FormContainer'
 
 class AddLog extends Component {
   constructor() {
     super()
     this.state = {
-      diveShop: {},
+      diveShopId: 0,
       diveName: '',
       timeIn: 0,
       timeOut: 0,
@@ -37,11 +37,13 @@ class AddLog extends Component {
     })
   }
 
-  async handleSubmit(evt) {
+  handleSubmit(evt) {
     evt.preventDefault()
-    await axios.post('/api/logs', this.state)
+    //this is where thunk will go
+    // await axios.post('/api/logs', this.state)
+    this.props.addLog(this.state)
     this.setState({
-      diveShop: {},
+      diveshopId: 0,
       diveName: '',
       timeIn: 0,
       timeOut: 0,
@@ -55,7 +57,8 @@ class AddLog extends Component {
       suitThickness: 0,
       airMixture: '',
       description: '',
-      visibility: 0
+      visibility: 0,
+      hasStrongCurrent: false
     })
   }
   render() {
@@ -75,7 +78,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchShops: () => dispatch(getShopsThunk())
+  fetchShops: () => dispatch(getShopsThunk()),
+  addLog: log => dispatch(addLogThunk(log))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddLog)
