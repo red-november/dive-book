@@ -9,21 +9,22 @@ class AddLog extends Component {
     super()
     this.state = {
       date: '',
-      diveShopId: 0,
+      diveShopId: null,
       diveName: '',
-      timeIn: '9:00',
-      timeOut: '10:00',
+      timeIn: '',
+      timeOut: '',
       location: '',
       maxDepth: 0,
       tankPressureStart: 0,
       tankPressureEnd: 0,
-      tankType: '',
+      tankType: 'aluminum',
       beltWeight: 0,
-      wetSuitType: '',
+      wetSuitType: 'none',
       wetSuitThickness: 0,
-      airMixture: '',
+      airMixture: 'air',
       description: '',
-      visibility: 0
+      visibility: 0,
+      hasStrongCurrent: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -51,16 +52,17 @@ class AddLog extends Component {
       timeOut: 0,
       location: '',
       maxDepth: 0,
-      pressureStart: 0,
-      pressureEnd: 0,
+      tankPressureStart: 0,
+      tankPressureEnd: 0,
       tankType: '',
       beltWeight: 0,
-      suitType: '',
-      suitThickness: 0,
+      wetSuitType: '',
+      wetSuitThickness: 0,
       airMixture: '',
       description: '',
       visibility: 0,
-      hasStrongCurrent: false
+      hasStrongCurrent: false,
+      date: ''
     })
   }
   render() {

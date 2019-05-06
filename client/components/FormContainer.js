@@ -27,9 +27,10 @@ const Form = props => {
       <form onSubmit={handleSubmit}>
         <label htmlFor="diveShop">Dive Shop:</label>
         <select name="diveshopId" onChange={handleChange}>
+          <option value={null}>Select dive shop</option>
           {shops.map((shop, idx) => {
             return (
-              <option key={shop.id} value={shop.id} selected={idx === 0}>
+              <option key={shop.id} value={shop.id}>
                 {shop.id}. {shop.name}
               </option>
             )
@@ -51,7 +52,6 @@ const Form = props => {
           type="time"
           name="timeIn"
           value={timeIn}
-          defaultValue={timeIn}
           onChange={handleChange}
         />
         <label htmlFor="timeOut">Time Out:</label>
@@ -59,7 +59,6 @@ const Form = props => {
           type="time"
           name="timeOut"
           value={timeOut}
-          defaultValue={timeOut}
           onChange={handleChange}
         />
         <label htmlFor="location">Location:</label>
@@ -92,13 +91,11 @@ const Form = props => {
           onChange={handleChange}
         />
         <label htmlFor="tankType">Tank Type:</label>
-        <input
-          type="text"
-          name="tankType"
-          value={tankType}
-          onChange={handleChange}
-          placeholder="Enter type here..."
-        />
+        <select name="tankType" onChange={handleChange}>
+          <option value="aluminum">Aluminum</option>
+          <option value="steel">Steel</option>
+          <option value="other">Other</option>
+        </select>
         <label htmlFor="beltWeight">Belt Weight:</label>
         <input
           type="number"
@@ -107,13 +104,13 @@ const Form = props => {
           onChange={handleChange}
         />
         <label htmlFor="wetSuitType">Wet Suit Type:</label>
-        <input
-          type="text"
-          name="wetSuitType"
-          value={wetSuitType}
-          onChange={handleChange}
-          placeholder="Enter type here..."
-        />
+        <select name="wetSuitType" onChange={handleChange}>
+          <option value="none">None</option>
+          <option value="shortie">Shortie</option>
+          <option value="fulljohn">Fulljohn</option>
+          <option value="dry suit">Dry suit</option>
+          <option value="other">Other</option>
+        </select>
         <label htmlFor="wetSuitThickness">Wet Suit Thickness:</label>
         <input
           type="number"
@@ -122,13 +119,10 @@ const Form = props => {
           onChange={handleChange}
         />
         <label htmlFor="airMixture">Air Mixture:</label>
-        <input
-          type="text"
-          name="airMixture"
-          value={airMixture}
-          onChange={handleChange}
-          placeholder="Enter mixture here..."
-        />
+        <select name="airMixture" onChange={handleChange}>
+          <option value="air">Air</option>
+          <option value="nitrox">Nitrox</option>
+        </select>
         <label htmlFor="description">Description:</label>
         <textarea
           type="text"
@@ -146,8 +140,8 @@ const Form = props => {
         />
         <label htmlFor="hasStrongCurrent">Strong Current?</label>
         <select name="hasStrongCurrent" onChange={handleChange}>
-          <option value={true}>True</option>
           <option value={false}>False</option>
+          <option value={true}>True</option>
         </select>
         <button type="submit">Submit</button>
       </form>
