@@ -8,6 +8,7 @@ class AddLog extends Component {
   constructor() {
     super()
     this.state = {
+      diveShop: {},
       diveName: '',
       timeIn: 0,
       timeOut: 0,
@@ -40,6 +41,7 @@ class AddLog extends Component {
     evt.preventDefault()
     await axios.post('/api/logs', this.state)
     this.setState({
+      diveShop: {},
       diveName: '',
       timeIn: 0,
       timeOut: 0,

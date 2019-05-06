@@ -11,14 +11,3 @@ router.get('/diver/:diverId', async (req, res, next) => {
   })
   res.status(200).send(certs)
 })
-
-router.post('/', async (req, res, next) => {
-  try {
-    if (req.user) {
-      const cert = await Certification.create(req.body)
-      res.status(201).send(cert)
-    }
-  } catch (err) {
-    next(err)
-  }
-})

@@ -1,9 +1,9 @@
 import React from 'react'
 
 const Form = props => {
-  console.log('PROPS', props)
   const {handleChange, handleSubmit, shops} = props
   const {
+    diveShop,
     diveName,
     timeIn,
     timeOut,
@@ -26,10 +26,19 @@ const Form = props => {
         <label id="form" htmlFor="diveShop">
           Dive Shop:
         </label>
-        <select>
-          {/* for(let i = 0; i < ) */}
-          <option value="true">True</option>
-          <option value="false">False</option>
+        <select
+          name="index"
+          id="shops"
+          onChange={handleChange}
+          value={diveShop}
+        >
+          {shops.map(shop => {
+            return (
+              <option key={shop.id}>
+                {shop.id}. {shop.name}
+              </option>
+            )
+          })}
         </select>
         <label id="form" htmlFor="diveShop">
           Dive Name:
@@ -45,7 +54,7 @@ const Form = props => {
           Time In:
         </label>
         <input
-          type="datetime-local"
+          type="text"
           name="timeIn"
           value={timeIn}
           onChange={handleChange}
@@ -54,7 +63,7 @@ const Form = props => {
           Time Out:
         </label>
         <input
-          type="datetime-local"
+          type="text"
           name="timeOut"
           value={timeOut}
           onChange={handleChange}

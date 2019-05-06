@@ -51,12 +51,41 @@ router.get('/diver/:diverId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    const {
+      diveName,
+      timeIn,
+      timeOut,
+      location,
+      maxDepth,
+      tankPressureStart,
+      tankPressureEnd,
+      tankType,
+      beltWeight,
+      wetSuitType,
+      wetSuitThickness,
+      airMixture,
+      description,
+      visibility
+    } = req.body
+
     if (req.user) {
+      console.log(req.body)
       const log = await Log.create(req.body)
       await log.setDiver(req.user.id)
+      // await log.setDiveShop(req.user.diveshopId)
       res.status(201).send(log)
     }
   } catch (err) {
     next(err)
   }
+})
+
+router.put('/diver/:diverId', async (req, res, next) => {
+  const diverId = req.params.diverId
+  const log = await Log.findByPk(diverId)
+  if (!log) {
+    res.send(404)
+  }
+  let logUpdate = await log.update(req.body)
+  res.status(200).send(logUpdate)
 })
