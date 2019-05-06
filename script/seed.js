@@ -77,8 +77,8 @@ async function seed() {
   // ])
 
   await OfferedDive.LoadData(OfferedDivesData)
-  // await Observation.LoadData(ObservationsData)
-  // await Log.LoadData(LogsData)
+  await Observation.LoadData(ObservationsData)
+  await Log.LoadData(LogsData)
 
 
   const badges = await Promise.all([
@@ -88,170 +88,149 @@ async function seed() {
     Badge.create({name: 'Voyager', description: 'Dived in over 10 places'})
   ])
 
-  const logs = await Promise.all([
-    Log.create({
-      diveName: `Barracuda Point`,
-      offeredDiveId: 1,
-      diveshopId: 1,
-      location: `Sipadan Island, Malaysia`,
-      isVerified: true,
-      diverId: 1 /* Cody */,
-      timeIn: `2019-05-01 08:00:00`,
-      timeOut: `2019-05-01 09:00:00`,
-      maxDepth: 100,
-      tankPressureStart: 200,
-      tankPressureEnd: 50,
-      tankType: `Steel`,
-      beltWeight: 30,
-      airMixture: `Hydreliox`,
-      description: `Best dive ever!!!`,
-      wetSuitType: `The Full Wetsuit`,
-      wetSuitThickness: 2 /*mm*/,
-      hasStrongCurrent: false,
-      visibility: 15
-    }),
+  // const logs = await Promise.all([
 
-    Log.create({
-      diveName: `Barracuda Point`,
-      offeredDiveId: 1,
-      diveshopId: 1,
-      location: `Sipadan Island, Malaysia`,
-      isVerified: true,
-      diverId: 2 /* Murphy */,
-      timeIn: `2019-05-01 08:00:00`,
-      timeOut: `2019-05-01 09:00:00`,
-      maxDepth: 100,
-      tankPressureStart: 260,
-      tankPressureEnd: 30,
-      tankType: `Steel`,
-      beltWeight: 30,
-      airMixture: `Hydreliox`,
-      description: `Lol I almost fainted`,
-      wetSuitType: `The Full Wetsuit`,
-      wetSuitThickness: 3 /*mm*/,
-      hasStrongCurrent: false,
-      visibility: 15
-    }),
+  //   Log.create({
+  //     diveName: `Barracuda Point`,
+  //     offeredDiveId: 1,
+  //     diveshopId: 1,
+  //     location: `Sipadan Island, Malaysia`,
+  //     isVerified: true,
+  //     diverId: 2 /* Murphy */,
+  //     timeIn: `2019-05-01 08:00:00`,
+  //     timeOut: `2019-05-01 09:00:00`,
+  //     maxDepth: 100,
+  //     tankPressureStart: 260,
+  //     tankPressureEnd: 30,
+  //     tankType: `Steel`,
+  //     beltWeight: 30,
+  //     airMixture: `Hydreliox`,
+  //     description: `Lol I almost fainted`,
+  //     wetSuitType: `The Full Wetsuit`,
+  //     wetSuitThickness: 3 /*mm*/,
+  //     hasStrongCurrent: false,
+  //     visibility: 15
+  //   }),
 
-    Log.create({
-      diveName: `Blue Corner Wall`,
-      offeredDiveId: 2,
-      diveshopId: 1,
-      location: `Palau, Micronesia`,
-      isVerified: true,
-      diverId: 1 /* Cody */,
-      timeIn: `2019-04-29 10:00:00`,
-      timeOut: `2019-04-29 11:15:00`,
-      maxDepth: 80,
-      tankPressureStart: 220,
-      tankPressureEnd: 60,
-      tankType: `Aluminum`,
-      beltWeight: 25,
-      airMixture: `Oxygen`,
-      description: `Heavenly`,
-      wetSuitType: `The Spring Wetsuit`,
-      wetSuitThickness: 3 /*mm*/,
-      hasStrongCurrent: false,
-      visibility: 20
-    }),
+  //   Log.create({
+  //     diveName: `Blue Corner Wall`,
+  //     offeredDiveId: 2,
+  //     diveshopId: 1,
+  //     location: `Palau, Micronesia`,
+  //     isVerified: true,
+  //     diverId: 1 /* Cody */,
+  //     timeIn: `2019-04-29 10:00:00`,
+  //     timeOut: `2019-04-29 11:15:00`,
+  //     maxDepth: 80,
+  //     tankPressureStart: 220,
+  //     tankPressureEnd: 60,
+  //     tankType: `Aluminum`,
+  //     beltWeight: 25,
+  //     airMixture: `Oxygen`,
+  //     description: `Heavenly`,
+  //     wetSuitType: `The Spring Wetsuit`,
+  //     wetSuitThickness: 3 /*mm*/,
+  //     hasStrongCurrent: false,
+  //     visibility: 20
+  //   }),
 
-    Log.create({
-      diveName: `The Great Blue Hole`,
-      offeredDiveId: 3,
-      diveshopId: 2,
-      location: `Belize City, Belize`,
-      isVerified: true,
-      diverId: 1 /* Cody */,
-      timeIn: `2019-04-28 15:00:00`,
-      timeOut: `2019-04-29 15:45:00`,
-      maxDepth: 85,
-      tankPressureStart: 250,
-      tankPressureEnd: 40,
-      tankType: `Steel`,
-      beltWeight: 25,
-      airMixture: `Oxygen`,
-      description: `This is one massive sink hole!`,
-      wetSuitType: `The Spring Wetsuit`,
-      wetSuitThickness: 3 /*mm*/,
-      hasStrongCurrent: false,
-      visibility: 23
-    })
-  ])
+  //   Log.create({
+  //     diveName: `The Great Blue Hole`,
+  //     offeredDiveId: 3,
+  //     diveshopId: 2,
+  //     location: `Belize City, Belize`,
+  //     isVerified: true,
+  //     diverId: 1 /* Cody */,
+  //     timeIn: `2019-04-28 15:00:00`,
+  //     timeOut: `2019-04-29 15:45:00`,
+  //     maxDepth: 85,
+  //     tankPressureStart: 250,
+  //     tankPressureEnd: 40,
+  //     tankType: `Steel`,
+  //     beltWeight: 25,
+  //     airMixture: `Oxygen`,
+  //     description: `This is one massive sink hole!`,
+  //     wetSuitType: `The Spring Wetsuit`,
+  //     wetSuitThickness: 3 /*mm*/,
+  //     hasStrongCurrent: false,
+  //     visibility: 23
+  //   })
+  // ])
 
 
 
-  const observations = await Promise.all([
-    Observation.create({
-      name: 'Whale Shark',
-      category: 'fish',
-      description:
-        'slow-moving, filter-feeding carpet shark. the biggest fish in the sea!',
-      color: 'blue',
-      shape: 'bulbous'
-    }),
-    Observation.create({
-      name: 'Nudibranch',
-      category: 'mollusks',
-      description: 'Sea slug. Lives on coral. Can grow to 4 inches.',
-      color: 'red',
-      shape: 'oblong'
-    }),
-    Observation.create({
-      name: 'Psychedelic Frogfish',
-      category: 'fish',
-      description: 'Small, short, stocky, and masters of camoflage',
-      color: 'orange'
-    }),
-    Observation.create({
-      name: 'Seahorse',
-      category: 'fish',
-      description: 'Lives exclusively on coral. Masters of camoflage',
-      color: 'yellow'
-    }),
-    Observation.create({
-      name: 'Manta Ray',
-      category: 'fish',
-      description: 'Majestic creatures with a wingspan of 23 feet',
-      color: 'gray',
-      shape: 'diamond'
-    }),
-    Observation.create({
-      name: 'Caribbean Reef Shark',
-      category: 'fish',
-      description: 'Shark! Scary!',
-      color: 'gray'
-    }),
-    Observation.create({
-      name: 'Moray Eel',
-      category: 'fish',
-      description: 'Mostly seen in brackish water.',
-      color: 'green'
-    }),
-    Observation.create({
-      name: 'Cuttlefish',
-      category: 'mollusks',
-      description: 'Shape-shifting, color-changing, beast',
-      color: 'multicolored'
-    }),
-    Observation.create({
-      name: 'Barrel Sponge',
-      category: 'sponges',
-      description: 'barrel-shaped sponge',
-      color: 'pink'
-    }),
-    Observation.create({
-      name: 'whip coral',
-      category: 'coral',
-      description: 'vine-shaped coral',
-      color: 'white'
-    }),
-    Observation.create({
-      name: 'HMCS Yukon',
-      category: 'inanimate objects',
-      description: 'Ship off of San Diego, California.',
-      shape: 'shiplike'
-    })
-  ])
+  // const observations = await Promise.all([
+  //   Observation.create({
+  //     name: 'Whale Shark',
+  //     category: 'fish',
+  //     description:
+  //       'slow-moving, filter-feeding carpet shark. the biggest fish in the sea!',
+  //     color: 'blue',
+  //     shape: 'bulbous'
+  //   }),
+  //   Observation.create({
+  //     name: 'Nudibranch',
+  //     category: 'mollusks',
+  //     description: 'Sea slug. Lives on coral. Can grow to 4 inches.',
+  //     color: 'red',
+  //     shape: 'oblong'
+  //   }),
+  //   Observation.create({
+  //     name: 'Psychedelic Frogfish',
+  //     category: 'fish',
+  //     description: 'Small, short, stocky, and masters of camoflage',
+  //     color: 'orange'
+  //   }),
+  //   Observation.create({
+  //     name: 'Seahorse',
+  //     category: 'fish',
+  //     description: 'Lives exclusively on coral. Masters of camoflage',
+  //     color: 'yellow'
+  //   }),
+  //   Observation.create({
+  //     name: 'Manta Ray',
+  //     category: 'fish',
+  //     description: 'Majestic creatures with a wingspan of 23 feet',
+  //     color: 'gray',
+  //     shape: 'diamond'
+  //   }),
+  //   Observation.create({
+  //     name: 'Caribbean Reef Shark',
+  //     category: 'fish',
+  //     description: 'Shark! Scary!',
+  //     color: 'gray'
+  //   }),
+  //   Observation.create({
+  //     name: 'Moray Eel',
+  //     category: 'fish',
+  //     description: 'Mostly seen in brackish water.',
+  //     color: 'green'
+  //   }),
+  //   Observation.create({
+  //     name: 'Cuttlefish',
+  //     category: 'mollusks',
+  //     description: 'Shape-shifting, color-changing, beast',
+  //     color: 'multicolored'
+  //   }),
+  //   Observation.create({
+  //     name: 'Barrel Sponge',
+  //     category: 'sponges',
+  //     description: 'barrel-shaped sponge',
+  //     color: 'pink'
+  //   }),
+  //   Observation.create({
+  //     name: 'whip coral',
+  //     category: 'coral',
+  //     description: 'vine-shaped coral',
+  //     color: 'white'
+  //   }),
+  //   Observation.create({
+  //     name: 'HMCS Yukon',
+  //     category: 'inanimate objects',
+  //     description: 'Ship off of San Diego, California.',
+  //     shape: 'shiplike'
+  //   })
+  // ])
 
     const certification = await Promise.all([
     Certification.create({
@@ -289,36 +268,36 @@ async function seed() {
     })
   ])
 
-  const sightings = await Promise.all([
-    Sighting.create({
-      logId: 1,
-      observationId: 1
-    }),
-    Sighting.create({
-      logId: 1,
-      observationId: 2
-    }),
-    Sighting.create({
-      logId: 1,
-      observationId: 3
-    }),
-    Sighting.create({
-      logId: 2,
-      observationId: 4
-    }),
-    Sighting.create({
-      logId: 2,
-      observationId: 5
-    }),
-    Sighting.create({
-      logId: 3,
-      observationId: 6
-    }),
-    Sighting.create({
-      logId: 3,
-      observationId: 1
-    })
-  ])
+  // const sightings = await Promise.all([
+  //   Sighting.create({
+  //     logId: 1,
+  //     observationId: 1
+  //   }),
+  //   Sighting.create({
+  //     logId: 1,
+  //     observationId: 2
+  //   }),
+  //   Sighting.create({
+  //     logId: 1,
+  //     observationId: 3
+  //   }),
+  //   Sighting.create({
+  //     logId: 2,
+  //     observationId: 4
+  //   }),
+  //   Sighting.create({
+  //     logId: 2,
+  //     observationId: 5
+  //   }),
+  //   Sighting.create({
+  //     logId: 3,
+  //     observationId: 6
+  //   }),
+  //   Sighting.create({
+  //     logId: 3,
+  //     observationId: 1
+  //   })
+  // ])
 
   // console.log(`seeded ${divers.length} users`)
   // console.log(`seeded ${offereddive.length} offered dives`)

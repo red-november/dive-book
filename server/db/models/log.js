@@ -19,9 +19,9 @@ const Log = db.define('log', {
   timeOut: {
     type: Sequelize.DATE
   },
-  // location: {
-  //   type: Sequelize.STRING
-  // },
+  location: {
+    type: Sequelize.STRING
+  },
   // moved to offered dive
 
   maxDepth: {
@@ -76,9 +76,9 @@ const Log = db.define('log', {
 Log.LoadData = async function(dataArray) {
   try {
     await dataArray.map(async data => {
-      let {id, diveName,	isVerified,	timeIn,	timeOut,	maxDepth,	tankPressureStart,	tankPressureEnd,	tankType,	beltWeight,	wetSuitType,	wetSuitThickness,	airMixture,	description,	hasStrongCurrent,	visibility,	diverId,	offeredDiveId,	diveshopId} = data
+    let {id, diveName,	isVerified,	timeIn,	timeOut,	maxDepth,	tankPressureStart,	tankPressureEnd,	tankType,	beltWeight,	wetSuitType,	wetSuitThickness,	airMixture,	description/*,	hasStrongCurrent,	visibility,	diverId,	offeredDiveId,	diveshopId, location*/} = data
         const newLog = await Log.create({
-        id, diveName,	isVerified,	timeIn,	timeOut,	maxDepth,	tankPressureStart,	tankPressureEnd,	tankType,	beltWeight,	wetSuitType,	wetSuitThickness,	airMixture,	description,	hasStrongCurrent,	visibility,	diverId,	offeredDiveId,	diveshopId
+        id, diveName,	isVerified,	timeIn,	timeOut,	maxDepth,	tankPressureStart,	tankPressureEnd,	tankType,	beltWeight,	wetSuitType,	wetSuitThickness,	airMixture,	description,	hasStrongCurrent,	visibility,	diverId,	offeredDiveId,	diveshopId, location
       })
       console.log(newLog)
     })
