@@ -34,6 +34,9 @@ const Diver = db.define('diver', {
   weight: {
     type: Sequelize.INTEGER
   },
+  height: {
+    type: Sequelize.INTEGER
+  },
   password: {
     type: Sequelize.STRING,
     // Making `.password` act like a func hides it when serializing to JSON.
@@ -67,6 +70,17 @@ Diver.prototype.correctPassword = function(candidatePwd) {
 /**
  * classMethods
  */
+
+Diver.LoadData = async function(dataArray) {
+  await dataArray.map(async data => {
+    let {id,	firstName,	lastName,	email,	password,	height,	weight,	diveshopId} = data
+    await Diver.create({
+      id,	firstName,	lastName,	email,	password,	height,	weight,	diveshopId
+    })
+  })
+  console.log("Diver Load Success!")
+}
+
 Diver.generateSalt = function() {
   return crypto.randomBytes(16).toString('base64')
 }

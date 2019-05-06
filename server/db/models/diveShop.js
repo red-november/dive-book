@@ -1,4 +1,4 @@
-const crypto = require('crypto')
+// const crypto = require('crypto')
 const Sequelize = require('sequelize');
 const db = require('../db');
 
@@ -19,6 +19,7 @@ const DiveShop = db.define('diveshop', {
     },
     stampImgUrl: {
         type: Sequelize.STRING,
+        defaultValue: '/pictures/diveshop/GenericStamp.jpg'
     },
     email: {
         type: Sequelize.STRING,
@@ -28,62 +29,73 @@ const DiveShop = db.define('diveshop', {
             isEmail: true
         }
     },
-    password: {
-        type: Sequelize.STRING,
-        // Making `.password` act like a func hides it when serializing to JSON.
-        // This is a hack to get around Sequelize's lack of a "private" option.
-        get() {
-            return () => this.getDataValue('password')
-        }
-    },
-    salt: {
-        type: Sequelize.STRING,
-        // Making `.salt` act like a function hides it when serializing to JSON.
-        // This is a hack to get around Sequelize's lack of a "private" option.
-        get() {
-            return () => this.getDataValue('salt')
-        }
-    },
-    googleId: {
-        type: Sequelize.STRING
-    }
+    // password: {
+    //     type: Sequelize.STRING,
+    //     // Making `.password` act like a func hides it when serializing to JSON.
+    //     // This is a hack to get around Sequelize's lack of a "private" option.
+    //     get() {
+    //         return () => this.getDataValue('password')
+    //     }
+    // },
+    // salt: {
+    //     type: Sequelize.STRING,
+    //     // Making `.salt` act like a function hides it when serializing to JSON.
+    //     // This is a hack to get around Sequelize's lack of a "private" option.
+    //     get() {
+    //         return () => this.getDataValue('salt')
+    //     }
+    // // },
+    // googleId: {
+    //     type: Sequelize.STRING
+    // }
 
     // QRCode pending?? we will use it for hyper link
 })
 
+DiveShop.LoadData = async function(dataArray) {
+  await dataArray.map(async data => {
+    let {name, location, email, storeFrontImgUrl} = data
+    await DiveShop.create({
+      name, location, email, storeFrontImgUrl
+    })
+  })
+  console.log("DiveShop Load Success!")
+}
+
 module.exports = DiveShop;
 
-DiveShop.prototype.correctPassword = function (candidatePwd) {
-    return DiveShop.encryptPassword(candidatePwd, this.salt()) === this.password()
-}
+// DiveShop.prototype.correctPassword = function (candidatePwd) {
+//     return DiveShop.encryptPassword(candidatePwd, this.salt()) === this.password()
+// }
 
 /**
 * classMethods
 */
-DiveShop.generateSalt = function () {
-    return crypto.randomBytes(16).toString('base64')
-}
+// DiveShop.generateSalt = function () {
+//     return crypto.randomBytes(16).toString('base64')
+// }
 
-DiveShop.encryptPassword = function (plainText, salt) {
-    return crypto
-        .createHash('RSA-SHA256')
-        .update(plainText)
-        .update(salt)
-        .digest('hex')
-}
+// DiveShop.encryptPassword = function (plainText, salt) {
+//     return crypto
+//         .createHash('RSA-SHA256')
+//         .update(plainText)
+//         .update(salt)
+//         .digest('hex')
+// }
 
-/**
-* hooks
-*/
-const setSaltAndPassword = diveshop => {
-    if (diveshop.changed('password')) {
-        diveshop.salt = DiveShop.generateSalt()
-        diveshop.password = DiveShop.encryptPassword(diveshop.password(), diveshop.salt())
-    }
-}
+// /**
+// * hooks
+// */
+// const setSaltAndPassword = diveshop => {
+//     if (diveshop.changed('password')) {
+//         diveshop.salt = DiveShop.generateSalt()
+//         diveshop.password = DiveShop.encryptPassword(diveshop.password(), diveshop.salt())
+//     }
+// }
 
-DiveShop.beforeCreate(setSaltAndPassword)
-DiveShop.beforeUpdate(setSaltAndPassword)
-DiveShop.beforeBulkCreate(diveshops => {
-    diveshops.forEach(setSaltAndPassword)
-})
+// DiveShop.beforeCreate(setSaltAndPassword)
+// DiveShop.beforeUpdate(setSaltAndPassword)
+// DiveShop.beforeBulkCreate(diveshops => {
+//     diveshops.forEach(setSaltAndPassword)
+// })
+

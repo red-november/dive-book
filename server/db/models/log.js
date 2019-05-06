@@ -19,11 +19,13 @@ const Log = db.define('log', {
   timeOut: {
     type: Sequelize.DATE
   },
-  location: {
-    type: Sequelize.STRING
-  },
+  // location: {
+  //   type: Sequelize.STRING
+  // },
+  // moved to offered dive
+
   maxDepth: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     defaultValue: 0
   },
   tankPressureStart: {
@@ -55,7 +57,8 @@ const Log = db.define('log', {
     // enum, but string for now
   },
   description: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    defaultValue: "Awesome Dive!!!!"
   },
   hasStrongCurrent: {
     type: Sequelize.BOOLEAN
@@ -69,6 +72,22 @@ const Log = db.define('log', {
 //class methods
 
 //returns an array of all unique observations
+
+Log.LoadData = async function(dataArray) {
+  try {
+    await dataArray.map(async data => {
+      let {id, diveName,	isVerified,	timeIn,	timeOut,	maxDepth,	tankPressureStart,	tankPressureEnd,	tankType,	beltWeight,	wetSuitType,	wetSuitThickness,	airMixture,	description,	hasStrongCurrent,	visibility,	diverId,	offeredDiveId,	diveshopId} = data
+        const newLog = await Log.create({
+        id, diveName,	isVerified,	timeIn,	timeOut,	maxDepth,	tankPressureStart,	tankPressureEnd,	tankType,	beltWeight,	wetSuitType,	wetSuitThickness,	airMixture,	description,	hasStrongCurrent,	visibility,	diverId,	offeredDiveId,	diveshopId
+      })
+      console.log(newLog)
+    })
+    console.log("Log Load Success!")
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 Log.getAllObservations = async function(diverId) {
   try {
     const diverLogs = await this.findAll({

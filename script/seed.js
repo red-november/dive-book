@@ -12,84 +12,74 @@ const {
   Observation,
   Sighting
 } = require('../server/db/models')
+const {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, LogsData} = require('../script/data')
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const diveShop = await Promise.all([
-    DiveShop.create({
-      email: 'hawaii@email.com',
-      password: '123',
-      name: 'Hawaii',
-      location: 'Honolulu Street, Hawaii',
-      storeFrontImgUrl: 'public/pictures/diveshop/hawaiiShop.jpg',
-      stampImgUrl: 'public/pictures/diveshop/hawaiiSymbol.png'
-    }),
-    DiveShop.create({
-      email: 'maldives@email.com',
-      password: '123',
-      name: 'Maldives',
-      location: 'Maldives Street, Maldives',
-      storeFrontImgUrl: 'public/pictures/diveshop/maldivesShop.jpeg',
-      stampImgUrl: 'public/pictures/diveshop/maldivesShopSymbol.jpg'
-    })
-  ])
+  // const diveShop = await Promise.all([
+  //   DiveShop.create({
+  //     email: 'hawaii@email.com',
+  //     password: '123',
+  //     name: 'Hawaii',
+  //     location: 'Honolulu Street, Hawaii',
+  //     storeFrontImgUrl: 'public/pictures/diveshop/hawaiiShop.jpg',
+  //     stampImgUrl: 'public/pictures/diveshop/hawaiiSymbol.png'
+  //   }),
+  //   DiveShop.create({
+  //     email: 'maldives@email.com',
+  //     password: '123',
+  //     name: 'Maldives',
+  //     location: 'Maldives Street, Maldives',
+  //     storeFrontImgUrl: 'public/pictures/diveshop/maldivesShop.jpeg',
+  //     stampImgUrl: 'public/pictures/diveshop/maldivesShopSymbol.jpg'
+  //   })
+  // ])
 
-  const divers = await Promise.all([
-    Diver.create({
-      email: 'cody@email.com',
-      password: '123',
-      firstName: 'Cody',
-      lastName: 'De Coder',
-      diveshopId: 1
-    }),
-    Diver.create({
-      email: 'murphy@email.com',
-      password: '123',
-      firstName: 'Murphy',
-      lastName: 'Law'
-    })
-  ])
+  await DiveShop.LoadData(DiveShopsData)
+  await Diver.LoadData(DiversData)
 
-  const certification = await Promise.all([
-    Certification.create({
-      certId: '001PADI',
-      provider: 'PADI',
-      date: '2019-05-01',
-      level: 'Advanced Skills Diver',
-      instructorId: 'James9999',
-      diverId: 1
-    }),
-    Certification.create({
-      certId: '002SSI',
-      provider: 'SSI',
-      date: '2016-10-01',
-      level: 'Underwater Navigation',
-      instructorId: 'Dan8888',
-      diverId: 1
-    })
-  ])
+  // const divers = await Promise.all([
+  //   Diver.create({
+  //     email: 'cody@email.com',
+  //     password: '123',
+  //     firstName: 'Cody',
+  //     lastName: 'De Coder',
+  //     diveshopId: 1
+  //   }),
+  //   Diver.create({
+  //     email: 'murphy@email.com',
+  //     password: '123',
+  //     firstName: 'Murphy',
+  //     lastName: 'Law'
+  //   })
+  // ])
 
-  const offereddive = await Promise.all([
-    OfferedDive.create({
-      name: 'Barracuda Point',
-      description:
-        'Sipadan is a world-class destination, long attracting divers from around the world. Barracuda Point is one of the standout dive sites among many.',
-      diveshopId: 1
-    }),
-    OfferedDive.create({
-      name: 'Blue Corner Wall',
-      description:
-        'Blue Corner Palau is one of the most action-packed scuba dive sites in the world and up to 13 different species of sharks circling just beyond the plummeting reef wall.',
-      diveshopId: 1
-    }),
-    OfferedDive.create({
-      name: 'The Great Blue Hole',
-      description:
-        'The Great Blue Hole is a giant marine sinkhole off the coast of Belize. It lies near the center of Lighthouse Reef.',
-      diveshopId: 2
-    })
-  ])
+  // const offereddive = await Promise.all([
+  //   OfferedDive.create({
+  //     name: 'Barracuda Point',
+  //     description:
+  //       'Sipadan is a world-class destination, long attracting divers from around the world. Barracuda Point is one of the standout dive sites among many.',
+  //     diveshopId: 1
+  //   }),
+  //   OfferedDive.create({
+  //     name: 'Blue Corner Wall',
+  //     description:
+  //       'Blue Corner Palau is one of the most action-packed scuba dive sites in the world and up to 13 different species of sharks circling just beyond the plummeting reef wall.',
+  //     diveshopId: 1
+  //   }),
+  //   OfferedDive.create({
+  //     name: 'The Great Blue Hole',
+  //     description:
+  //       'The Great Blue Hole is a giant marine sinkhole off the coast of Belize. It lies near the center of Lighthouse Reef.',
+  //     diveshopId: 2
+  //   })
+  // ])
+
+  await OfferedDive.LoadData(OfferedDivesData)
+  // await Observation.LoadData(ObservationsData)
+  // await Log.LoadData(LogsData)
+
 
   const badges = await Promise.all([
     Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
@@ -188,6 +178,8 @@ async function seed() {
     })
   ])
 
+
+
   const observations = await Promise.all([
     Observation.create({
       name: 'Whale Shark',
@@ -261,6 +253,25 @@ async function seed() {
     })
   ])
 
+    const certification = await Promise.all([
+    Certification.create({
+      certId: '001PADI',
+      provider: 'PADI',
+      date: '2019-05-01',
+      level: 'Advanced Skills Diver',
+      instructorId: 'James9999',
+      diverId: 1
+    }),
+    Certification.create({
+      certId: '002SSI',
+      provider: 'SSI',
+      date: '2016-10-01',
+      level: 'Underwater Navigation',
+      instructorId: 'Dan8888',
+      diverId: 1
+    })
+  ])
+
   // Relationships
 
   const badgesEarned = await Promise.all([
@@ -309,9 +320,9 @@ async function seed() {
     })
   ])
 
-  console.log(`seeded ${divers.length} users`)
-  console.log(`seeded ${offereddive.length} offered dives`)
-  console.log(`seeded ${logs.length} divers`)
+  // console.log(`seeded ${divers.length} users`)
+  // console.log(`seeded ${offereddive.length} offered dives`)
+  // console.log(`seeded ${logs.length} divers`)
   console.log(`seeded successfully`)
 }
 
