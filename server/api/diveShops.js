@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { DiveShop } = require('../db/models')
+const {DiveShop, OfferedDive} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -13,7 +13,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:shopId', async (req, res, next) => {
   try {
-    const singleShop = await DiveShop.findByPk(req.params.shopId)
+    const singleShop = await DiveShop.findByPk(req.params.shopId, {
+      include: [{model: OfferedDive}]
+    })
     res.json(singleShop)
   } catch (err) {
     next(err)
