@@ -47,6 +47,7 @@ class SingleCert extends Component {
       level: event.target.level.value,
       instructorId: event.target.instructorId.value
     }
+    console.log(data)
 
     await this.props.updateSingleCert(this.props.SingleCert.id, data)
   }
@@ -56,6 +57,13 @@ class SingleCert extends Component {
   }
 
   render() {
+    const providerOptions = ['MAUI', 'PADI', 'SSI', 'Other']
+    const levelOptions = [
+      'Open Water',
+      'Advancded Open Water',
+      'Rescue Diver',
+      'Deep Diver'
+    ]
     const {certId, provider, date, level, instructorId} = this.state
     return (
       <form className="InputForm" onSubmit={this.handleSubmit}>
@@ -68,35 +76,41 @@ class SingleCert extends Component {
         />
 
         <label htmlFor="provider">Provider: </label>
-        {/* <input
-          type="text"
-          name="provider"
-          value={provider}
-          onChange={this.handleChange}
-        /> */}
+
         <select name="provider" onChange={this.handleChange}>
-          <option value={provider}>MAUI</option>
-          <option value={provider}>PADI</option>
-          <option value={provider}>SSI</option>
-          <option value={provider}>Other</option>
+          {providerOptions.map(
+            opt =>
+              opt === this.props.SingleCert.provider ? (
+                <option value={opt} selected>
+                  {opt}
+                </option>
+              ) : (
+                <option value={opt}>{opt}</option>
+              )
+          )}
         </select>
 
         <label htmlFor="date">Date Obtained: </label>
         <input
-          type="text"
+          type="date"
           name="date"
           value={date}
           onChange={this.handleChange}
         />
 
         <label htmlFor="level">Level: </label>
-        <input
-          type="text"
-          name="level"
-          value={level}
-          onChange={this.handleChange}
-        />
-
+        <select name="level" onChange={this.handleChange}>
+          {levelOptions.map(
+            opt =>
+              opt === this.props.SingleCert.level ? (
+                <option value={opt} selected>
+                  {opt}
+                </option>
+              ) : (
+                <option value={opt}>{opt}</option>
+              )
+          )}
+        </select>
         <label htmlFor="instructorId">Instructor ID: </label>
         <input
           type="text"
