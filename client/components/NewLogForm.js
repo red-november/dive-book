@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {getShopsThunk, addLogThunk} from '../store/index'
+import {getShopsThunk, addLogThunk, getSingleShopThunk} from '../store/index'
 import Form from './FormContainer'
 
 class AddLog extends Component {
@@ -78,11 +78,13 @@ class AddLog extends Component {
 }
 
 const mapStateToProps = state => ({
-  allShops: state.shops
+  allShops: state.shops,
+  singleShop: state.singleShop
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchShops: () => dispatch(getShopsThunk()),
+  fetchSingleShop: shopId => dispatch(getSingleShopThunk(shopId)),
   addLog: log => dispatch(addLogThunk(log))
 })
 

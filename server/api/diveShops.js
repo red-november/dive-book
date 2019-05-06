@@ -4,7 +4,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const shops = await DiveShop.findAll({})
+    const shops = await DiveShop.findAll()
     res.json(shops)
   } catch (err) {
     next(err)

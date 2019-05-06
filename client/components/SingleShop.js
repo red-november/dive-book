@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getSingleShopThunk, getOfferedDivesBySingleShopThunk} from '../store'
+import {getSingleShopThunk} from '../store'
 
 class SingleShop extends Component {
   componentDidMount() {
     this.props.fetchSingleShop(this.props.match.params.shopId)
-    this.props.fetchOfferedDives(this.props.match.params.shopId)
   }
 
   render() {
@@ -14,11 +13,11 @@ class SingleShop extends Component {
       <div>
         <h1>{this.props.singleShop.name}</h1>
         <h2>Offered Dives:</h2>
-        {this.props.offeredDive.map(offeredDives => (
-          <ul key={offeredDives.id}>
+        {this.props.singleShop.offeredDives.map(offeredDive => (
+          <ul key={offeredDive.id}>
             <li>
-              {offeredDives.name}:<p />
-              {offeredDives.description}
+              {offeredDive.name}:<p />
+              {offeredDive.description}
               <p />
             </li>
           </ul>
@@ -29,14 +28,11 @@ class SingleShop extends Component {
 }
 
 const mapStateToProps = state => ({
-  singleShop: state.singleShop,
-  offeredDive: state.offeredDivesBySingleShop
+  singleShop: state.singleShop
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchSingleShop: shopId => dispatch(getSingleShopThunk(shopId)),
-  fetchOfferedDives: shopId =>
-    dispatch(getOfferedDivesBySingleShopThunk(shopId))
+  fetchSingleShop: shopId => dispatch(getSingleShopThunk(shopId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleShop)
