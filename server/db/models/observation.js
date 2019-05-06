@@ -12,13 +12,13 @@ const Observation = db.define('observation', {
   category: {
     type: Sequelize.ENUM(
       'flora',
-      'mammals',
-      'fish',
       'mollusks',
+      'fish',
       'coral',
-      'sponges',
+      'mammals',
       'other living things',
-      'inanimate objects'
+      'sponges',
+      'inanimate objects',
     ),
     allowNull: false,
     validate: {

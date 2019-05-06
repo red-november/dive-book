@@ -19,3 +19,27 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.OptionComponent {
+  display: flex;
+  align-items: center; }
+
+.SubmitOrder {
+  border: 4px ridge #061d48;
+  display: flex;
+  background-color: #1ab675;
+  justify-content: center;
+  padding: 10px;
+  -webkit-animation: xition 2s; }
+
+.False {
+  background-color: #b61a1a;
+  -webkit-animation: xition 2s; }
+
+.Ready {
+  background-color: #ddff01;
+  -webkit-animation: xition 2s; }
+
+.canva {
+  background-color: rgba(202, 202, 186, 0.605);
+  border: ridge 3px white; }

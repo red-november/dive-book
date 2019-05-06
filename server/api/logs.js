@@ -88,4 +88,13 @@ router.put('/diver/:diverId', async (req, res, next) => {
   }
   let logUpdate = await log.update(req.body)
   res.status(200).send(logUpdate)
+router.get('/diver/:diverId/addObservations', async (req, res, next) => {
+  const diverId = Number(req.params.diverId)
+  const logs = await Log.findAll({
+    where: {
+      diverId
+    },
+    include: [{model: Observation}]
+  })
+  res.status(200).send(logs)
 })
