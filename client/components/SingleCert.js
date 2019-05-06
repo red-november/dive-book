@@ -14,7 +14,8 @@ class SingleCert extends Component {
       provider: '',
       date: '',
       level: '',
-      instructorId: ''
+      instructorId: '',
+      displayText: false
     }
   }
 
@@ -34,6 +35,10 @@ class SingleCert extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+    if (event.target.name === 'provider' && event.target.value === 'Other') {
+      this.setState({displayText: true})
+    }
+    console.log('selected')
   }
 
   handleSubmit = async event => {
@@ -64,7 +69,14 @@ class SingleCert extends Component {
       'Rescue Diver',
       'Deep Diver'
     ]
-    const {certId, provider, date, level, instructorId} = this.state
+    const {
+      certId,
+      provider,
+      date,
+      level,
+      instructorId,
+      displayText
+    } = this.state
     return (
       <form className="InputForm" onSubmit={this.handleSubmit}>
         <label htmlFor="certId">Certification ID: </label>
@@ -77,18 +89,27 @@ class SingleCert extends Component {
 
         <label htmlFor="provider">Provider: </label>
 
-        <select name="provider" onChange={this.handleChange}>
-          {providerOptions.map(
-            opt =>
-              opt === this.props.SingleCert.provider ? (
-                <option value={opt} selected>
-                  {opt}
-                </option>
-              ) : (
-                <option value={opt}>{opt}</option>
-              )
-          )}
-        </select>
+        {!displayText ? (
+          <select name="provider" onChange={this.handleChange}>
+            {providerOptions.map(
+              opt =>
+                opt === this.props.SingleCert.provider ? (
+                  <option value={opt} selected>
+                    {opt}
+                  </option>
+                ) : (
+                  <option value={opt}>{opt}</option>
+                )
+            )}
+          </select>
+        ) : (
+          <input
+            type="text"
+            name="provider"
+            value={provider}
+            onChange={this.handleChange}
+          />
+        )}
 
         <label htmlFor="date">Date Obtained: </label>
         <input
