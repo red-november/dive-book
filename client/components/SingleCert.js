@@ -68,12 +68,18 @@ class SingleCert extends Component {
         />
 
         <label htmlFor="provider">Provider: </label>
-        <input
+        {/* <input
           type="text"
           name="provider"
           value={provider}
           onChange={this.handleChange}
-        />
+        /> */}
+        <select name="provider" onChange={this.handleChange}>
+          <option value={provider}>MAUI</option>
+          <option value={provider}>PADI</option>
+          <option value={provider}>SSI</option>
+          <option value={provider}>Other</option>
+        </select>
 
         <label htmlFor="date">Date Obtained: </label>
         <input
