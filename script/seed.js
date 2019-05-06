@@ -122,6 +122,28 @@ async function seed() {
     }),
 
     Log.create({
+      diveName: `Barracuda Point`,
+      offeredDiveId: 1,
+      diveshopId: 1,
+      location: `Sipadan Island, Malaysia`,
+      isVerified: true,
+      diverId: 2 /* Murphy */,
+      timeIn: `2019-05-01 08:00:00`,
+      timeOut: `2019-05-01 09:00:00`,
+      maxDepth: 100,
+      tankPressureStart: 260,
+      tankPressureEnd: 30,
+      tankType: `Steel`,
+      beltWeight: 30,
+      airMixture: `Hydreliox`,
+      description: `Lol I almost fainted`,
+      wetSuitType: `The Full Wetsuit`,
+      wetSuitThickness: 3 /*mm*/,
+      hasStrongCurrent: false,
+      visibility: 15
+    }),
+
+    Log.create({
       diveName: `Blue Corner Wall`,
       offeredDiveId: 2,
       diveshopId: 1,

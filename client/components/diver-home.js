@@ -55,6 +55,9 @@ class DiverHome extends Component {
             </ul>
           ))}
         </div>
+        <div className = "canva">
+
+        </div>
       </div>
     )
   }
