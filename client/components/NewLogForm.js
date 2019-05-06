@@ -32,15 +32,32 @@ class AddLog extends Component {
   }
 
   handleChange(evt) {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    })
+    console.log('in change event:')
+    console.log('value:', evt.target.value)
+    if (evt.target.name === 'timeIn' || evt.target.name === 'timeOut') {
+      let formattedtime = evt.target.value.split('T')
+      formattedtime[1] = formattedtime[1] + ':00'
+      formattedtime = formattedtime.join(' ')
+      console.log('formatted time:', formattedtime)
+      if (evt.target.name === 'timeIn') {
+        this.setState({
+          timeIn: formattedtime,
+          timeOut: formattedtime
+        })
+      } else {
+        this.setState({
+          timeOut: formattedtime
+        })
+      }
+    } else {
+      this.setState({
+        [evt.target.name]: evt.target.value
+      })
+    }
   }
 
   handleSubmit(evt) {
     evt.preventDefault()
-    //this is where thunk will go
-    // await axios.post('/api/logs', this.state)
     this.props.addLog(this.state)
     this.setState({
       diveshopId: 0,

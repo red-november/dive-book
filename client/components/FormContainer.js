@@ -28,11 +28,7 @@ const Form = props => {
         <select name="diveshopId" onChange={handleChange}>
           {shops.map((shop, idx) => {
             return (
-              <option
-                key={shop.id}
-                value={shop.id}
-                selected={idx === 0 && 'selected'}
-              >
+              <option key={shop.id} value={shop.id} selected={idx === 0}>
                 {shop.id}. {shop.name}
               </option>
             )
@@ -48,16 +44,17 @@ const Form = props => {
         />
         <label htmlFor="timeIn">Time In:</label>
         <input
-          type="text"
+          type="datetime-local"
           name="timeIn"
           value={timeIn}
           onChange={handleChange}
         />
         <label htmlFor="timeOut">Time Out:</label>
         <input
-          type="text"
+          type="datetime-local"
           name="timeOut"
           value={timeOut}
+          defaultValue={new Date()}
           onChange={handleChange}
         />
         <label htmlFor="location">Location:</label>
