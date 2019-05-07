@@ -18,7 +18,8 @@ const DiveShop = db.define('diveshop', {
     type: Sequelize.STRING
   },
   stampImgUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: '/pictures/diveshop/GenericStamp.jpg'
   },
   email: {
     type: Sequelize.STRING,

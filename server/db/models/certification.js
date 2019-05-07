@@ -25,4 +25,10 @@ const Certification = db.define('certification', {
   }
 })
 
+Certification.LoadData = async function(dataArray) {
+  const certs = await Promise.all(dataArray)
+  console.log("Certification Load Success!")
+  return certs
+}
+
 module.exports = Certification

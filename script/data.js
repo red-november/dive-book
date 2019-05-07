@@ -1,5 +1,6 @@
 const {
-  Sighting
+  Sighting,
+  Certification
 } = require('../server/db/models')
 
 const DiveShopsData = [
@@ -302,16 +303,45 @@ const TourGuide = async function (DiveBook, OddsBook, Encyclopedia) {
   }
   console.log("Total Counter ------> ",counter)
   console.log("Total Fail ------> ",fail)
-
 }
 
-const Guru = function (data) {
-  const instructor = "HCOLE1234"
+const CertificationsData =
+[	Certification.create({ provider: "SSI", level: "Open Water", certId: "515SSI", date: "2017-09-19", diverId: 1}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "869NAUI", date: "2018-11-23", diverId: 1}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "867NAUI", date: "2018-11-20", diverId: 1}),
+	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "876NAUI", date: "2018-12-02", diverId: 2}),	Certification.create({ provider: "Other", level: "Deep Diver", certId: "961Other", date: "2019-03-15", diverId: 2}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "081PADI", date: "2016-04-09", diverId: 2}),
+	Certification.create({ provider: "PADI", level: "Open Water", certId: "137PADI", date: "2016-06-16", diverId: 3}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "306PADI", date: "2017-01-07", diverId: 3}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "139PADI", date: "2016-06-18", diverId: 3}),
+	Certification.create({ provider: "PADI", level: "Open Water", certId: "183PADI", date: "2016-08-11", diverId: 4}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "777NAUI", date: "2018-08-03", diverId: 4}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "423SSI", date: "2017-05-30", diverId: 4}),
+	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "728NAUI", date: "2018-06-04", diverId: 5}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "747NAUI", date: "2018-06-28", diverId: 5}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "436SSI", date: "2017-06-14", diverId: 5}),
+	Certification.create({ provider: "SSI", level: "Open Water", certId: "371SSI", date: "2017-03-28", diverId: 6}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "304PADI", date: "2017-01-05", diverId: 6}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "002PADI", date: "2016-01-03", diverId: 6}),
+	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "735NAUI", date: "2018-06-13", diverId: 7}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "708NAUI", date: "2018-05-11", diverId: 7}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "176PADI", date: "2016-08-02", diverId: 7}),
+	Certification.create({ provider: "PADI", level: "Open Water", certId: "099PADI", date: "2016-04-30", diverId: 8}),	Certification.create({ provider: "Other", level: "Deep Diver", certId: "999Other", date: "2019-04-29", diverId: 8}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "326SSI", date: "2017-01-31", diverId: 8}),
+	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "844NAUI", date: "2018-10-23", diverId: 9}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "520SSI", date: "2017-09-24", diverId: 9}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "442SSI", date: "2017-06-22", diverId: 9}),
+	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "680NAUI", date: "2018-04-07", diverId: 10}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "102PADI", date: "2016-05-04", diverId: 10}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "354SSI", date: "2017-03-07", diverId: 10}),
+	Certification.create({ provider: "PADI", level: "Open Water", certId: "148PADI", date: "2016-06-29", diverId: 11}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "136PADI", date: "2016-06-15", diverId: 11}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "881NAUI", date: "2018-12-07", diverId: 11}),
+	Certification.create({ provider: "PADI", level: "Open Water", certId: "169PADI", date: "2016-07-25", diverId: 12}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "887NAUI", date: "2018-12-15", diverId: 12}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "651NAUI", date: "2018-03-03", diverId: 12}),
+	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "851NAUI", date: "2018-10-31", diverId: 13}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "328SSI", date: "2017-02-03", diverId: 13}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "347SSI", date: "2017-02-26", diverId: 13}),
+	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "888NAUI", date: "2018-12-15", diverId: 14}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "097PADI", date: "2016-04-29", diverId: 14}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "740NAUI", date: "2018-06-19", diverId: 14}),
+	Certification.create({ provider: "SSI", level: "Open Water", certId: "430SSI", date: "2017-06-07", diverId: 15}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "569SSI", date: "2017-11-23", diverId: 15}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "907NAUI", date: "2019-01-08", diverId: 15}),
+  Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "713NAUI", date: "2018-05-17", diverId: 16}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "352SSI", date: "2017-03-04", diverId: 16}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "747NAUI", date: "2018-06-28", diverId: 16})
+]
 
-  for(let i = 0; i < data.length; i++) {
-    let rand = Math.floor(Math.random()*1000)
-    console.log(rand)
-  }
-}
+const LocationsData =
+[ {	Location: "Sipadan Island, Malaysia", 	Latitude: 4.114683, 	Longitude: 118.628756, 		},
+  {	Location: "Palau, Micronesia", 	Latitude: 7.5, 	Longitude: 134.616667, 		},
+  {	Location: "Belize City, Belize", 	Latitude: 17.498611, 	Longitude: -88.188611, 		},
+  {	Location: "Yongala, Australia", 	Latitude: -33.0255, 	Longitude: 138.7581, 		},
+  {	Location: "Ras Mohammed, Egypt", 	Latitude: 27.722222, 	Longitude: 34.253889, 		},
+  {	Location: "Sharm El Sheikh, Egypt", 	Latitude: 27.912222, 	Longitude: 34.329722, 		},
+  {	Location: "Honolulu, Hawaii", 	Latitude: 21.3, 	Longitude: -157.816667, 		},
+  {	Location: "Navy Pier, Western Australia", 	Latitude: -21.817378, 	Longitude: 114.191304, 		},
+  {	Location: "Bali, Indonesia", 	Latitude: -8.335, 	Longitude: 115.088056, 		},
+  {	Location: "Galapagos Islands, Ecuador", 	Latitude: -0.666667, 	Longitude: -90.55, 		},
+  {	Location: "Verde Island, Philippines", 	Latitude: 13.549722, 	Longitude: 121.070833, 		},
+  {	Location: "Palawan, Philippines", 	Latitude: 10, 	Longitude: 118.83, 		},
+  {	Location: "Monterey Bay, California", 	Latitude: 36.8, 	Longitude: -121.9, 		},
+  {	Location: "Santa Catalina Island, California", 	Latitude: 33.383333, 	Longitude: -118.416667, 		},
+  {	Location: "Channel Islands National Park", 	Latitude: 34.008333, 	Longitude: -119.416667, 		},
+  {	Location: "Florida Keys, Florida", 	Latitude: 24.666944, 	Longitude: -81.544167, 		},
+  {	Location: "New York, NY", 	Latitude: 40.7127, 	Longitude: -74.0059, 		}
+]
 
-module.exports = {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, Dice, ObservationHash, TourGuide, Guru}
+module.exports = {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, Dice, ObservationHash, TourGuide, CertificationsData, LocationsData}
