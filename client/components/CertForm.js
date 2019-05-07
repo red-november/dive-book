@@ -4,18 +4,21 @@ const CertForm = ({
   handleSubmit,
   handleChange,
   certId,
-  displayText,
+  displayTextOrg,
+  displayTextLevel,
   provider,
   date,
   instructorId,
-  singleCert
+  singleCert,
+  level
 }) => {
   const providerOptions = ['NAUI', 'PADI', 'SSI', 'Other']
   const levelOptions = [
     'Open Water',
     'Advancded Open Water',
     'Rescue Diver',
-    'Deep Diver'
+    'Deep Diver',
+    'Other'
   ]
   return (
     <form className="InputForm" onSubmit={handleSubmit}>
@@ -24,7 +27,7 @@ const CertForm = ({
 
       <label htmlFor="provider">Provider: </label>
 
-      {!displayText ? (
+      {!displayTextOrg ? (
         <select name="provider" onChange={handleChange}>
           {providerOptions.map(
             opt =>
@@ -52,20 +55,25 @@ const CertForm = ({
       <input type="date" name="date" value={date} onChange={handleChange} />
 
       <label htmlFor="level">Level: </label>
-      <select name="level" onChange={handleChange}>
-        {levelOptions.map(
-          opt =>
-            opt === singleCert.level ? (
-              <option key={opt} value={opt} selected>
-                {opt}
-              </option>
-            ) : (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            )
-        )}
-      </select>
+      {!displayTextLevel ? (
+        <select name="level" onChange={handleChange}>
+          {levelOptions.map(
+            opt =>
+              opt === singleCert.level ? (
+                <option key={opt} value={opt} selected>
+                  {opt}
+                </option>
+              ) : (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              )
+          )}
+        </select>
+      ) : (
+        <input type="text" name="level" value={level} onChange={handleChange} />
+      )}
+
       <label htmlFor="instructorId">Instructor ID: </label>
       <input
         type="text"

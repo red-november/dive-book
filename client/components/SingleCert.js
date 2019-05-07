@@ -16,7 +16,8 @@ class SingleCert extends Component {
       date: '',
       level: '',
       instructorId: '',
-      displayText: false
+      displayTextOrg: false,
+      displayTextLevel: false
     }
   }
 
@@ -37,7 +38,10 @@ class SingleCert extends Component {
       [event.target.name]: event.target.value
     })
     if (event.target.name === 'provider' && event.target.value === 'Other') {
-      this.setState({displayText: true})
+      this.setState({displayTextOrg: true})
+    }
+    if (event.target.name === 'level' && event.target.value === 'Other') {
+      this.setState({displayTextLevel: true})
     }
   }
 
