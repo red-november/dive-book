@@ -1,3 +1,7 @@
+const {
+  Sighting
+} = require('../server/db/models')
+
 const DiveShopsData = [
   {name: "Big Blue Explorer", location: "Palawan, Philippines", email: "bbe@email.com", storeFrontImgUrl: "BigBlueExplorer.jpg"},
   {name: "Aqua Scuba Center", location: "Belize, C.A.", email: "acb@email.com", storeFrontImgUrl: "AquaScubaCenter.jpeg"},
@@ -34,21 +38,21 @@ const OfferedDivesData =[
 ]
 
 const ObservationOddsByOfferedDiveData = [
-  {	offereddiveId: 1, 	Guaranteed: "Barracuda, White Tip Shark, Black Tip Shark, Acroporids",	Common: "Batfish, Stonefish, Cuttlefish, Nudibranch, Whip CoralJack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
+  {	offereddiveId: 1, 	Guaranteed: "Barracuda, White Tip Shark, Black Tip Shark, Acroporids",	Common: "Batfish, Stonefish, Cuttlefish, Nudibranch, Whip Coral, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 2, 	Guaranteed: "Dolphin, Manta Ray, Hammerhead Shark, Reef Shark",	Common: "White Tip Shark, Black Tip Shark, Nurse Shark, Leopard Shark, Octopus, Barracuda, Lobster",	Uncommon: "Jack, Snapper, Tang, Parrot Fish, Coral, Anemone, Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 3, 	Guaranteed: "The Great Blue Hole, Reef Shark, Nudibranch",	Common: "Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
-  {	offereddiveId: 4, 	Guaranteed: "Yongala",	Common: "Manta Ray, Sea Snake, Octopus, Turtle, Bull Shark, Tiger Shark, Acroporids, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Lion Fish, Scorpion Fish, Stargazers, Whip CoralFusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
+  {	offereddiveId: 4, 	Guaranteed: "Yongala",	Common: "Manta Ray, Sea Snake, Octopus, Turtle, Bull Shark, Tiger Shark, Acroporids, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Lion Fish, Scorpion Fish, Stargazer, Whip Coral, Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 5, 	Guaranteed: "Thistlegorm, Nudibranch, Coral",	Common: "Acroporids, Moray Eel, Scorpion Fish, Crocodile Fish, Lion Fish, Turtle, Barracuda, Tiger Shark",	Uncommon: "Shipwreck",	Rare: "Treasure",	Legendary: "New Yorker, Fullstack Academy Alum"	},
   {	offereddiveId: 6, 	Guaranteed: "Coral, Yongala",	Common: "Acroporids, Moray Eel, Scorpion Fish, Crocodile Fish, Lion Fish, Turtle, Barracuda, Tiger Shark",	Uncommon: "Shipwreck",	Rare: "Treasure",	Legendary: "New Yorker, Fullstack Academy Alum"	},
   {	offereddiveId: 7, 	Guaranteed: "Pocilloporids, Kormoran, Coral",	Common: "Acroporids, Moray Eel, Scorpion Fish, Crocodile Fish, Lion Fish, Turtle, Barracuda, Tiger Shark",	Uncommon: "Shipwreck",	Rare: "Treasure",	Legendary: "New Yorker, Fullstack Academy Alum"	},
   {	offereddiveId: 8, 	Guaranteed: "Manta Ray",	Common: "Whip Coral, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Reef Shark, Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
-  {	offereddiveId: 9, 	Guaranteed: "Nudibranch, Flatworm, Moray Eel",	Common: "Woebegone, White Tip Shark, Octopus, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Lion Fish, Scorpion Fish, Stargazers, Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
+  {	offereddiveId: 9, 	Guaranteed: "Nudibranch, Flatworm, Moray Eel",	Common: "Woebegone, White Tip Shark, Octopus, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Lion Fish, Scorpion Fish, Stargazer, Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 10, 	Guaranteed: "USS Liberty, Anemone, Gorgonian, Acroporids",	Common: "Octopus, Reef Shark, Spanish Dancers, Flashlight Fish, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Batfish, Stonefish, Cuttlefish, Nudibranch, Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 11, 	Guaranteed: "Fire Coral, Barrel Sponge, Anemone, Blue Ribbon Eel",	Common: "Octopus, Reef Shark, Spanish Dancers, Flashlight Fish, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 12, 	Guaranteed: "Tubbataha Reef, Thresher Shark",	Common: "Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Orca, Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 13, 	Guaranteed: "Hammerhead Shark",	Common: "Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Orca, Mobula, Whale Shark, Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 14, 	Guaranteed: "Volcano",	Common: "Moray Eel, Goat Fish, Emperor Fish, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Wrasse, Hawk Fish, Manta Ray, Humpback Seal, Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
-  {	offereddiveId: 15, 	Guaranteed: "White Tip shark, Pocilloporids, Shipwreck",	Common: "Blue Shark, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
+  {	offereddiveId: 15, 	Guaranteed: "White Tip Shark, Pocilloporids, Shipwreck",	Common: "Blue Shark, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 16, 	Guaranteed: "Harbor Seal",	Common: "Abalone, Rock Cod, Leopard Shark, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 17, 	Guaranteed: "Shipwreck",	Common: "Sun Fish, Garibaldi, Sheepshead, Rock Cod, Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Octopus, Leopard Shark, Angel Shark, Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
   {	offereddiveId: 18, 	Guaranteed: "Giant Sea Bass, Black Sea Bass",	Common: "Jack, Snapper, Tang, Parrot Fish, Coral, Anemone",	Uncommon: "Fusilier, Butterfly Fish, Tuna, Flatworm, Jellyfish, Clown Fish",	Rare: "Cuttlefish, Shipwreck, Reef Shark, Dolphin, Nudibranch, Seahorse",	Legendary: "Whale Shark, Whale, New Yorker, Treasure, Psychedelic Frogfish, Fullstack Academy Alum"	},
@@ -57,7 +61,7 @@ const ObservationOddsByOfferedDiveData = [
 ]
 
 const ObservationsData = [
-  {	id: 1, 	name: "Whale Shark", 	category: "fish"	, description: "slow-moving, filter-feeding carpet shark. the biggest fish in the sea!", 	},
+  {	id: 1, 	name: "Whale Shark", 	category: "fish"	, description: "Slow-moving, filter-feeding carpet shark. the biggest fish in the sea!", 	},
   {	id: 2, 	name: "Nudibranch", 	category: "mollusks"	, description: "Sea slug. Lives on coral. Can grow to 4 inches.", 	},
   {	id: 3, 	name: "Psychedelic Frogfish", 	category: "fish"	, description: "Small, short, stocky, and masters of camoflage", 	},
   {	id: 4, 	name: "Seahorse", 	category: "fish"	, description: "Lives exclusively on coral. Masters of camoflage", 	},
@@ -65,7 +69,7 @@ const ObservationsData = [
   {	id: 6, 	name: "Reef Shark", 	category: "fish"	, description: "Shark! Scary!", 	},
   {	id: 7, 	name: "Moray Eel", 	category: "fish"	, description: "Mostly seen in brackish water.", 	},
   {	id: 8, 	name: "Cuttlefish", 	category: "mollusks"	, description: "Shape-shifting, color-changing, beast", 	},
-  {	id: 9, 	name: "Barrel Sponge", 	category: "sponges"	, description: "barrel-shaped sponge", 	},
+  {	id: 9, 	name: "Barrel Sponge", 	category: "sponges"	, description: "Barrel-shaped sponge", 	},
   {	id: 10, 	name: "Shipwreck", 	category: "inanimate objects"	, description: "Shipwreck. Wonders of the sea", 	},
   {	id: 11, 	name: "White Tip Shark", 	category: "fish"		},
   {	id: 12, 	name: "Black Tip Shark", 	category: "fish"		},
@@ -81,7 +85,7 @@ const ObservationsData = [
   {	id: 22, 	name: "Lobster", 	category: "mollusks"		},
   {	id: 23, 	name: "The Great Blue Hole", 	category: "inanimate objects"		},
   {	id: 24, 	name: "Sea Snake", 	category: "fish"		},
-  {	id: 25, 	name: "Whip Coral", 	category: "coral"	, description: "vine-shaped coral", 	},
+  {	id: 25, 	name: "Whip Coral", 	category: "coral"	, description: "Vine-shaped coral", 	},
   {	id: 26, 	name: "Bull Shark", 	category: "fish"		},
   {	id: 27, 	name: "Tiger Shark", 	category: "fish"		},
   {	id: 28, 	name: "Scorpion Fish", 	category: "fish"		},
@@ -97,47 +101,47 @@ const ObservationsData = [
   {	id: 38, 	name: "Blue Ribbon Eel", 	category: "fish"		},
   {	id: 39, 	name: "Parrot Fish", 	category: "fish"		},
   {	id: 40, 	name: "Spanish Dancers", 	category: "mollusks"		},
-  {	id: 41, 	name: "Flashight Fish", 	category: "fish"		},
-  {	id: 43, 	name: "Thesher Shark", 	category: "fish"		},
-  {	id: 44, 	name: "Orca", 	category: "mammals"		},
-  {	id: 45, 	name: "Mobula", 	category: "mammals"		},
-  {	id: 46, 	name: "Tubbataha Reef", 	category: "coral"		},
-  {	id: 47, 	name: "Volcano", 	category: "inanimate objects"		},
-  {	id: 48, 	name: "Jack", 	category: "fish"		},
-  {	id: 49, 	name: "Snapper", 	category: "fish"		},
-  {	id: 50, 	name: "Goat Fish", 	category: "fish"		},
-  {	id: 51, 	name: "Emperor Fish", 	category: "fish"		},
-  {	id: 52, 	name: "Wrasse", 	category: "fish"		},
-  {	id: 53, 	name: "Tang", 	category: "fish"		},
-  {	id: 54, 	name: "Butterfly Fish", 	category: "fish"		},
-  {	id: 55, 	name: "Hawk Fish", 	category: "fish"		},
-  {	id: 56, 	name: "Humpback Seal", 	category: "mammals"		},
-  {	id: 57, 	name: "Blue Shark", 	category: "fish"		},
-  {	id: 58, 	name: "Pocilloporids", 	category: "coral"		},
-  {	id: 59, 	name: "Acroporids", 	category: "coral"		},
-  {	id: 60, 	name: "Harbor Seal", 	category: "mammals"		},
-  {	id: 61, 	name: "Abalone", 	category: "mollusks"		},
-  {	id: 62, 	name: "Rock Cod", 	category: "fish"		},
-  {	id: 63, 	name: "Garibaldi", 	category: "fish"		},
-  {	id: 64, 	name: "Sheepshead", 	category: "fish"		},
-  {	id: 65, 	name: "Angel Shark", 	category: "fish"		},
-  {	id: 66, 	name: "Sun Fish", 	category: "fish"		},
-  {	id: 67, 	name: "Giant Sea Bass", 	category: "fish"		},
-  {	id: 68, 	name: "Black Sea Bass", 	category: "fish"		},
-  {	id: 69, 	name: "New Yorker", 	category: "mammals"		},
-  {	id: 70, 	name: "Coral", 	category: "coral"	, description: "Fascinating looking coral", 	},
-  {	id: 71, 	name: "USS Spiegel Grove", 	category: "inanimate objects"		},
-  {	id: 72, 	name: "Jellyfish", 	category: "other living things"		},
-  {	id: 73, 	name: "Clown Fish", 	category: "fish"		},
-  {	id: 74, 	name: "Whale", 	category: "mammals"		},
-  {	id: 75, 	name: "Treasure", 	category: "inanimate objects"		},
-  {	id: 76, 	name: "Fullstack Academy Alum", 	category: "mammals"		},
-  {	id: 77, 	name: "USS Liberty", 	category: "inanimate objects"		},
-  {	id: 78, 	name: "Kormoran", 	category: "inanimate objects"		},
-  {	id: 79, 	name: "Yongala", 	category: "inanimate objects"		},
-  {	id: 80, 	name: "Thistlegorm", 	category: "inanimate objects"		},
-  {	id: 81, 	name: "Turtle", 	category: "other living things"		},
-  {	id: 82, 	name: "Tuna", 	category: "fish"		}
+  {	id: 41, 	name: "Flashlight Fish", 	category: "fish"		},
+  {	id: 42, 	name: "Thresher Shark", 	category: "fish"		},
+  {	id: 43, 	name: "Orca", 	category: "mammals"		},
+  {	id: 44, 	name: "Mobula", 	category: "mammals"		},
+  {	id: 45, 	name: "Tubbataha Reef", 	category: "coral"		},
+  {	id: 46, 	name: "Volcano", 	category: "inanimate objects"		},
+  {	id: 47, 	name: "Jack", 	category: "fish"		},
+  {	id: 48, 	name: "Snapper", 	category: "fish"		},
+  {	id: 49, 	name: "Goat Fish", 	category: "fish"		},
+  {	id: 50, 	name: "Emperor Fish", 	category: "fish"		},
+  {	id: 51, 	name: "Wrasse", 	category: "fish"		},
+  {	id: 52, 	name: "Tang", 	category: "fish"		},
+  {	id: 53, 	name: "Butterfly Fish", 	category: "fish"		},
+  {	id: 54, 	name: "Hawk Fish", 	category: "fish"		},
+  {	id: 55, 	name: "Humpback Seal", 	category: "mammals"		},
+  {	id: 56, 	name: "Blue Shark", 	category: "fish"		},
+  {	id: 57, 	name: "Pocilloporids", 	category: "coral"		},
+  {	id: 58, 	name: "Acroporids", 	category: "coral"		},
+  {	id: 59, 	name: "Harbor Seal", 	category: "mammals"		},
+  {	id: 60, 	name: "Abalone", 	category: "mollusks"		},
+  {	id: 61, 	name: "Rock Cod", 	category: "fish"		},
+  {	id: 62, 	name: "Garibaldi", 	category: "fish"		},
+  {	id: 63, 	name: "Sheepshead", 	category: "fish"		},
+  {	id: 64, 	name: "Angel Shark", 	category: "fish"		},
+  {	id: 65, 	name: "Sun Fish", 	category: "fish"		},
+  {	id: 66, 	name: "Giant Sea Bass", 	category: "fish"		},
+  {	id: 67, 	name: "Black Sea Bass", 	category: "fish"		},
+  {	id: 68, 	name: "New Yorker", 	category: "mammals"		},
+  {	id: 69, 	name: "Coral", 	category: "coral"	, description: "Fascinating looking coral", 	},
+  {	id: 70, 	name: "USS Spiegel Grove", 	category: "inanimate objects"		},
+  {	id: 71, 	name: "Jellyfish", 	category: "other living things"		},
+  {	id: 72, 	name: "Clown Fish", 	category: "fish"		},
+  {	id: 73, 	name: "Whale", 	category: "mammals"		},
+  {	id: 74, 	name: "Treasure", 	category: "inanimate objects"		},
+  {	id: 75, 	name: "Fullstack Academy Alum", 	category: "mammals"		},
+  {	id: 76, 	name: "USS Liberty", 	category: "inanimate objects"		},
+  {	id: 77, 	name: "Kormoran", 	category: "inanimate objects"		},
+  {	id: 78, 	name: "Yongala", 	category: "inanimate objects"		},
+  {	id: 79, 	name: "Thistlegorm", 	category: "inanimate objects"		},
+  {	id: 80, 	name: "Turtle", 	category: "other living things"		},
+  {	id: 81, 	name: "Tuna", 	category: "fish"		}
 ]
 
 const DiversData = [
@@ -228,46 +232,77 @@ const ObservationHash = {	"Whale Shark"	:	1	,
 "Blue Ribbon Eel"	:	38	,
 "Parrot Fish"	:	39	,
 "Spanish Dancers"	:	40	,
-"Flashight Fish"	:	41	,
-"Thesher Shark"	:	43	,
-"Orca"	:	44	,
-"Mobula"	:	45	,
-"Tubbataha Reef"	:	46	,
-"Volcano"	:	47	,
-"Jack"	:	48	,
-"Snapper"	:	49	,
-"Goat Fish"	:	50	,
-"Emperor Fish"	:	51	,
-"Wrasse"	:	52	,
-"Tang"	:	53	,
-"Butterfly Fish"	:	54	,
-"Hawk Fish"	:	55	,
-"Humpback Seal"	:	56	,
-"Blue Shark"	:	57	,
-"Pocilloporids"	:	58	,
-"Acroporids"	:	59	,
-"Harbor Seal"	:	60	,
-"Abalone"	:	61	,
-"Rock Cod"	:	62	,
-"Garibaldi"	:	63	,
-"Sheepshead"	:	64	,
-"Angel Shark"	:	65	,
-"Sun Fish"	:	66	,
-"Giant Sea Bass"	:	67	,
-"Black Sea Bass"	:	68	,
-"New Yorker"	:	69	,
-"Coral"	:	70	,
-"USS Spiegel Grove"	:	71	,
-"Jellyfish"	:	72	,
-"Clown Fish"	:	73	,
-"Whale"	:	74	,
-"Treasure"	:	75	,
-"Fullstack Academy Alum"	:	76	,
-"USS Liberty"	:	77	,
-"Kormoran"	:	78	,
-"Yongala"	:	79	,
-"Thistlegorm"	:	80	,
-"Turtle"	:	81	,
-"Tuna":		82	}
+"Flashlight Fish"	:	41	,
+"Thresher Shark"	:	42	,
+"Orca"	:	43	,
+"Mobula"	:	44	,
+"Tubbataha Reef"	:	45	,
+"Volcano"	:	46	,
+"Jack"	:	47	,
+"Snapper"	:	48	,
+"Goat Fish"	:	49	,
+"Emperor Fish"	:	50	,
+"Wrasse"	:	51	,
+"Tang"	:	52	,
+"Butterfly Fish"	:	53	,
+"Hawk Fish"	:	54	,
+"Humpback Seal"	:	55	,
+"Blue Shark"	:	56	,
+"Pocilloporids"	:	57	,
+"Acroporids"	:	58	,
+"Harbor Seal"	:	59	,
+"Abalone"	:	60	,
+"Rock Cod"	:	61	,
+"Garibaldi"	:	62	,
+"Sheepshead"	:	63	,
+"Angel Shark"	:	64	,
+"Sun Fish"	:	65	,
+"Giant Sea Bass"	:	66	,
+"Black Sea Bass"	:	67	,
+"New Yorker"	:	68	,
+"Coral"	:	69	,
+"USS Spiegel Grove"	:	70	,
+"Jellyfish"	:	71	,
+"Clown Fish"	:	72	,
+"Whale"	:	73	,
+"Treasure"	:	74	,
+"Fullstack Academy Alum"	:	75	,
+"USS Liberty"	:	76	,
+"Kormoran"	:	77	,
+"Yongala"	:	78	,
+"Thistlegorm"	:	79	,
+"Turtle"	:	80	,
+"Tuna"	:	81	}
 
-module.exports = {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, Dice, ObservationHash}
+const TourGuide = async function (DiveBook, OddsBook, Encyclopedia) {
+  let counter = 0
+  let fail = 0
+  for(let i = 0; i < DiveBook.length; i++) {
+    let {id, offeredDiveId} = DiveBook[i]
+    console.log("Offered Dive Id ---> ",offeredDiveId)
+
+    let seen = Dice(OddsBook[offeredDiveId - 1])
+    for(let j = 0; j < seen.length; ) {
+      let seeing = seen.splice(0,1)[0]
+      if(seen.indexOf(seeing) === -1) {
+        console.log('Seen this dive ------>',seeing)
+        counter++
+        try {
+          await Sighting.create({
+            logId: id,
+            observationId: Encyclopedia[seeing]
+          })
+        } catch (error) {
+          console.log(error)
+          fail++
+          console.log('fail ------------->',fail)
+        }
+      }
+    }
+  }
+  console.log("Total Counter ------> ",counter)
+  console.log("Total Fail ------> ",fail)
+
+}
+
+module.exports = {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, Dice, ObservationHash, TourGuide}

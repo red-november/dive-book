@@ -128,183 +128,151 @@ const Log = db.define('log', {
 
 //returns an array of all unique observations
 
-Log.LoadData = async function(dataArray) {
+
+Log.getAllObservations = async function(diverId) {
   try {
-    await dataArray.map(async data => {
-    let {diveName,	isVerified,	timeIn,	timeOut,	maxDepth,	tankPressureStart,	tankPressureEnd,	tankType,	beltWeight,	wetSuitType,	wetSuitThickness,	airMixture,	description,	hasStrongCurrent,	visibility,	diverId,	offeredDiveId,	diveshopId, location} = data
-
-
-    const newLog = await Log.create({
-      diveName,
-      offeredDiveId,
-      diveshopId,
-      location,
-      isVerified,
-      diverId,
-      timeIn,
-      timeOut,
-      maxDepth,
-      tankPressureStart,
-      tankPressureEnd,
-      tankType,
-      beltWeight,
-      airMixture,
-      description,
-      wetSuitType,
-      wetSuitThickness,
-      hasStrongCurrent,
-      visibility
-      })
+    const diverLogs = await this.findAll({
+      where: {
+        diverId: diverId
+      }
     })
+    const unique = {}
+    for (let i = 0; i < diverLogs.length; i++) {
+      let obsArr = await diverLogs[i].getObservations()
+      for (let j = 0; j < obsArr.length; j++) {
+        let currentObs = obsArr[j]
+        if (!unique[currentObs.id]) {
+          unique[currentObs.id] = currentObs
+        }
+      }
+    }
+
+    return Object.values(unique)
   } catch (error) {
     console.error(error)
   }
 }
 
-// Log.getAllObservations = async function(diverId) {
-//   try {
-//     const diverLogs = await this.findAll({
-//       where: {
-//         diverId: diverId
-//       }
-//     })
-//     const unique = {}
-//     for (let i = 0; i < diverLogs.length; i++) {
-//       let obsArr = await diverLogs[i].getObservations()
-//       for (let j = 0; j < obsArr.length; j++) {
-//         let currentObs = obsArr[j]
-//         if (!unique[currentObs.id]) {
-//           unique[currentObs.id] = currentObs
-//         }
-//       }
-//     }
+Log.findDiverLogs = async function(diverId) {
+  const diverLogs = await this.findAll({
+    where: {
+      diverId: diverId
+    }
+  })
 
-//     return Object.values(unique)
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+  return diverLogs
+}
 
-// Log.findDiverLogs = async function(diverId) {
-//   const diverLogs = await this.findAll({
-//     where: {
-//       diverId: diverId
-//     }
-//   })
+//instance methods
 
-//   return diverLogs
-// }
+Log.prototype.getDiverBadges = async function(diverId) {
+  const badges = await this.sequelize.models.earnedBadge.findAll({
+    where: {
+      diverId: diverId
+    }
+  })
+  return badges
+}
 
-// //instance methods
+Log.prototype.getAllBadges = async function() {
+  const badges = await this.sequelize.models.badge.findAll()
+  return badges
+}
 
-// Log.prototype.getDiverBadges = async function(diverId) {
-//   const badges = await this.sequelize.models.earnedBadge.findAll({
-//     where: {
-//       diverId: diverId
-//     }
-//   })
-//   return badges
-// }
+//hooks
 
-// Log.prototype.getAllBadges = async function() {
-//   const badges = await this.sequelize.models.badge.findAll()
-//   return badges
-// }
+async function addBadges(logInstance) {
+  const diverId = logInstance.diverId
+  //get all logs for diver
+  try {
+    const diverLogs = await Log.findDiverLogs(diverId)
+    //get all badges for diver
+    const diverBadges = await logInstance.getDiverBadges(diverId)
+    //set default statuses for all badges
 
-// //hooks
+    const allBadges = await logInstance.getAllBadges()
 
-// async function addBadges(logInstance) {
-//   const diverId = logInstance.diverId
-//   //get all logs for diver
-//   try {
-//     const diverLogs = await Log.findDiverLogs(diverId)
-//     //get all badges for diver
-//     const diverBadges = await logInstance.getDiverBadges(diverId)
-//     //set default statuses for all badges
+    let [juvenile, aquaman, discoverer, voyager] = badgesPresent(diverBadges, 4)
 
-//     const allBadges = await logInstance.getAllBadges()
+    const diverInstance = await logInstance.sequelize.models.diver.findByPk(
+      diverId
+    )
 
-//     let [juvenile, aquaman, discoverer, voyager] = badgesPresent(diverBadges, 4)
+    // check for Juvenile Badge (more than 9 dives)
+    if (!juvenile && diverLogs.length > 9) {
+      await diverInstance.sequelize.models.earnedBadge.findOrCreate({
+        where: {
+          diverId: diverId,
+          badgeId: 1
+        }
+      })
+    }
 
-//     const diverInstance = await logInstance.sequelize.models.diver.findByPk(
-//       diverId
-//     )
+    // check for aquaman badge (deeper than 30 meters)
+    if (!aquaman && hasDivedDeep(diverLogs, 30)) {
+      await await diverInstance.sequelize.models.earnedBadge.findOrCreate({
+        where: {
+          diverId: diverId,
+          badgeId: 2
+        }
+      })
+    }
 
-//     // check for Juvenile Badge (more than 9 dives)
-//     if (!juvenile && diverLogs.length > 9) {
-//       await diverInstance.sequelize.models.earnedBadge.findOrCreate({
-//         where: {
-//           diverId: diverId,
-//           badgeId: 1
-//         }
-//       })
-//     }
+    //check for discoverer badge (more than 40 observations)
+    if (!discoverer) {
+      const observations = await Log.getAllObservations(diverId)
+      observations.length > 40 &&
+        (await diverInstance.sequelize.models.earnedBadge.findOrCreate({
+          where: {
+            diverId: diverId,
+            badgeId: 3
+          }
+        }))
+    }
 
-//     // check for aquaman badge (deeper than 30 meters)
-//     if (!aquaman && hasDivedDeep(diverLogs, 30)) {
-//       await await diverInstance.sequelize.models.earnedBadge.findOrCreate({
-//         where: {
-//           diverId: diverId,
-//           badgeId: 2
-//         }
-//       })
-//     }
+    //check for voyager badge (more than 10 places)
+    if (!voyager && hasTraveled(diverLogs, 10)) {
+      await diverInstance.sequelize.models.earnedBadge.findOrCreate({
+        where: {
+          diverId: diverId,
+          badgeId: 4
+        }
+      })
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}
 
-//     //check for discoverer badge (more than 40 observations)
-//     if (!discoverer) {
-//       const observations = await Log.getAllObservations(diverId)
-//       observations.length > 40 &&
-//         (await diverInstance.sequelize.models.earnedBadge.findOrCreate({
-//           where: {
-//             diverId: diverId,
-//             badgeId: 3
-//           }
-//         }))
-//     }
+//utility functionas
 
-//     //check for voyager badge (more than 10 places)
-//     if (!voyager && hasTraveled(diverLogs, 10)) {
-//       await diverInstance.sequelize.models.earnedBadge.findOrCreate({
-//         where: {
-//           diverId: diverId,
-//           badgeId: 4
-//         }
-//       })
-//     }
-//   } catch (e) {
-//     console.error(e)
-//   }
-// }
+function hasDivedDeep(arrOfLogs, depth) {
+  return !!arrOfLogs.find(log => log.maxDepth > depth)
+}
 
-// //utility functionas
+//returns an array of booleans representing badges present in order
+function badgesPresent(arrOfBadges, numOfBadges) {
+  const badgeBooleans = Array(numOfBadges).fill(false)
+  //loop through badges, return true at index of present badge
+  for (let i = 0; i < arrOfBadges.length; i++) {
+    let currentBadge = arrOfBadges[i]
+    badgeBooleans[currentBadge.badgeId - 1] = true
+  }
 
-// function hasDivedDeep(arrOfLogs, depth) {
-//   return !!arrOfLogs.find(log => log.maxDepth > depth)
-// }
+  return badgeBooleans
+}
 
-// //returns an array of booleans representing badges present in order
-// function badgesPresent(arrOfBadges, numOfBadges) {
-//   const badgeBooleans = Array(numOfBadges).fill(false)
-//   //loop through badges, return true at index of present badge
-//   for (let i = 0; i < arrOfBadges.length; i++) {
-//     let currentBadge = arrOfBadges[i]
-//     badgeBooleans[currentBadge.badgeId - 1] = true
-//   }
+function hasTraveled(arrOfLogs, numPlaces) {
+  const uniqueLocations = arrOfLogs.reduce((accum, log) => {
+    if (!accum[log.location]) {
+      accum[log.location] = log.location
+    }
+    return accum
+  }, {})
 
-//   return badgeBooleans
-// }
+  return Object.values(uniqueLocations).length > numPlaces
+}
 
-// function hasTraveled(arrOfLogs, numPlaces) {
-//   const uniqueLocations = arrOfLogs.reduce((accum, log) => {
-//     if (!accum[log.location]) {
-//       accum[log.location] = log.location
-//     }
-//     return accum
-//   }, {})
-
-//   return Object.values(uniqueLocations).length > numPlaces
-// }
-
-// Log.afterCreate(addBadges)
+Log.afterCreate(addBadges)
 
 module.exports = Log

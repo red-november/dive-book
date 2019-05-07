@@ -21,9 +21,9 @@ const OfferedDive = db.define('offeredDive', {
 
 OfferedDive.LoadData = async function(dataArray) {
     await dataArray.map(async data => {
-      let {id, name, location, description, diveshopId, imageURL} = data
+      let {name, location, description, diveshopId, imageURL} = data
       await OfferedDive.create({
-        id, name, location, description, diveshopId, imageURL
+        name, location, description, diveshopId, imageURL
       })
     })
     console.log("Offered Dive Load Success!")
