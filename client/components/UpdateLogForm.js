@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Form = props => {
-  const {handleChange, handleSubmit, shops, singleShop, displayText} = props
+const UpdateForm = props => {
+  const {handleChange, handleSubmit, allShops, singleShop} = props
   const {
     date,
     diveshopId,
@@ -19,17 +19,18 @@ const Form = props => {
     airMixture,
     description,
     visibility,
-    hasStrongCurrent
+    hasStrongCurrent,
+    displayText,
+    offeredDiveId
   } = props.log
-
   return (
     <div>
-      <h2>New Log: </h2>
+      <h2>Log: </h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="diveshopId">Dive Shop:</label>
         <select name="diveshopId" onChange={handleChange}>
-          <option value="">Select dive shop</option>
-          {shops.map(shop => {
+          {/* <option value="">Select dive shop</option> */}
+          {allShops.map(shop => {
             return (
               <option key={shop.id} value={shop.id}>
                 {shop.id}. {shop.name}
@@ -43,7 +44,7 @@ const Form = props => {
             <option value="Other">Select dive</option>
             {singleShop.offeredDives.map(dive => {
               return (
-                <option key={dive.id} value={`${dive.name}^${dive.id}`}>
+                <option key={dive.id} value={`${dive.name}`}>
                   {dive.name}
                 </option>
               )
@@ -165,4 +166,4 @@ const Form = props => {
   )
 }
 
-export default Form
+export default UpdateForm
