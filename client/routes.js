@@ -11,10 +11,16 @@ import {
   SingleShop,
   AllLogs,
   SingleLog,
+  AddLog,
   SingleBadge,
   AllObservations,
   AllOfferedDives,
+<<<<<<< HEAD
   ShopQR
+=======
+  SingleCert,
+  CreateCert
+>>>>>>> logForm
 } from './components'
 import {me} from './store'
 
@@ -43,10 +49,13 @@ class Routes extends Component {
         <Route path="/logs/:id" component={SingleLog} />
         <Route path="/logs" component={AllLogs} />
         <Route path="/observations" component={AllObservations} />
+        <Route path="/certs/create" component={CreateCert} />
+        <Route path="/certs/:id" component={SingleCert} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={DiverHome} />
+            <Route path="/create" component={AddLog} />
             {isOwner && <Route path="/shopqr" component={ShopQR} />}
           </Switch>
         )}
