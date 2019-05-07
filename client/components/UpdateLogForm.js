@@ -1,8 +1,9 @@
+/* eslint-disable no-lone-blocks */
 import React from 'react'
 
 const UpdateForm = props => {
   const {handleChange, handleSubmit, allShops, singleShop} = props
-  const {
+  let {
     date,
     diveshopId,
     diveName,
@@ -23,6 +24,21 @@ const UpdateForm = props => {
     displayText,
     offeredDiveId
   } = props.log
+  date = date.split('T')[0]
+
+  let tankTypeOptions = ['Aluminum', 'Steel', 'Other']
+  let wetSuitTypeOptions = [
+    'Shortie',
+    'Fulljohn',
+    'The Full Wetsuit',
+    'Dry Suit',
+    'None',
+    'Other'
+  ]
+  let airMixtureOptions = ['Air', 'Nitrox', 'Hydreliox', 'Oxygen']
+
+  console.log('id', diveshopId)
+
   return (
     <div>
       <h2>Log: </h2>
@@ -30,25 +46,39 @@ const UpdateForm = props => {
         <label htmlFor="diveshopId">Dive Shop:</label>
         <select name="diveshopId" onChange={handleChange}>
           {/* <option value="">Select dive shop</option> */}
-          {allShops.map(shop => {
-            return (
-              <option key={shop.id} value={shop.id}>
-                {shop.id}. {shop.name}
-              </option>
-            )
-          })}
+          {allShops.map(
+            shop =>
+              shop.id === diveshopId ? (
+                <option key={shop.id} value={shop.id} selected>
+                  {shop.id}. {shop.name}
+                </option>
+              ) : (
+                <option key={shop.id} value={shop.id}>
+                  {shop.id}. {shop.name}
+                </option>
+              )
+          )}
         </select>
         <label htmlFor="diveName">Dive Name:</label>
         {singleShop.offeredDives && !displayText ? (
           <select name="diveName" onChange={handleChange}>
             <option value="Other">Select dive</option>
-            {singleShop.offeredDives.map(dive => {
-              return (
-                <option key={dive.id} value={`${dive.name}`}>
-                  {dive.name}
-                </option>
-              )
-            })}
+            {singleShop.offeredDives.map(
+              dive =>
+                dive.name === diveName ? (
+                  <option
+                    key={dive.id}
+                    value={`${dive.name}^${dive.id}`}
+                    selected
+                  >
+                    {dive.name}
+                  </option>
+                ) : (
+                  <option key={dive.id} value={`${dive.name}^${dive.id}`}>
+                    {dive.name}
+                  </option>
+                )
+            )}
             <option value="Other">Other</option>
           </select>
         ) : (
@@ -108,10 +138,17 @@ const UpdateForm = props => {
           onChange={handleChange}
         />
         <label htmlFor="tankType">Tank Type:</label>
-        <select name="tankType" onChange={handleChange}>
-          <option value="aluminum">Aluminum</option>
-          <option value="steel">Steel</option>
-          <option value="other">Other</option>
+        <select name="tankType" onChange={handleChange} value={tankType}>
+          {tankTypeOptions.map(
+            type =>
+              type === tankType ? (
+                <option value={type} selected>
+                  {type}
+                </option>
+              ) : (
+                <option value={type}>{type}</option>
+              )
+          )}
         </select>
         <label htmlFor="beltWeight">Belt Weight:</label>
         <input
@@ -121,12 +158,19 @@ const UpdateForm = props => {
           onChange={handleChange}
         />
         <label htmlFor="wetSuitType">Wet Suit Type:</label>
-        <select name="wetSuitType" onChange={handleChange}>
-          <option value="none">None</option>
-          <option value="shortie">Shortie</option>
-          <option value="fulljohn">Fulljohn</option>
-          <option value="dry suit">Dry suit</option>
-          <option value="other">Other</option>
+        <select name="wetSuitType" onChange={handleChange} value={wetSuitType}>
+          {wetSuitTypeOptions.map(
+            suit =>
+              suit === wetSuitType ? (
+                <option key={suit} value={suit} selected>
+                  {suit}
+                </option>
+              ) : (
+                <option key={suit} value={suit}>
+                  {suit}
+                </option>
+              )
+          )}
         </select>
         <label htmlFor="wetSuitThickness">Wet Suit Thickness:</label>
         <input
@@ -136,9 +180,19 @@ const UpdateForm = props => {
           onChange={handleChange}
         />
         <label htmlFor="airMixture">Air Mixture:</label>
-        <select name="airMixture" onChange={handleChange}>
-          <option value="air">Air</option>
-          <option value="nitrox">Nitrox</option>
+        <select name="airMixture" onChange={handleChange} value={airMixture}>
+          {airMixtureOptions.map(
+            mix =>
+              mix === airMixture ? (
+                <option key={mix} value={mix} selected>
+                  {mix}
+                </option>
+              ) : (
+                <option key={mix} value={mix}>
+                  {mix}
+                </option>
+              )
+          )}
         </select>
         <label htmlFor="description">Description:</label>
         <textarea
@@ -156,9 +210,13 @@ const UpdateForm = props => {
           onChange={handleChange}
         />
         <label htmlFor="hasStrongCurrent">Strong Current?</label>
-        <select name="hasStrongCurrent" onChange={handleChange}>
-          <option value={false}>False</option>
-          <option value={true}>True</option>
+        <select
+          name="hasStrongCurrent"
+          onChange={handleChange}
+          value={hasStrongCurrent}
+        >
+          <option value="false">False</option>
+          <option value="true">True</option>
         </select>
         <button type="submit">Submit</button>
       </form>

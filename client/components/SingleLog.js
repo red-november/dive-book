@@ -63,6 +63,7 @@ class SingleLog extends Component {
       displayText,
       offeredDiveId
     } = this.props.singleLog
+    await this.props.fetchSingleShop(diveshopId)
 
     this.setState({
       date,
@@ -118,10 +119,16 @@ class SingleLog extends Component {
   handleSubmit = async event => {
     event.preventDefault()
 
+    let currentBool = false
+
+    this.state.hasStrongCurrent === 'true'
+      ? (currentBool = true)
+      : (currentBool = false)
+
     const data = {
       date: event.target.date.value,
       diveshopId: event.target.diveshopId.value,
-      diveName: event.target.diveName.value,
+      diveName: this.state.diveName,
       timeIn: event.target.timeIn.value,
       timeOut: event.target.timeOut.value,
       location: event.target.location.value,
@@ -135,15 +142,14 @@ class SingleLog extends Component {
       airMixture: event.target.airMixture.value,
       description: event.target.description.value,
       visibility: event.target.visibility.value,
-      hasStrongCurrent: event.target.hasStrongCurrent.value
-      // displayText: event.target.displayText.value
-      // offeredDiveId: event.target.offeredDiveId.value
+      hasStrongCurrent: currentBool,
+      offeredDiveId: this.state.offeredDiveId
     }
+    console.log('datacurrent', data.hasStrongCurrent)
     await this.props.updateLog(this.props.singleLog.id, data)
   }
 
   displayScanner = () => {
-    console.log(this.state.displayQrScanner)
     this.setState({displayQrScanner: !this.state.displayQrScanner})
   }
 

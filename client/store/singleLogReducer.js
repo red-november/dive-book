@@ -58,15 +58,6 @@ export default function(state = initialState, action) {
     case GET_SINGLE_LOG:
       newState = action.log
       return newState
-    // case UPDATE_DIVER_LOG:
-    //   newState = newState.filter(log => {
-    //     if (log.id === action.log.id) {
-    //       return action.log
-    //     } else {
-    //       return log
-    //     }
-    //   })
-    //   return newState
     default:
       return state
   }
