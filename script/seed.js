@@ -12,7 +12,7 @@ const {
   Observation,
   Sighting
 } = require('../server/db/models')
-const {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, Dice, ObservationHash, TourGuide} = require('../script/data')
+const {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, Dice, ObservationHash, TourGuide, Guru} = require('../script/data')
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
@@ -192,7 +192,7 @@ async function seed() {
       // Relationships
 
       await TourGuide(DiveBook, ObservationOddsByOfferedDiveData, ObservationHash)
-
+      Guru()
 
       // const diveShop = await Promise.all([
   //   DiveShop.create({

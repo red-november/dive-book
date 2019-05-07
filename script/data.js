@@ -305,4 +305,13 @@ const TourGuide = async function (DiveBook, OddsBook, Encyclopedia) {
 
 }
 
-module.exports = {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, Dice, ObservationHash, TourGuide}
+const Guru = function (data) {
+  const instructor = "HCOLE1234"
+
+  for(let i = 0; i < data.length; i++) {
+    let rand = Math.floor(Math.random()*1000)
+    console.log(rand)
+  }
+}
+
+module.exports = {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, Dice, ObservationHash, TourGuide, Guru}
