@@ -30,7 +30,9 @@ class DiverHome extends Component {
           <h3>Logs:</h3>
           {diverLogs.map(log => (
             <ul key={log.id}>
-              <li>{log.diveName}</li>
+              <li>
+                <Link to={`/logs/${log.id}`}>{log.diveName}</Link>
+              </li>
             </ul>
           ))}
         </div>

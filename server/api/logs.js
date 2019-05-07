@@ -90,7 +90,10 @@ router.put('/diver/:logId', async (req, res, next) => {
     wetSuitThickness,
     airMixture,
     description,
-    visibility
+    visibility,
+    hasStrongCurrent,
+    diveshopId,
+    offeredDiveId
   } = req.body
   try {
     const logId = req.params.logId
@@ -112,7 +115,10 @@ router.put('/diver/:logId', async (req, res, next) => {
       wetSuitType,
       airMixture,
       description,
-      visibility
+      visibility,
+      hasStrongCurrent,
+      diveshopId,
+      offeredDiveId
     })
     res.status(200).send(logUpdate)
   } catch (err) {
