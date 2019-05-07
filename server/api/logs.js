@@ -130,7 +130,7 @@ router.put('/diver/:logId', async (req, res, next) => {
   }
 })
 
-router.get('/diver/:diverId/addObservations', async (req, res, next) => {
+router.get('/diver/:diverId/observations', async (req, res, next) => {
   try {
     const diverId = Number(req.params.diverId)
     const logs = await Log.findAll({
