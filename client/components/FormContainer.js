@@ -32,7 +32,7 @@ const Form = props => {
           {shops.map(shop => {
             return (
               <option key={shop.id} value={shop.id}>
-                {shop.id}. {shop.name}
+                {shop.name}
               </option>
             )
           })}

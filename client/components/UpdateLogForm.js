@@ -37,8 +37,6 @@ const UpdateForm = props => {
   ]
   let airMixtureOptions = ['Air', 'Nitrox', 'Hydreliox', 'Oxygen']
 
-  console.log('id', diveshopId)
-
   return (
     <div>
       <h2>Log: </h2>
