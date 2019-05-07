@@ -15,12 +15,9 @@ import {
   SingleBadge,
   AllObservations,
   AllOfferedDives,
-<<<<<<< HEAD
-  ShopQR
-=======
+  ShopQR,
   SingleCert,
   CreateCert
->>>>>>> logForm
 } from './components'
 import {me} from './store'
 
