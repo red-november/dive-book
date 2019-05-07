@@ -119,34 +119,7 @@ class SingleLog extends Component {
   handleSubmit = async event => {
     event.preventDefault()
 
-    let currentBool = false
-
-    this.state.hasStrongCurrent === 'true'
-      ? (currentBool = true)
-      : (currentBool = false)
-
-    const data = {
-      date: event.target.date.value,
-      diveshopId: event.target.diveshopId.value,
-      diveName: this.state.diveName,
-      timeIn: event.target.timeIn.value,
-      timeOut: event.target.timeOut.value,
-      location: event.target.location.value,
-      maxDepth: event.target.maxDepth.value,
-      tankPressureStart: event.target.tankPressureStart.value,
-      tankPressureEnd: event.target.tankPressureEnd.value,
-      tankType: event.target.tankType.value,
-      beltWeight: event.target.beltWeight.value,
-      wetSuitType: event.target.wetSuitType.value,
-      wetSuitThickness: event.target.wetSuitThickness.value,
-      airMixture: event.target.airMixture.value,
-      description: event.target.description.value,
-      visibility: event.target.visibility.value,
-      hasStrongCurrent: currentBool,
-      offeredDiveId: this.state.offeredDiveId
-    }
-    console.log('datacurrent', data.hasStrongCurrent)
-    await this.props.updateLog(this.props.singleLog.id, data)
+    await this.props.updateLog(this.props.singleLog.id, this.state)
   }
 
   displayScanner = () => {

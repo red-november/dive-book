@@ -48,17 +48,7 @@ class SingleCert extends Component {
   handleSubmit = async event => {
     event.preventDefault()
 
-    // create the object property
-    const data = {
-      certId: event.target.certId.value,
-      provider: event.target.provider.value,
-      date: event.target.date.value,
-      level: event.target.level.value,
-      instructorId: event.target.instructorId.value
-    }
-    console.log(data)
-
-    await this.props.updateSingleCert(this.props.SingleCert.id, data)
+    await this.props.updateSingleCert(this.props.SingleCert.id, this.state)
   }
 
   handleDelete = async () => {
