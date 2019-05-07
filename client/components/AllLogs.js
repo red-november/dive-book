@@ -14,10 +14,10 @@ class AllLogs extends Component {
   render() {
     const {logs} = this.props
     const data = logs.reduce((accum, log) => {
-      if (!accum[log.diveshopId]) {
-        accum[log.diveshopId] = {
-          id: log.diveshopId,
-          name: log.location,
+      if (!accum[log.name]) {
+        accum[log.name] = {
+          id: log.id,
+          name: log.name,
           quantity: 1
         }
       } else {
