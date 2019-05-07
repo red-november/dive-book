@@ -18,7 +18,7 @@ const Observation = db.define('observation', {
       'mammals',
       'other living things',
       'sponges',
-      'inanimate objects',
+      'inanimate objects'
     ),
     allowNull: false,
     validate: {
@@ -27,12 +27,11 @@ const Observation = db.define('observation', {
   },
 
   description: {
-    type: Sequelize.STRING,
-    // allowNull: false,
-    // validate: {
-    //   notEmpty: true
-    // }
-    defaultValue: "Awesome sighting!"
+    type: Sequelize.TEXT,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   imageUrl: {
     type: Sequelize.STRING,

@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { getShopsThunk } from '../store/index'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {getShopsThunk} from '../store/index'
 
 class AllShops extends Component {
   componentDidMount() {
