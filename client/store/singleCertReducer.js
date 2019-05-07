@@ -4,28 +4,15 @@ import history from '../history'
 const initialState = {}
 
 const GET_CERTIFICATION = 'GET_CERTIFICATION'
-const UPDATE_CERTIFICATION = 'UPDATE_CERTIFICATION'
-const CREATE_CERTIFICATION = 'CREATE_CERTIFICATION'
 const DELETE_CERTIFICATION = 'DELETE_CERTIFICATION'
-
-const updateCertification = cert => ({
-  type: UPDATE_CERTIFICATION,
-  cert
-})
 
 const getCertification = cert => ({
   type: GET_CERTIFICATION,
   cert
 })
 
-const createCertification = cert => ({
-  type: CREATE_CERTIFICATION,
-  cert
-})
-
-const deleteCertification = cert => ({
-  type: DELETE_CERTIFICATION,
-  cert
+const deleteCertification = () => ({
+  type: DELETE_CERTIFICATION
 })
 
 export const getCertificationThunk = id => async dispatch => {
@@ -40,7 +27,7 @@ export const getCertificationThunk = id => async dispatch => {
 export const updateCertificationThunk = (id, newData) => async dispatch => {
   try {
     const res = await axios.put(`/api/certs/${id}`, newData)
-    dispatch(updateCertification(res.data))
+    dispatch(getCertification(res.data))
     history.push('/home')
   } catch (error) {
     console.error('error in updateCertificationThunk')
@@ -50,7 +37,7 @@ export const updateCertificationThunk = (id, newData) => async dispatch => {
 export const createCertificationThunk = newData => async dispatch => {
   try {
     const res = await axios.post('/api/certs', newData)
-    dispatch(createCertification(res.data))
+    dispatch(getCertification(res.data))
     history.push('/home')
   } catch (error) {
     console.log('error in createCertificationThunk')
@@ -69,11 +56,11 @@ export const deleteCertificationThunk = id => async dispatch => {
 export default function(state = initialState, action) {
   let newState = {...state}
   switch (action.type) {
-    case UPDATE_CERTIFICATION:
-    case CREATE_CERTIFICATION:
-    case DELETE_CERTIFICATION:
     case GET_CERTIFICATION:
       newState = action.cert
+      return newState
+    case DELETE_CERTIFICATION:
+      newState = {}
       return newState
     default:
       return state
