@@ -6,9 +6,11 @@ class ObservationSearch extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentList: []
+      currentList: [],
+      diverObservations: []
     }
     this.keyup = this.keyup.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
     this.props.fetchObservations()
@@ -24,14 +26,33 @@ class ObservationSearch extends Component {
     this.setState({currentList: newList})
   }
 
+  handleChange(evt) {
+    let currentObs = evt.target.value
+    let currentObsArr = [...this.state.diverObservations]
+    currentObsArr.push(JSON.parse(currentObs))
+    this.setState({
+      diverObservations: currentObsArr
+    })
+  }
+
   render() {
     return (
       <div>
         <label htmlFor="search">Add an observation</label>
         <input type="text" name="search" onKeyUp={this.keyup} />
-        <ul>
-          {this.state.currentList.map(obs => <li key={obs.id}>{obs.name}</li>)}
-        </ul>
+        <select onChange={this.handleChange}>
+          {this.state.currentList.map(obs => (
+            <option value={JSON.stringify(obs)} name={obs.name} key={obs.id}>
+              {obs.name}
+            </option>
+          ))}
+        </select>
+        <h4>Observations selected:</h4>
+        <ol>
+          {this.state.diverObservations.map(obs => (
+            <li key={obs.id}>{obs.name}</li>
+          ))}
+        </ol>
       </div>
     )
   }
