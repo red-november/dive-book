@@ -5,34 +5,72 @@ const db = require('../db')
 const Log = db.define('log', {
   diveName: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   isVerified: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   },
 
   // Experience Props
 
   timeIn: {
-    type: Sequelize.DATE
+    type: Sequelize.TIME,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   timeOut: {
-    type: Sequelize.DATE
+    type: Sequelize.TIME,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  date: {
+    type: Sequelize.DATE,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   location: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   maxDepth: {
     type: Sequelize.FLOAT,
-    defaultValue: 0
+    defaultValue: 0,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      min: 0
+    }
   },
   tankPressureStart: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      min: 0
+    }
   },
   tankPressureEnd: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      min: 0
+    }
   },
   tankType: {
     type: Sequelize.STRING
@@ -40,7 +78,12 @@ const Log = db.define('log', {
   },
   beltWeight: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      min: 0
+    }
   },
   wetSuitType: {
     type: Sequelize.STRING
@@ -48,7 +91,13 @@ const Log = db.define('log', {
   },
   wetSuitThickness: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      min: 0,
+      max: 10
+    }
   },
   airMixture: {
     type: Sequelize.STRING
@@ -58,11 +107,17 @@ const Log = db.define('log', {
     type: Sequelize.TEXT
   },
   hasStrongCurrent: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   },
   visibility: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      min: 0
+    }
   }
 })
 
