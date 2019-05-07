@@ -11,6 +11,8 @@ class ObservationSearch extends Component {
     }
     this.keyup = this.keyup.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.enterObservation = this.enterObservation.bind(this)
+    this.removeFromList = this.removeFromList.bind(this)
   }
   componentDidMount() {
     this.props.fetchObservations()
@@ -29,17 +31,41 @@ class ObservationSearch extends Component {
   handleChange(evt) {
     let currentObs = evt.target.value
     let currentObsArr = [...this.state.diverObservations]
-    currentObsArr.push(JSON.parse(currentObs))
-    this.setState({
-      diverObservations: currentObsArr
-    })
+    if (!currentObsArr.find(obs => obs.id === JSON.parse(currentObs).id)) {
+      currentObsArr.push(JSON.parse(currentObs))
+      this.setState({
+        diverObservations: currentObsArr
+      })
+    }
+  }
+
+  removeFromList(id) {
+    let currentObsArr = [...this.state.diverObservations]
+    currentObsArr = currentObsArr.filter(obs => obs.id !== id)
+    this.setState({diverObservations: currentObsArr})
+  }
+
+  enterObservation(evt) {
+    if (evt.keyCode === 13) {
+      let topSelection = this.state.currentList[0]
+      let currentObsArr = [...this.state.diverObservations]
+      if (!currentObsArr.find(obs => obs.id === topSelection.id)) {
+        currentObsArr.push(topSelection)
+        this.setState({diverObservations: currentObsArr})
+      }
+    }
   }
 
   render() {
     return (
       <div>
         <label htmlFor="search">Add an observation</label>
-        <input type="text" name="search" onKeyUp={this.keyup} />
+        <input
+          type="text"
+          name="search"
+          onKeyUp={this.keyup}
+          onKeyDown={this.enterObservation}
+        />
         <select onChange={this.handleChange}>
           {this.state.currentList.map(obs => (
             <option value={JSON.stringify(obs)} name={obs.name} key={obs.id}>
@@ -50,7 +76,10 @@ class ObservationSearch extends Component {
         <h4>Observations selected:</h4>
         <ol>
           {this.state.diverObservations.map(obs => (
-            <li key={obs.id}>{obs.name}</li>
+            <li key={obs.id}>
+              {obs.name}{' '}
+              <span onClick={() => this.removeFromList(obs.id)}>X</span>
+            </li>
           ))}
         </ol>
       </div>
