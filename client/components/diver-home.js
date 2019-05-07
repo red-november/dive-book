@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getDiverLogsThunk, getDiverCertsThunk, getBadgesThunk} from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
+import {LineChart} from './LineChart'
 
 /**
  * COMPONENT
@@ -64,6 +65,22 @@ class DiverHome extends Component {
           ))}
         </div>
         <div className="canva" />
+        {/* <LineChart
+          data={{
+            topicName: 'Air Consumption',
+            topic: 1,
+            dates: [
+              {
+                date: '2019-01-01',
+                value: 3
+              },
+              {
+                date: '2019-02-01',
+                value: 5
+              }
+            ]
+          }}
+        /> */}
       </div>
     )
   }
