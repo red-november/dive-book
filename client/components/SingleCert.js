@@ -5,6 +5,7 @@ import {
   updateCertificationThunk,
   deleteCertificationThunk
 } from '../store'
+import {CertForm} from './index'
 
 class SingleCert extends Component {
   constructor() {
@@ -62,89 +63,26 @@ class SingleCert extends Component {
   }
 
   render() {
-    const providerOptions = ['MAUI', 'PADI', 'SSI', 'Other']
-    const levelOptions = [
-      'Open Water',
-      'Advancded Open Water',
-      'Rescue Diver',
-      'Deep Diver'
-    ]
-    const {
-      certId,
-      provider,
-      date,
-      level,
-      instructorId,
-      displayText
-    } = this.state
+    // const {
+    //   certId,
+    //   provider,
+    //   date,
+    //   level,
+    //   instructorId,
+    //   displayText
+    // } = this.state
     return (
-      <form className="InputForm" onSubmit={this.handleSubmit}>
-        <label htmlFor="certId">Certification ID: </label>
-        <input
-          type="text"
-          name="certId"
-          value={certId}
-          onChange={this.handleChange}
+      <div>
+        <CertForm
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          {...this.state}
+          singleCert={this.props.SingleCert}
         />
-
-        <label htmlFor="provider">Provider: </label>
-
-        {!displayText ? (
-          <select name="provider" onChange={this.handleChange}>
-            {providerOptions.map(
-              opt =>
-                opt === this.props.SingleCert.provider ? (
-                  <option value={opt} selected>
-                    {opt}
-                  </option>
-                ) : (
-                  <option value={opt}>{opt}</option>
-                )
-            )}
-          </select>
-        ) : (
-          <input
-            type="text"
-            name="provider"
-            value={provider}
-            onChange={this.handleChange}
-          />
-        )}
-
-        <label htmlFor="date">Date Obtained: </label>
-        <input
-          type="date"
-          name="date"
-          value={date}
-          onChange={this.handleChange}
-        />
-
-        <label htmlFor="level">Level: </label>
-        <select name="level" onChange={this.handleChange}>
-          {levelOptions.map(
-            opt =>
-              opt === this.props.SingleCert.level ? (
-                <option value={opt} selected>
-                  {opt}
-                </option>
-              ) : (
-                <option value={opt}>{opt}</option>
-              )
-          )}
-        </select>
-        <label htmlFor="instructorId">Instructor ID: </label>
-        <input
-          type="text"
-          name="instructorId"
-          value={instructorId}
-          onChange={this.handleChange}
-        />
-
-        <button type="submit">Update Certification</button>
         <button type="button" onClick={this.handleDelete}>
           Delete Certification
         </button>
-      </form>
+      </div>
     )
   }
 }
