@@ -19,7 +19,6 @@ async function seed() {
   const diveShop = await Promise.all([
     DiveShop.create({
       email: 'hawaii@email.com',
-      password: '123',
       name: 'Hawaii',
       location: 'Honolulu Street, Hawaii',
       storeFrontImgUrl: 'public/pictures/diveshop/hawaiiShop.jpg',
@@ -27,7 +26,6 @@ async function seed() {
     }),
     DiveShop.create({
       email: 'maldives@email.com',
-      password: '123',
       name: 'Maldives',
       location: 'Maldives Street, Maldives',
       storeFrontImgUrl: 'public/pictures/diveshop/maldivesShop.jpeg',
