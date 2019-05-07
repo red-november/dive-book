@@ -19,7 +19,6 @@ async function seed() {
   const diveShop = await Promise.all([
     DiveShop.create({
       email: 'hawaii@email.com',
-      password: '123',
       name: 'Hawaii',
       location: 'Honolulu Street, Hawaii',
       storeFrontImgUrl: 'public/pictures/diveshop/hawaiiShop.jpg',
@@ -27,7 +26,6 @@ async function seed() {
     }),
     DiveShop.create({
       email: 'maldives@email.com',
-      password: '123',
       name: 'Maldives',
       location: 'Maldives Street, Maldives',
       storeFrontImgUrl: 'public/pictures/diveshop/maldivesShop.jpeg',
@@ -91,6 +89,13 @@ async function seed() {
     })
   ])
 
+  const badges = await Promise.all([
+    Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
+    Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
+    Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
+    Badge.create({name: 'Voyager', description: 'Dived in over 10 places'})
+  ])
+
   const logs = await Promise.all([
     Log.create({
       diveName: `Barracuda Point`,
@@ -99,8 +104,9 @@ async function seed() {
       location: `Sipadan Island, Malaysia`,
       isVerified: true,
       diverId: 1 /* Cody */,
-      timeIn: `2019-05-01 08:00:00`,
-      timeOut: `2019-05-01 09:00:00`,
+      timeIn: `08:00`,
+      timeOut: `09:00:00`,
+      date: `2019-05-01`,
       maxDepth: 100,
       tankPressureStart: 200,
       tankPressureEnd: 50,
@@ -115,14 +121,38 @@ async function seed() {
     }),
 
     Log.create({
+      diveName: `Barracuda Point`,
+      offeredDiveId: 1,
+      diveshopId: 1,
+      location: `Sipadan Island, Malaysia`,
+      isVerified: true,
+      diverId: 2 /* Murphy */,
+      timeIn: `08:00:00`,
+      timeOut: `09:00:00`,
+      date: `2019-05-01`,
+      maxDepth: 100,
+      tankPressureStart: 260,
+      tankPressureEnd: 30,
+      tankType: `Steel`,
+      beltWeight: 30,
+      airMixture: `Hydreliox`,
+      description: `Lol I almost fainted`,
+      wetSuitType: `The Full Wetsuit`,
+      wetSuitThickness: 3 /*mm*/,
+      hasStrongCurrent: false,
+      visibility: 15
+    }),
+
+    Log.create({
       diveName: `Blue Corner Wall`,
       offeredDiveId: 2,
       diveshopId: 1,
       location: `Palau, Micronesia`,
       isVerified: true,
       diverId: 1 /* Cody */,
-      timeIn: `2019-04-29 10:00:00`,
-      timeOut: `2019-04-29 11:15:00`,
+      timeIn: `10:00:00`,
+      timeOut: `11:15:00`,
+      date: `2019-04-29`,
       maxDepth: 80,
       tankPressureStart: 220,
       tankPressureEnd: 60,
@@ -143,8 +173,9 @@ async function seed() {
       location: `Belize City, Belize`,
       isVerified: true,
       diverId: 1 /* Cody */,
-      timeIn: `2019-04-28 15:00:00`,
-      timeOut: `2019-04-29 15:45:00`,
+      timeIn: `15:00:00`,
+      timeOut: `15:45:00`,
+      date: `2019-04-28`,
       maxDepth: 85,
       tankPressureStart: 250,
       tankPressureEnd: 40,
@@ -157,13 +188,6 @@ async function seed() {
       hasStrongCurrent: false,
       visibility: 23
     })
-  ])
-
-  const badges = await Promise.all([
-    Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
-    Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
-    Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
-    Badge.create({name: 'Voyager', description: 'Dived in over 10 countries'})
   ])
 
   const observations = await Promise.all([
@@ -248,11 +272,11 @@ async function seed() {
     }),
     EarnedBadge.create({
       diverId: 1,
-      badgeId: 2
+      badgeId: 4
     }),
     EarnedBadge.create({
       diverId: 2,
-      badgeId: 1
+      badgeId: 3
     })
   ])
 

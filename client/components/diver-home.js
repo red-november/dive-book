@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {getDiverLogsThunk, getDiverCertsThunk, getBadgesThunk} from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
 
@@ -15,7 +16,7 @@ class DiverHome extends Component {
   }
   render() {
     const {firstName} = this.props.diver
-    const {diverProfile, diverCerts, diverBadges} = this.props
+    const {diverLogs, diverCerts, diverBadges} = this.props
 
     if (!this.props.diver.id) {
       return <h1>LOADING</h1>
@@ -27,9 +28,11 @@ class DiverHome extends Component {
         <div>
           {' '}
           <h3>Logs:</h3>
-          {diverProfile.map(log => (
+          {diverLogs.map(log => (
             <ul key={log.id}>
-              <li>{log.diveName}</li>
+              <li>
+                <Link to={`/logs/${log.id}`}>{log.diveName}</Link>
+              </li>
             </ul>
           ))}
         </div>
@@ -39,10 +42,15 @@ class DiverHome extends Component {
           {diverCerts.map(cert => (
             <ul key={cert.id}>
               <li>
-                {cert.provider} {cert.level}
+                <Link to={`/certs/${cert.id}`}>
+                  {cert.provider} {cert.level}
+                </Link>
               </li>
             </ul>
           ))}
+          <button type="button">
+            <Link to="/certs/create">Create New Certification</Link>
+          </button>
         </div>
         <div>
           {' '}
@@ -55,6 +63,7 @@ class DiverHome extends Component {
             </ul>
           ))}
         </div>
+        <div className="canva" />
       </div>
     )
   }
@@ -66,7 +75,7 @@ class DiverHome extends Component {
 const mapStateToProps = state => {
   return {
     diver: state.diver,
-    diverProfile: state.diverProfile,
+    diverLogs: state.diverLogs,
     diverCerts: state.diverCerts,
     diverBadges: state.diverBadges
   }
