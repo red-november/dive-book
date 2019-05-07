@@ -7,36 +7,6 @@ router.get('/', async (req, res, next) => {
   res.status(200).send(allLogs)
 })
 
-router.get('/test', async (req, res, next) => {
-  try {
-    // const diverLogs = await Log.findAll({
-    //   include: [{model: Observation}],
-    //   where: {
-    //     diverId: 1
-    //   }
-    // })
-    // const diverBadges = await Badge.findAll({
-    //   include: [
-    //     {
-    //       model: Diver,
-    //       where: {
-    //         id: 1
-    //       }
-    //     }
-    //   ]
-    // })
-
-    let diverBadges = await EarnedBadge.findAll({where: {diverId: 1}})
-    diverBadges = diverBadges.find(b => b.badgeId === 1)
-
-    // const diverLogs = await Log.getAllObservations(1)
-
-    res.json({diverBadges})
-  } catch (error) {
-    next(error)
-  }
-})
-
 router.get('/:logId', async (req, res, next) => {
   const id = Number(req.params.logId)
   const log = await Log.findByPk(id)
@@ -49,13 +19,118 @@ router.get('/diver/:diverId', async (req, res, next) => {
   res.status(200).send(logs)
 })
 
+router.post('/', async (req, res, next) => {
+  try {
+    let {
+      date,
+      diveshopId,
+      diveName,
+      timeIn,
+      timeOut,
+      location,
+      maxDepth,
+      tankPressureStart,
+      tankPressureEnd,
+      tankType,
+      beltWeight,
+      wetSuitType,
+      wetSuitThickness,
+      airMixture,
+      description,
+      visibility,
+      hasStrongCurrent,
+      offeredDiveId
+    } = req.body
+
+    if (typeof diveshopId !== 'number') diveshopId = null
+    if (typeof offeredDiveId !== 'number') offeredDiveId = null
+
+    if (req.user) {
+      const log = await Log.create({
+        diveshopId,
+        diveName,
+        timeIn,
+        timeOut,
+        location,
+        maxDepth,
+        tankPressureStart,
+        tankPressureEnd,
+        tankType,
+        beltWeight,
+        wetSuitThickness,
+        wetSuitType,
+        airMixture,
+        description,
+        visibility,
+        date,
+        hasStrongCurrent,
+        offeredDiveId,
+        diverId: req.user.id
+      })
+      // await log.setDiver(req.user.id)
+      res.status(201).send(log)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/diver/:logId', async (req, res, next) => {
+  const {
+    diveName,
+    timeIn,
+    timeOut,
+    location,
+    maxDepth,
+    tankPressureStart,
+    tankPressureEnd,
+    tankType,
+    beltWeight,
+    wetSuitType,
+    wetSuitThickness,
+    airMixture,
+    description,
+    visibility
+  } = req.body
+  try {
+    const logId = req.params.logId
+    const log = await Log.findByPk(logId)
+    if (!log) {
+      res.send(404)
+    }
+    let logUpdate = await log.update({
+      diveName,
+      timeIn,
+      timeOut,
+      location,
+      maxDepth,
+      tankPressureStart,
+      tankPressureEnd,
+      tankType,
+      beltWeight,
+      wetSuitThickness,
+      wetSuitType,
+      airMixture,
+      description,
+      visibility
+    })
+    res.status(200).send(logUpdate)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/diver/:diverId/addObservations', async (req, res, next) => {
-  const diverId = Number(req.params.diverId)
-  const logs = await Log.findAll({
-    where: {
-      diverId
-    },
-    include: [{model: Observation}]
-  })
-  res.status(200).send(logs)
+  try {
+    const diverId = Number(req.params.diverId)
+    const logs = await Log.findAll({
+      where: {
+        diverId
+      },
+      include: [{model: Observation}]
+    })
+    res.status(200).send(logs)
+  } catch (err) {
+    next(err)
+  }
 })

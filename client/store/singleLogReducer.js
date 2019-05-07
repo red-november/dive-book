@@ -28,6 +28,15 @@ export const getSingleLogThunk = id => async dispatch => {
   }
 }
 
+export const addLogThunk = log => async dispatch => {
+  try {
+    const {data} = await axios.post('/api/logs', log)
+    dispatch(getSingleLog(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
