@@ -29,11 +29,13 @@ const CertForm = ({
           {providerOptions.map(
             opt =>
               opt === singleCert.provider ? (
-                <option value={opt} selected>
+                <option key={opt} value={opt} selected>
                   {opt}
                 </option>
               ) : (
-                <option value={opt}>{opt}</option>
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
               )
           )}
         </select>
@@ -54,11 +56,13 @@ const CertForm = ({
         {levelOptions.map(
           opt =>
             opt === singleCert.level ? (
-              <option value={opt} selected>
+              <option key={opt} value={opt} selected>
                 {opt}
               </option>
             ) : (
-              <option value={opt}>{opt}</option>
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
             )
         )}
       </select>
@@ -70,7 +74,7 @@ const CertForm = ({
         onChange={handleChange}
       />
 
-      <button type="submit">Update Certification</button>
+      <button type="submit">Submit</button>
     </form>
   )
 }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createCertificationThunk} from '../store'
+import {CertForm} from '../components'
 
 class CreateCert extends Component {
   constructor() {
@@ -10,7 +11,8 @@ class CreateCert extends Component {
       provider: '',
       date: '',
       level: '',
-      instructorId: ''
+      instructorId: '',
+      displayText: false
     }
   }
 
@@ -18,6 +20,9 @@ class CreateCert extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+    if (event.target.name === 'provider' && event.target.value === 'Other') {
+      this.setState({displayText: true})
+    }
   }
 
   handleSubmit = async event => {
@@ -36,51 +41,13 @@ class CreateCert extends Component {
   }
 
   render() {
-    const {certId, provider, date, level, instructorId} = this.state
     return (
-      <form className="InputForm" onSubmit={this.handleSubmit}>
-        <label htmlFor="certId">Certification ID: </label>
-        <input
-          type="text"
-          name="certId"
-          value={certId}
-          onChange={this.handleChange}
-        />
-
-        <label htmlFor="provider">Provider: </label>
-        <input
-          type="text"
-          name="provider"
-          value={provider}
-          onChange={this.handleChange}
-        />
-
-        <label htmlFor="date">Date Obtained: </label>
-        <input
-          type="text"
-          name="date"
-          value={date}
-          onChange={this.handleChange}
-        />
-
-        <label htmlFor="level">Level: </label>
-        <input
-          type="text"
-          name="level"
-          value={level}
-          onChange={this.handleChange}
-        />
-
-        <label htmlFor="instructorId">Instructor ID: </label>
-        <input
-          type="text"
-          name="instructorId"
-          value={instructorId}
-          onChange={this.handleChange}
-        />
-
-        <button type="submit">Create Certification</button>
-      </form>
+      <CertForm
+        handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
+        {...this.state}
+        singleCert={this.props.SingleCert}
+      />
     )
   }
 }

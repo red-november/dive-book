@@ -39,7 +39,6 @@ class SingleCert extends Component {
     if (event.target.name === 'provider' && event.target.value === 'Other') {
       this.setState({displayText: true})
     }
-    console.log('selected')
   }
 
   handleSubmit = async event => {
@@ -63,14 +62,6 @@ class SingleCert extends Component {
   }
 
   render() {
-    // const {
-    //   certId,
-    //   provider,
-    //   date,
-    //   level,
-    //   instructorId,
-    //   displayText
-    // } = this.state
     return (
       <div>
         <CertForm

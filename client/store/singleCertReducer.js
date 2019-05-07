@@ -37,7 +37,7 @@ export const updateCertificationThunk = (id, newData) => async dispatch => {
 export const createCertificationThunk = newData => async dispatch => {
   try {
     const res = await axios.post('/api/certs', newData)
-    dispatch(createCertification(res.data))
+    dispatch(getCertification(res.data))
     history.push('/home')
   } catch (error) {
     console.log('error in createCertificationThunk')
