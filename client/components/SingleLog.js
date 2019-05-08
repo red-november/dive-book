@@ -8,7 +8,7 @@ import {
 } from '../store/index'
 import {connect} from 'react-redux'
 import UpdateForm from './UpdateLogForm'
-import Scanner from './QRscanner'
+import {Link} from 'react-router-dom'
 
 class SingleLog extends Component {
   constructor(props) {
@@ -140,12 +140,9 @@ class SingleLog extends Component {
           allShops={this.props.allShops}
           singleShop={this.props.singleShop}
         />
-        <button onClick={this.displayScanner}>Toggle QR Scanner</button>
-        {this.state.displayQrScanner ? (
-          <Scanner />
-        ) : (
-          console.log('Scanner is off')
-        )}
+        <Link to="/qr">
+          <button onClick={this.displayScanner}>Toggle QR Scanner</button>{' '}
+        </Link>
       </div>
     )
   }
