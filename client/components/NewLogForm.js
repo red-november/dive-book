@@ -60,7 +60,6 @@ class AddLog extends Component {
         [evt.target.name]: evt.target.value
       })
     }
-    console.log('state', this.state)
   }
 
   handleSubmit(evt) {
