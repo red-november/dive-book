@@ -1,6 +1,5 @@
 /* eslint-disable complexity */
 import React, {Component} from 'react'
-import axios from 'axios'
 import {connect} from 'react-redux'
 import {getShopsThunk, addLogThunk, getSingleShopThunk} from '../store/index'
 import Form from './FormContainer'
@@ -37,7 +36,6 @@ class AddLog extends Component {
   }
 
   handleChange(evt) {
-    console.log('target value:', evt.target.value)
     if (evt.target.name === 'diveshopId') {
       //fetch single shop if id is not null
       evt.target.value && this.props.fetchSingleShop(evt.target.value)
@@ -52,6 +50,7 @@ class AddLog extends Component {
     }
     if (evt.target.name === 'diveName' && !this.state.displayText) {
       let [diveName, offeredDiveId] = evt.target.value.split('^')
+      offeredDiveId = Number(offeredDiveId)
       this.setState({
         diveName,
         offeredDiveId

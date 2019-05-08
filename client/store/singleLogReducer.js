@@ -11,20 +11,21 @@ const initialState = {}
  */
 const GET_SINGLE_LOG = 'GET_SINGLE_LOG'
 const UPDATE_DIVER_LOG = 'UPDATE_DIVER_LOG'
+const VERIFY_DIVER_LOG = 'VERIFY_DIVER_LOG'
 
 /**
  * ACTION CREATORS
  */
 const getSingleLog = log => ({type: GET_SINGLE_LOG, log})
 const updateDiverLog = log => ({type: UPDATE_DIVER_LOG, log})
-
+const verifyDiverLog = log => ({type: VERIFY_DIVER_LOG, log})
 /**
  * THUNK CREATORS
  */
 export const getSingleLogThunk = (id, newLog) => async dispatch => {
   try {
-    const res = await axios.get(`/api/logs/${id}`, newLog)
-    dispatch(getSingleLog(res.data))
+    const {data} = await axios.get(`/api/logs/${id}`, newLog)
+    dispatch(getSingleLog(data))
   } catch (err) {
     console.error(err)
   }
@@ -34,6 +35,7 @@ export const addLogThunk = log => async dispatch => {
   try {
     const {data} = await axios.post('/api/logs', log)
     dispatch(getSingleLog(data))
+    history.push('/home')
   } catch (err) {
     console.error(err)
   }
@@ -41,11 +43,23 @@ export const addLogThunk = log => async dispatch => {
 
 export const updateLogThunk = (id, newData) => async dispatch => {
   try {
-    const res = await axios.put(`/api/logs/diver/${id}`, newData)
-    dispatch(updateDiverLog(res.data))
+    const {data} = await axios.put(`/api/logs/diver/${id}`, newData)
+    dispatch(updateDiverLog(data))
     history.push('/home')
   } catch (error) {
     console.error('error in updateLogThunk')
+  }
+}
+
+export const verifyLogThunk = (logId, scannedId) => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/logs/diver/verify/${logId}`, {
+      scannedId
+    })
+    dispatch(verifyDiverLog({data}))
+    history.push(`/logs/${logId}`)
+  } catch (error) {
+    console.error('error in verifyLogThunk')
   }
 }
 

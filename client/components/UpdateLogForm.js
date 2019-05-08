@@ -37,8 +37,6 @@ const UpdateForm = props => {
   ]
   let airMixtureOptions = ['Air', 'Nitrox', 'Hydreliox', 'Oxygen']
 
-  console.log('id', diveshopId)
-
   return (
     <div>
       <h2>Log: </h2>
@@ -54,7 +52,7 @@ const UpdateForm = props => {
                 </option>
               ) : (
                 <option key={shop.id} value={shop.id}>
-                  {shop.id}. {shop.name}
+                  {shop.name}
                 </option>
               )
           )}
