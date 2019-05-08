@@ -34,6 +34,7 @@ class AllLogs extends Component {
 
     return (
       <div>
+        <CircleChart data={chartData} />
         {logs.map(log => (
           <ul key={log.id}>
             <li>
@@ -41,7 +42,6 @@ class AllLogs extends Component {
             </li>
           </ul>
         ))}
-        <CircleChart data={chartData} />
       </div>
     )
   }
