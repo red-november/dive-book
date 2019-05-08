@@ -11,7 +11,13 @@ class AllObservations extends Component {
     const {observations} = this.props
     const headers = ['Name', 'Category', 'Occurence']
     console.log(observations)
-    const chartdata = Object.values(data)
+
+    // const data = observations.reduce((accum,log)=>{
+
+    // })
+
+    // const chartdata = Object.values(data)
+
     if (observations.length === 0) {
       return <h1>LOADING</h1>
     }
@@ -29,7 +35,18 @@ class AllObservations extends Component {
             </tr>
           ))}
         </table>
-        <BarChart data={chartdata} />
+        <BarChart
+          data={[
+            {
+              value: 1,
+              name: 'glittering'
+            },
+            {
+              value: 5,
+              name: 'luminous'
+            }
+          ]}
+        />
       </div>
     )
   }

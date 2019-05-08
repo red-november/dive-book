@@ -65,22 +65,32 @@ class DiverHome extends Component {
           ))}
         </div>
         <div className="canva" />
-        {/* <LineChart
-          data={{
-            topicName: 'Air Consumption',
-            topic: 1,
-            dates: [
-              {
-                date: '2019-01-01',
-                value: 3
-              },
-              {
-                date: '2019-02-01',
-                value: 5
-              }
-            ]
-          }}
-        /> */}
+        <LineChart
+          data={[
+            {
+              data: [
+                {
+                  topicName: 'San Francisco',
+                  name: 123,
+                  date: '2017-01-16T16:00:00-08:00',
+                  value: 1
+                },
+                {
+                  topicName: 'San Francisco',
+                  name: 123,
+                  date: '2017-01-17T16:00:00-08:00',
+                  value: 2
+                },
+                {
+                  topicName: 'San Francisco',
+                  name: 123,
+                  date: '2017-01-18T16:00:00-08:00',
+                  value: 3
+                }
+              ]
+            }
+          ]}
+        />
       </div>
     )
   }

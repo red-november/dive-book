@@ -17,7 +17,8 @@ export const BarChart = ({data}) => {
     <div>
       <Bar
         data={data}
-        margin={{top: 30, bottom: 30, left: 30, right: 30}}
+        isHorizontal={true}
+        margin={{top: 10, bottom: 1, left: 10, right: 2}}
         colorSchema={colorSchema}
       />
       <Legend data={data} colorSchema={colorSchema} />
