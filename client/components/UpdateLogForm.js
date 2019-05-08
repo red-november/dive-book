@@ -52,7 +52,7 @@ const UpdateForm = props => {
                 </option>
               ) : (
                 <option key={shop.id} value={shop.id}>
-                  {shop.id}. {shop.name}
+                  {shop.name}
                 </option>
               )
           )}

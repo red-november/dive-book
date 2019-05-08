@@ -128,7 +128,6 @@ router.put('/diver/:logId', async (req, res, next) => {
 
 router.put('/diver/verify/:logId', async (req, res, next) => {
   const {scannedId} = req.body
-  console.log('body', req.body)
   try {
     const logId = Number(req.params.logId)
     const log = await Log.findByPk(logId)

@@ -52,7 +52,6 @@ export const updateLogThunk = (id, newData) => async dispatch => {
 }
 
 export const verifyLogThunk = (logId, scannedId) => async dispatch => {
-  console.log('we are in the verify thunk')
   try {
     const {data} = await axios.put(`/api/logs/diver/verify/${logId}`, {
       scannedId

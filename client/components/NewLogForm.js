@@ -1,6 +1,5 @@
 /* eslint-disable complexity */
 import React, {Component} from 'react'
-import axios from 'axios'
 import {connect} from 'react-redux'
 import {getShopsThunk, addLogThunk, getSingleShopThunk} from '../store/index'
 import Form from './FormContainer'
