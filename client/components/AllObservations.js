@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {getObservationsThunk} from '../store/observationsReducer'
 import {connect} from 'react-redux'
 import {BarChart} from './BarChartAllObservations'
+import {FillObservationCategory} from '../../utilities/d3Utils'
+import {CircleChart} from './D3Test'
 
 class AllObservations extends Component {
   componentDidMount() {
@@ -10,13 +12,24 @@ class AllObservations extends Component {
   render() {
     const {observations} = this.props
     const headers = ['Name', 'Category', 'Occurence']
-    console.log(observations)
+    // console.log(observations)
 
-    // const data = observations.reduce((accum,log)=>{
+    let data = [
+      {quantity: 0, name: 'flora', id: 1},
+      {quantity: 0, name: 'mollusks', id: 2},
+      {quantity: 0, name: 'fish', id: 3},
+      {quantity: 0, name: 'coral', id: 4},
+      {quantity: 0, name: 'mammals', id: 5},
+      {quantity: 0, name: 'other living things', id: 6},
+      {quantity: 0, name: 'sponges', id: 7},
+      {quantity: 0, name: 'inanimate objects', id: 8}
+    ]
 
-    // })
-
-    // const chartdata = Object.values(data)
+    observations.forEach(obs => {
+      let {category} = obs
+      data = FillObservationCategory(data, category)
+    })
+    console.log('dataaaa', data)
 
     if (observations.length === 0) {
       return <h1>LOADING</h1>
@@ -35,17 +48,18 @@ class AllObservations extends Component {
             </tr>
           ))}
         </table>
-        <BarChart
-          data={[
-            {
-              value: 1,
-              name: 'glittering'
-            },
-            {
-              value: 5,
-              name: 'luminous'
-            }
-          ]}
+        <CircleChart
+          data={data}
+          // data={[
+          //   {
+          //     value: 1,
+          //     name: 'glittering'
+          //   },
+          //   {
+          //     value: 5,
+          //     name: 'luminous'
+          //   }
+          // ]}
         />
       </div>
     )

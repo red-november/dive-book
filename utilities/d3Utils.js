@@ -5,8 +5,7 @@ const GraphifyDiscoverer = (
   data,
   dimensions,
   margin,
-  axisIntervals,
-
+  axisIntervals
 ) => {
   const minimum = 1
   const axisLabelSpace = 60
@@ -25,7 +24,7 @@ const GraphifyDiscoverer = (
     }
   })
 
-  high = Math.ceil(high/10) * 10
+  high = Math.ceil(high / 10) * 10
 
   for (let i = 1; i <= axisIntervals; i++) {
     xAxisValues.push(high * (i / axisIntervals))
@@ -118,37 +117,69 @@ const GraphifyDiscoverer = (
 
 // eslint-disable-next-line complexity
 const FillDiscoverer = (data, category) => {
-  switch(category) {
+  switch (category) {
     case 'flora':
-      data[0].height = data[0].height + 1;
-      break;
+      data[0].height = data[0].height + 1
+      break
     case 'mollusks':
-      data[1].height = data[1].height + 1;
-      break;
+      data[1].height = data[1].height + 1
+      break
     case 'fish':
-      data[2].height = data[2].height + 1;
-      break;
+      data[2].height = data[2].height + 1
+      break
     case 'coral':
-      data[3].height = data[3].height + 1;
-      break;
+      data[3].height = data[3].height + 1
+      break
     case 'mammals':
-      data[4].height = data[4].height + 1;
-      break;
+      data[4].height = data[4].height + 1
+      break
     case 'other living things':
-      data[5].height = data[5].height + 1;
-      break;
+      data[5].height = data[5].height + 1
+      break
     case 'sponges':
-      data[6].height = data[6].height + 1;
-      break;
+      data[6].height = data[6].height + 1
+      break
     case 'inanimate objects':
-      data[7].height = data[7].height + 1;
-      break;
+      data[7].height = data[7].height + 1
+      break
     default:
-      break;
+      break
   }
-  console.log("TYPE ---> ",category)
-  console.log("DATA ---> ",data)
+  console.log('TYPE ---> ', category)
+  console.log('DATA ---> ', data)
   return data
 }
-
-module.exports = {GraphifyDiscoverer, FillDiscoverer}
+const FillObservationCategory = (data, category) => {
+  switch (category) {
+    case 'flora':
+      data[0].quantity = data[0].quantity + 1
+      break
+    case 'mollusks':
+      data[1].quantity = data[1].quantity + 1
+      break
+    case 'fish':
+      data[2].quantity = data[2].quantity + 1
+      break
+    case 'coral':
+      data[3].quantity = data[3].quantity + 1
+      break
+    case 'mammals':
+      data[4].quantity = data[4].quantity + 1
+      break
+    case 'other living things':
+      data[5].quantity = data[5].quantity + 1
+      break
+    case 'sponges':
+      data[6].quantity = data[6].quantity + 1
+      break
+    case 'inanimate objects':
+      data[7].quantity = data[7].quantity + 1
+      break
+    default:
+      break
+  }
+  // console.log('TYPE ---> ', category)
+  // console.log('DATA ---> ', data)
+  return data
+}
+module.exports = {GraphifyDiscoverer, FillDiscoverer, FillObservationCategory}

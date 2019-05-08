@@ -13,6 +13,7 @@ export const CircleChart = ({data}) => {
     '#002d2f',
     '#0d2223'
   ]
+  console.log('data in D3TEST', data)
   return (
     <div>
       <Donut
