@@ -3,7 +3,7 @@ import {getObservationsThunk} from '../store/observationsReducer'
 import {connect} from 'react-redux'
 import {BarChart} from './BarChartAllObservations'
 import {FillObservationCategory} from '../../utilities/d3Utils'
-import {CircleChart, CircleChartObservation} from './D3Test'
+import {CircleChart, CircleChartObservation} from './D3Components'
 import {log} from 'util'
 
 class AllObservations extends Component {
@@ -13,35 +13,6 @@ class AllObservations extends Component {
   render() {
     const {observations} = this.props
     const headers = ['Name', 'Category', 'Occurence']
-    // console.log(observations)
-    let categoryFound = []
-    // let categoryData = [
-    // {quantity: 0, name: 'flora', id: 1},
-    // {quantity: 0, name: 'mollusks', id: 2},
-    // {quantity: 0, name: 'fish', id: 3},
-    // {quantity: 0, name: 'coral', id: 4},
-    // {quantity: 0, name: 'mammals', id: 5},
-    // {quantity: 0, name: 'other living things', id: 6},
-    // {quantity: 0, name: 'sponges', id: 7},
-    // {quantity: 0, name: 'inanimate objects', id: 8}
-    // ]
-    // observations.forEach(obs => {
-    //   if (!categoryFound.indexOf(obs.category)) {
-    //     categoryFound.push(obs.category)
-    //     categoryData.push({
-    //       quantity: 0,
-    //       name: obs.category,
-    //       id: categoryFound.length + 1
-    //     })
-    //   }
-    // })
-
-    // console.log('categoryDataaaa', categoryData)
-    // observations.forEach(obs => {
-    //   let {category} = obs
-    //   categoryData = FillObservationCategory(categoryData, category)
-    // })
-
     const categoryData = observations.reduce((accum, obs) => {
       if (!accum[obs.category]) {
         accum[obs.category] = {
@@ -78,11 +49,11 @@ class AllObservations extends Component {
       <div>
         <div className="Container">
           <div className="ChartContainer">
-            <h4>Category BreakDown</h4>
+            <h4>Category Breakdown</h4>
             <CircleChart data={chartCategoryData} />
           </div>
           <div className="ChartContainer">
-            <h4>Observations Occurence BreakDown</h4>
+            <h4>Observations Occurence Breakdown</h4>
             <CircleChartObservation data={chartObsData} />
           </div>
         </div>

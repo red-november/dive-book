@@ -1,5 +1,5 @@
 import React from 'react'
-import {Donut, Legend} from 'britecharts-react'
+import {Donut, Legend, Line, Bar} from 'britecharts-react'
 import {ColorMaker} from '../../utilities/d3Utils'
 
 export const CircleChart = ({data}) => {
@@ -31,6 +31,34 @@ export const CircleChartObservation = ({data}) => {
         margin={{top: 30, bottom: 30, left: 30, right: 30}}
         colorSchema={colorSchema}
       />
+    </div>
+  )
+}
+
+export const LineChart = ({data}) => {
+  const colorSchema = ColorMaker(data.dataByTopic)
+  return (
+    <div>
+      <Line
+        data={data}
+        lineCurve="basis"
+        margin={{top: 50, bottom: 50, left: 50, right: 50}}
+        colorSchema={colorSchema}
+      />
+    </div>
+  )
+}
+
+export const BarChart = ({data}) => {
+  const colorSchema = ColorMaker()
+  return (
+    <div>
+      <Bar
+        data={data}
+        margin={{top: 10, bottom: 1, left: 10, right: 2}}
+        colorSchema={colorSchema}
+      />
+      <Legend data={data} colorSchema={colorSchema} />
     </div>
   )
 }

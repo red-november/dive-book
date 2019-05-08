@@ -191,9 +191,17 @@ const ColorMaker = input => {
   return colors
 }
 
+const TimeStringToFloat = time => {
+  let hoursMinutes = time.split(/[.:]/)
+  let hours = parseInt(hoursMinutes[0], 10)
+  let minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0
+  return hours + minutes / 60
+}
+
 module.exports = {
   GraphifyDiscoverer,
   FillDiscoverer,
   FillObservationCategory,
-  ColorMaker
+  ColorMaker,
+  TimeStringToFloat
 }

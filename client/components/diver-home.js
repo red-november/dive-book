@@ -2,9 +2,17 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {getDiverLogsThunk, getDiverCertsThunk, getBadgesThunk} from '../store'
+import {
+  getDiverLogsThunk,
+  getDiverCertsThunk,
+  getBadgesThunk,
+  getLogsThunk
+} from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
-import {LineChart} from './LineChart'
+import {LineChart, BarChart} from './D3Components'
+import {timeDay} from 'd3-time'
+import {TimeStringToFloat} from '../../utilities/d3Utils'
+import AllLogs from './AllLogs'
 
 /**
  * COMPONENT
@@ -14,12 +22,72 @@ class DiverHome extends Component {
     this.props.loadDiverLogs(this.props.diver.id)
     this.props.loadDiverCerts(this.props.diver.id)
     this.props.loadDiverBadges(this.props.diver.id)
+    this.props.loadAllLogs()
   }
   render() {
-    const {firstName} = this.props.diver
-    const {diverLogs, diverCerts, diverBadges} = this.props
+    console.log('this.propssss', this.props)
+    const {firstName, id} = this.props.diver
+    const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
+    const timeUnderWaterDateData = diverLogs.reduce((accum, log) => {
+      if (log) {
+        accum.push({
+          date: log.date,
+          value:
+            (TimeStringToFloat(log.timeOut) - TimeStringToFloat(log.timeIn)) *
+            60
+        })
+      }
+      return accum
+    }, [])
 
-    if (!this.props.diver.id) {
+    const airEfficiencyDateData = diverLogs.reduce((accum, log) => {
+      if (log) {
+        accum.push({
+          date: log.date,
+          value:
+            (log.tankPressureStart - log.tankPressureEnd) /
+            ((TimeStringToFloat(log.timeOut) - TimeStringToFloat(log.timeIn)) *
+              60)
+        })
+      }
+      return accum
+    }, [])
+
+    // const numberOfDivesComparisonData = allLogs.reduce((accum, log) => {
+    //   if (!accum.myDives && log.diverId === id) {
+    //     accum.myDives = {
+    //       id: log.id,
+    //       name: log.diverId,
+    //       value: 1
+    //     }
+    //   } else if(log.) {
+    //     accum[log.diverId].value += 1
+    //   }
+    // })
+
+    const timeUnderWaterData = {
+      dataByTopic: [
+        {
+          topicName: 'Time Under Water',
+          topic: 'Time Under Water',
+          dates: timeUnderWaterDateData
+        }
+      ]
+    }
+
+    const airEfficiencyData = {
+      dataByTopic: [
+        {
+          topicName: 'Air Consumption per min',
+          topic: 'Air Consumption per min',
+          dates: airEfficiencyDateData
+        }
+      ]
+    }
+    // const chartTimeUnderWaterDate = Object.values(timeUnderWaterData)
+    console.log('time under water', airEfficiencyDateData)
+
+    if (this.props.allLogs.length === 0) {
       return <h1>LOADING</h1>
     }
 
@@ -65,32 +133,20 @@ class DiverHome extends Component {
           ))}
         </div>
         <div className="canva" />
-        {/* <LineChart
-          data={[
-            {
-              data: [
-                {
-                  topicName: 'San Francisco',
-                  name: 123,
-                  date: '2017-01-16T16:00:00-08:00',
-                  value: 1
-                },
-                {
-                  topicName: 'San Francisco',
-                  name: 123,
-                  date: '2017-01-17T16:00:00-08:00',
-                  value: 2
-                },
-                {
-                  topicName: 'San Francisco',
-                  name: 123,
-                  date: '2017-01-18T16:00:00-08:00',
-                  value: 3
-                }
-              ]
-            }
-          ]}
-        /> */}
+        <div className="Container">
+          <div className="ChartContainer">
+            <h4>Time Under Water Breakdown</h4>
+            <LineChart data={timeUnderWaterData} />
+          </div>
+          <div className="ChartContainer">
+            <h4>Air Consumption Bar per min Breakdown</h4>
+            <LineChart data={airEfficiencyData} />
+          </div>
+          <div className="ChartContainer">
+            <h4>Number of Dives for All Divers</h4>
+            {/* <BarChart data={airEfficiencyData} /> */}
+          </div>
+        </div>
       </div>
     )
   }
@@ -104,7 +160,8 @@ const mapStateToProps = state => {
     diver: state.diver,
     diverLogs: state.diverLogs,
     diverCerts: state.diverCerts,
-    diverBadges: state.diverBadges
+    diverBadges: state.diverBadges,
+    allLogs: state.logs
   }
 }
 
@@ -117,6 +174,9 @@ const mapDispatchToProps = dispatch => ({
   },
   loadDiverBadges: diverId => {
     dispatch(getDiverBadgesThunk(diverId))
+  },
+  loadAllLogs: () => {
+    dispatch(getLogsThunk())
   }
 })
 

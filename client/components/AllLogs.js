@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {getLogsThunk} from '../store/allLogsReducer'
 import {connect} from 'react-redux'
-import {CircleChart} from './D3Test'
+import {CircleChart} from './D3Components'
 
 class AllLogs extends Component {
   constructor(props) {
@@ -33,7 +33,8 @@ class AllLogs extends Component {
     }
 
     return (
-      <div>
+      <div className="ChartContainer">
+        <h4>Number of Dives by Logs</h4>
         <CircleChart data={chartData} />
         {logs.map(log => (
           <ul key={log.id}>
