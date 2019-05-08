@@ -27,8 +27,9 @@ router.delete('/:logId', async (req, res, next) => {
     const log = await Log.findByPk(id)
     if (req.user.id === log.diverId && !log.isVerified) {
       log.destroy()
+      res.sendStatus(202)
     }
-    res.sendStatus(202)
+    next(new Error('unable to delete log'))
   } catch (error) {
     next(error)
   }
