@@ -49,6 +49,11 @@ form div {
   border: ridge 3px white;
 }
 
+.Container {
+  display: flex;
+}
 .ChartContainer {
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }

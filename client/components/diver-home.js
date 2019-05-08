@@ -65,7 +65,7 @@ class DiverHome extends Component {
           ))}
         </div>
         <div className="canva" />
-        <LineChart
+        {/* <LineChart
           data={[
             {
               data: [
@@ -90,7 +90,7 @@ class DiverHome extends Component {
               ]
             }
           ]}
-        />
+        /> */}
       </div>
     )
   }

@@ -76,9 +76,15 @@ class AllObservations extends Component {
 
     return (
       <div>
-        <div className="ChartContainer">
-          <CircleChart data={chartCategoryData} />
-          <CircleChartObservation data={chartObsData} />
+        <div className="Container">
+          <div className="ChartContainer">
+            <h4>Category BreakDown</h4>
+            <CircleChart data={chartCategoryData} />
+          </div>
+          <div className="ChartContainer">
+            <h4>Observations Occurence BreakDown</h4>
+            <CircleChartObservation data={chartObsData} />
+          </div>
         </div>
 
         <table>
