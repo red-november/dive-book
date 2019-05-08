@@ -13,14 +13,36 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:logId', async (req, res, next) => {
   const id = Number(req.params.logId)
-  const log = await Log.findByPk(id)
-  res.status(200).send(log)
+  try {
+    const log = await Log.findByPk(id)
+    res.status(200).send(log)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:logId', async (req, res, next) => {
+  const id = Number(req.params.logId)
+  try {
+    const log = await Log.findByPk(id)
+    if (req.user.id === log.diverId && !log.isVerified) {
+      log.destroy()
+      res.sendStatus(202)
+    }
+    next(new Error('unable to delete log'))
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.get('/diver/:diverId', async (req, res, next) => {
-  const diverId = Number(req.params.diverId)
-  const logs = await Log.findAll({where: {diverId: diverId}})
-  res.status(200).send(logs)
+  try {
+    const diverId = Number(req.params.diverId)
+    const logs = await Log.findAll({where: {diverId: diverId}})
+    res.status(200).send(logs)
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.post('/', async (req, res, next) => {
