@@ -3,7 +3,8 @@ let QRCode = require('qrcode.react')
 
 //must take in a string!
 const Generator = ({diveshopId}) => {
-  return <QRCode value={diveshopId} />
+  console.log('iddddd', diveshopId)
+  return <QRCode value={diveshopId.toString()} />
 }
 
 export default Generator

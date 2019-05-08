@@ -1,18 +1,22 @@
 import React, {Component} from 'react'
 import QrReader from 'react-qr-reader'
+import {connect} from 'react-redux'
+import {verifyLogThunk} from '../store/index'
 
 class Scanner extends Component {
   state = {
     result: 'No result'
   }
 
-  handleScan = data => {
+  handleScan = async data => {
     if (data) {
       this.setState({
         result: data
       })
+      this.props.verifyLog(this.props.singleLog.id, this.state.result)
     }
   }
+
   handleError = err => {
     console.error(err)
   }
@@ -31,4 +35,14 @@ class Scanner extends Component {
   }
 }
 
-export default Scanner
+const mapStateToProps = state => ({
+  singleLog: state.singleLog
+})
+
+const mapDispatchToProps = dispatch => ({
+  verifyLog: (logId, scannedId) => {
+    dispatch(verifyLogThunk(logId, scannedId))
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Scanner)
