@@ -34,7 +34,8 @@ const Observation = db.define('observation', {
     }
   },
   imageUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: '/pictures/observations/GenericObservation.jpg'
   },
   color: {
     type: Sequelize.STRING
@@ -43,5 +44,15 @@ const Observation = db.define('observation', {
     type: Sequelize.STRING
   }
 })
+
+Observation.LoadData = async function(dataArray) {
+  await dataArray.map(async data => {
+    let {id, name, category, description, imageURL} = data
+    await Observation.create({
+      id, name, category, description, imageURL
+    })
+  })
+  console.log("Observation Load Success!")
+}
 
 module.exports = Observation

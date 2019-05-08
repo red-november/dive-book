@@ -45,6 +45,8 @@ const Log = db.define('log', {
       notEmpty: true
     }
   },
+  // moved to offered dive
+
   maxDepth: {
     type: Sequelize.FLOAT,
     defaultValue: 0,
@@ -104,7 +106,8 @@ const Log = db.define('log', {
     // enum, but string for now
   },
   description: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    defaultValue: "Awesome Dive!!!!"
   },
   hasStrongCurrent: {
     type: Sequelize.BOOLEAN,
@@ -124,6 +127,8 @@ const Log = db.define('log', {
 //class methods
 
 //returns an array of all unique observations
+
+
 Log.getAllObservations = async function(diverId) {
   try {
     const diverLogs = await this.findAll({

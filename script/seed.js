@@ -73,19 +73,25 @@ async function seed() {
       name: 'Barracuda Point',
       description:
         'Sipadan is a world-class destination, long attracting divers from around the world. Barracuda Point is one of the standout dive sites among many.',
-      diveshopId: 1
+      diveshopId: 1,
+      location: 'Sipadan Island, Malaysia',
+      imageURL: 'BarracudaPoint.jpg'
     }),
     OfferedDive.create({
       name: 'Blue Corner Wall',
       description:
         'Blue Corner Palau is one of the most action-packed scuba dive sites in the world and up to 13 different species of sharks circling just beyond the plummeting reef wall.',
-      diveshopId: 1
+      diveshopId: 1,
+      location: 'Palau, Micronesia',
+      imageURL: 'BlueCornerWall.jpg'
     }),
     OfferedDive.create({
       name: 'The Great Blue Hole',
       description:
         'The Great Blue Hole is a giant marine sinkhole off the coast of Belize. It lies near the center of Lighthouse Reef.',
-      diveshopId: 2
+      diveshopId: 2,
+      location: 'Belize City, Belize',
+      imageURL: 'TheGreatBlueHole.jpg'
     })
   ])
 
