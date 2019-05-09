@@ -149,45 +149,19 @@ const FillDiscoverer = (data, category) => {
   console.log('DATA ---> ', data)
   return data
 }
-const FillObservationCategory = (data, category) => {
-  switch (category) {
-    // case 'flora':
-    //   data[0].quantity = data[0].quantity + 1
-    //   break
-    case 'mollusks':
-      data[0].quantity = data[0].quantity + 1
-      break
-    case 'fish':
-      data[1].quantity = data[1].quantity + 1
-      break
-    case 'coral':
-      data[2].quantity = data[2].quantity + 1
-      break
-    case 'mammals':
-      data[3].quantity = data[3].quantity + 1
-      break
-    case 'other living things':
-      data[4].quantity = data[4].quantity + 1
-      break
-    case 'sponges':
-      data[5].quantity = data[5].quantity + 1
-      break
-    case 'inanimate objects':
-      data[6].quantity = data[6].quantity + 1
-      break
-    default:
-      break
-  }
-  // console.log('TYPE ---> ', category)
-  // console.log('DATA ---> ', data)
-  return data
-}
+
 const ColorMaker = input => {
+  console.log('innnputtt', input)
+
   let colors = []
-  const growth = (255 - 100) / input.length
-  for (let i = 0; i < input.length; i++) {
-    colors.push(`rgb(0, ${growth * i + 100}, 255)`)
+
+  if (input) {
+    const growth = (255 - 100) / input.length
+    for (let i = 0; i < input.length; i++) {
+      colors.push(`rgb(0, ${growth * i + 100}, 255)`)
+    }
   }
+
   return colors
 }
 
@@ -201,7 +175,6 @@ const TimeStringToFloat = time => {
 module.exports = {
   GraphifyDiscoverer,
   FillDiscoverer,
-  FillObservationCategory,
   ColorMaker,
   TimeStringToFloat
 }

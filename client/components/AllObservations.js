@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {getObservationsThunk} from '../store/observationsReducer'
 import {connect} from 'react-redux'
-
 import {CircleChart, CircleChartObservation} from './D3Components'
 
 class AllObservations extends Component {

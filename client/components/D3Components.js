@@ -50,12 +50,12 @@ export const LineChart = ({data}) => {
 }
 
 export const BarChart = ({data}) => {
-  const colorSchema = ColorMaker()
+  const colorSchema = ColorMaker(data)
   return (
     <div>
       <Bar
         data={data}
-        margin={{top: 10, bottom: 1, left: 10, right: 2}}
+        margin={{top: 50, bottom: 50, left: 50, right: 50}}
         colorSchema={colorSchema}
       />
       <Legend data={data} colorSchema={colorSchema} />
