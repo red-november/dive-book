@@ -1,10 +1,7 @@
 import React, {Component} from 'react'
 import {getObservationsThunk} from '../store/observationsReducer'
 import {connect} from 'react-redux'
-import {BarChart} from './BarChartAllObservations'
-import {FillObservationCategory} from '../../utilities/d3Utils'
 import {CircleChart, CircleChartObservation} from './D3Components'
-import {log} from 'util'
 
 class AllObservations extends Component {
   componentDidMount() {

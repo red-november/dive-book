@@ -1,18 +1,18 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {
   getDiverLogsThunk,
   getDiverCertsThunk,
-  getBadgesThunk,
+  // getBadgesThunk,
   getLogsThunk
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
-import {LineChart, BarChart} from './D3Components'
-import {timeDay} from 'd3-time'
+// import {/*LineChart, BarChart*/} from './D3Components'
+
 import {TimeStringToFloat} from '../../utilities/d3Utils'
-import AllLogs from './AllLogs'
+
 
 /**
  * COMPONENT
@@ -26,7 +26,7 @@ class DiverHome extends Component {
   }
   render() {
     console.log('this.propssss', this.props)
-    const {firstName, id} = this.props.diver
+    const {firstName, id,} = this.props.diver
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
     const timeUnderWaterDateData = diverLogs.reduce((accum, log) => {
       if (log) {
@@ -136,11 +136,11 @@ class DiverHome extends Component {
         <div className="Container">
           <div className="ChartContainer">
             <h4>Time Under Water Breakdown</h4>
-            <LineChart data={timeUnderWaterData} />
+            {/* <LineChart data={timeUnderWaterData} /> */}
           </div>
           <div className="ChartContainer">
             <h4>Air Consumption Bar per min Breakdown</h4>
-            <LineChart data={airEfficiencyData} />
+            {/* <LineChart data={airEfficiencyData} /> */}
           </div>
           <div className="ChartContainer">
             <h4>Number of Dives for All Divers</h4>
