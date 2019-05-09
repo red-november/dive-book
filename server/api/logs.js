@@ -38,7 +38,10 @@ router.delete('/:logId', async (req, res, next) => {
 router.get('/diver/:diverId', async (req, res, next) => {
   try {
     const diverId = Number(req.params.diverId)
-    const logs = await Log.findAll({where: {diverId: diverId}})
+    const logs = await Log.findAll({
+      where: {diverId: diverId},
+      order: [['date', 'ASC']]
+    })
     res.status(200).send(logs)
   } catch (error) {
     next(error)

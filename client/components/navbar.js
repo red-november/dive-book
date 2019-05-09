@@ -18,6 +18,9 @@ const Navbar = ({handleClick, isLoggedIn, isOwner}) => (
           <Link id="newLog" to="/create">
             Add a Log
           </Link>
+          <Link id="analysis" to="/home/analysis">
+            Analysis
+          </Link>
           {isOwner && <Link to="/shopqr">Generate Shop QR</Link>}
         </div>
       ) : (

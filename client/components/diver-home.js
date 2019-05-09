@@ -1,10 +1,17 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {getDiverLogsThunk, getDiverCertsThunk, getBadgesThunk} from '../store'
+import {
+  getDiverLogsThunk,
+  getDiverCertsThunk,
+  // getBadgesThunk,
+  getLogsThunk
+} from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
-import {LineChart} from './LineChart'
+import {LineChart, BarChart} from './D3Components'
+
+import {TimeStringToFloat} from '../../utilities/d3Utils'
 
 /**
  * COMPONENT
@@ -14,13 +21,15 @@ class DiverHome extends Component {
     this.props.loadDiverLogs(this.props.diver.id)
     this.props.loadDiverCerts(this.props.diver.id)
     this.props.loadDiverBadges(this.props.diver.id)
+    this.props.loadAllLogs()
   }
   render() {
-    const {firstName} = this.props.diver
-    const {diverLogs, diverCerts, diverBadges} = this.props
+    console.log('this.propssss', this.props)
+    const {firstName, id} = this.props.diver
+    const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
 
-    if (!this.props.diver.id) {
-      return <h1>LOADING</h1>
+    if (allLogs.length === 0) {
+      return <h1>LOADING...</h1>
     }
 
     return (
@@ -65,22 +74,6 @@ class DiverHome extends Component {
           ))}
         </div>
         <div className="canva" />
-        {/* <LineChart
-          data={{
-            topicName: 'Air Consumption',
-            topic: 1,
-            dates: [
-              {
-                date: '2019-01-01',
-                value: 3
-              },
-              {
-                date: '2019-02-01',
-                value: 5
-              }
-            ]
-          }}
-        /> */}
       </div>
     )
   }
@@ -94,7 +87,8 @@ const mapStateToProps = state => {
     diver: state.diver,
     diverLogs: state.diverLogs,
     diverCerts: state.diverCerts,
-    diverBadges: state.diverBadges
+    diverBadges: state.diverBadges,
+    allLogs: state.logs
   }
 }
 
@@ -107,6 +101,9 @@ const mapDispatchToProps = dispatch => ({
   },
   loadDiverBadges: diverId => {
     dispatch(getDiverBadgesThunk(diverId))
+  },
+  loadAllLogs: () => {
+    dispatch(getLogsThunk())
   }
 })
 
