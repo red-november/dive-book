@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {
@@ -9,10 +9,10 @@ import {
   getLogsThunk
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
-import {LineChart, BarChart} from './D3Components'
-import {timeDay} from 'd3-time'
+import {LineChart} from './D3Components'
+
 import {TimeStringToFloat} from '../../utilities/d3Utils'
-import AllLogs from './AllLogs'
+// import AllLogs from './AllLogs'
 
 /**
  * COMPONENT
@@ -87,8 +87,8 @@ class DiverHome extends Component {
     // const chartTimeUnderWaterDate = Object.values(timeUnderWaterData)
     console.log('time under water', airEfficiencyDateData)
 
-    if (this.props.allLogs.length === 0) {
-      return <h1>LOADING</h1>
+    if (!this.props.diver.id) {
+      return <h1>LOADING...</h1>
     }
 
     return (
@@ -144,7 +144,18 @@ class DiverHome extends Component {
           </div>
           <div className="ChartContainer">
             <h4>Number of Dives for All Divers</h4>
-            {/* <BarChart data={airEfficiencyData} /> */}
+            {/* <BarChart
+              data={[
+                {
+                  value: 1,
+                  name: 'glittering'
+                },
+                {
+                  value: 1,
+                  name: 'luminous'
+                }
+              ]}
+            /> */}
           </div>
         </div>
       </div>
