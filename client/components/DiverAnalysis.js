@@ -103,11 +103,11 @@ class DiverAnalysis extends Component {
     return (
       <div className="Container">
         <div className="ChartContainer">
-          <h4>Time Under Water Breakdown</h4>
+          <h4>Time Under Water Breakdown(mins)</h4>
           <LineChart data={timeUnderWaterData} />
         </div>
         <div className="ChartContainer">
-          <h4>Air Consumption Bar per min Breakdown</h4>
+          <h4>Air Consumption Breakdown (Bar per min)</h4>
           <LineChart data={airEfficiencyData} />
         </div>
         <div className="ChartContainer">
@@ -120,7 +120,7 @@ class DiverAnalysis extends Component {
               },
               {
                 value: numberOfDivesComparisonData.otherDives,
-                name: `Others' Dives`
+                name: 'Avg Number of Dives for Other Divers'
               }
             ]}
           />

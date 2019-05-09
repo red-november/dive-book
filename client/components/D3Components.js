@@ -66,7 +66,7 @@ export const BarChart = ({data}) => {
       <Bar
         data={data}
         margin={{top: 50, bottom: 50, left: 50, right: 50}}
-        width={400}
+        width={600}
         colorSchema={colorSchema}
         isAnimated="true"
       />
