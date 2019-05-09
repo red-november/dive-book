@@ -51,10 +51,15 @@ form div {
 
 .Container {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 .ChartContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.Chart {
+  display: flex;
+  justify-content: space-around;
 }
