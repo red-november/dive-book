@@ -196,4 +196,17 @@ router.get('/diver/:diverId/observations', async (req, res, next) => {
   }
 })
 
-router.get('/test', async (req, res, next) => {})
+router.get('/distance/:start/:end', async (req, res, next) => {
+  const start = Number(req.params.start)
+  const end = Number(req.params.end)
+  try {
+    const distance = await db.query(
+      `SELECT ST_Distance((SELECT geog from logs where id = ${start}),(SELECT geog from logs where id = ${end}));
+      ;`,
+      {type: Sequelize.QueryTypes.SELECT}
+    )
+    res.json(distance[0])
+  } catch (error) {
+    next(error)
+  }
+})
