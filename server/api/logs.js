@@ -38,7 +38,10 @@ router.delete('/:logId', async (req, res, next) => {
 router.get('/diver/:diverId', async (req, res, next) => {
   try {
     const diverId = Number(req.params.diverId)
-    const logs = await Log.findAll({where: {diverId: diverId}})
+    const logs = await Log.findAll({
+      where: {diverId: diverId},
+      order: [['date', 'ASC']]
+    })
     res.status(200).send(logs)
   } catch (error) {
     next(error)
@@ -68,8 +71,8 @@ router.post('/', async (req, res, next) => {
       offeredDiveId
     } = req.body
 
-    if (typeof diveshopId !== 'number') diveshopId = null
-    if (typeof offeredDiveId !== 'number') offeredDiveId = null
+    if (diveshopId === '') diveshopId = null
+    if (typeof offeredDiveId === 'string') offeredDiveId = null
 
     if (req.user) {
       const log = await Log.create({
@@ -147,6 +150,23 @@ router.put('/diver/:logId', async (req, res, next) => {
       offeredDiveId
     })
     res.status(200).send(logUpdate)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/diver/verify/:logId', async (req, res, next) => {
+  const {scannedId} = req.body
+  console.log('body', req.body)
+  try {
+    const logId = Number(req.params.logId)
+    const log = await Log.findByPk(logId)
+
+    if (Number(scannedId) === log.diveshopId) {
+      const logUpdate = await log.update({isVerified: true})
+      console.log('stamped')
+      res.status(201).send(logUpdate)
+    }
   } catch (err) {
     next(err)
   }

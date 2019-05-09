@@ -27,11 +27,11 @@ const Observation = db.define('observation', {
   },
 
   description: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.TEXT
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // }
   },
   imageUrl: {
     type: Sequelize.STRING,
@@ -49,10 +49,14 @@ Observation.LoadData = async function(dataArray) {
   await dataArray.map(async data => {
     let {id, name, category, description, imageURL} = data
     await Observation.create({
-      id, name, category, description, imageURL
+      id,
+      name,
+      category,
+      description,
+      imageURL
     })
   })
-  console.log("Observation Load Success!")
+  console.log('Observation Load Success!')
 }
 
 module.exports = Observation

@@ -38,6 +38,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
+    "britecharts": "^2.11.0",
     "britecharts-react": "^0.5.1",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
@@ -45,6 +46,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.1",
     "history": "^4.9.0",
+    "mapbox-gl": "^0.54.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",
@@ -55,6 +57,7 @@
     "qrcode.react": "^0.9.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-map-gl": "^4.1.2",
     "react-qr-reader": "^2.2.1",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",

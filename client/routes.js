@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   Login,
@@ -18,7 +18,9 @@ import {
   ShopQR,
   SingleCert,
   CreateCert,
-  ObservationSearch
+  ObservationSearch,
+  TestMap,
+  DiverAnalysis
 } from './components'
 import {me} from './store'
 
@@ -37,6 +39,7 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/qr" component={Scanner} />
+        <Route path="/test" component={TestMap} />
         <Route exact path="/allshops/:shopId" component={SingleShop} />
         <Route exact path="/allshops" component={AllShops} />
         <Route exact path="/alloffereddives" component={AllOfferedDives} />
@@ -53,7 +56,9 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route path="/home/analysis" component={DiverAnalysis} />
             <Route path="/home" component={DiverHome} />
+            <Redirect exact from="/" to="/home" />
             <Route path="/create" component={AddLog} />
             {isOwner && <Route path="/shopqr" component={ShopQR} />}
           </Switch>
