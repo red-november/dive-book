@@ -223,19 +223,19 @@ async function seed() {
   // 4 = 0101000020E61000009529E620E850314021CB82893FE255C0
   await Promise.all([
     db.query(
-      'UPDATE logs set geog = ST_MakePoint(4.1150, 118.6287) where id = 1'
+      'UPDATE logs set geog = ST_MakePoint(118.6287,4.1150) where id = 1'
     ),
     db.query(
-      'UPDATE logs set geog = ST_MakePoint(40.7871618,-73.9653714) where id = 2'
+      'UPDATE logs set geog = ST_MakePoint(-73.9653714,40.7871618) where id = 2'
     ),
     db.query(
-      'UPDATE logs set geog = ST_MakePoint(7.353442, 134.485756) where id = 3'
+      'UPDATE logs set geog = ST_MakePoint(134.485756,7.353442) where id = 3'
     ),
     db.query(
-      'UPDATE logs set geog = ST_MakePoint(17.316042, -87.535128) where id = 4'
+      'UPDATE logs set geog = ST_MakePoint(-87.535128,17.316042) where id = 4'
     ),
     db.query(
-      'UPDATE logs set geog = ST_MakePoint(-20.865115, 151.022436) where id = 5'
+      'UPDATE logs set geog = ST_MakePoint(151.022436,-20.865115) where id = 5'
     )
   ])
 

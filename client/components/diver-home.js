@@ -24,7 +24,6 @@ class DiverHome extends Component {
     this.props.loadAllLogs()
   }
   render() {
-    console.log('diver logs', this.props.diverLogs)
     const {firstName, id} = this.props.diver
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
 
