@@ -19,7 +19,8 @@ import {
   SingleCert,
   CreateCert,
   ObservationSearch,
-  TestMap
+  TestMap,
+  DiverAnalysis
 } from './components'
 import {me} from './store'
 
@@ -55,6 +56,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route path="/home/analysis" component={DiverAnalysis} />
             <Route path="/home" component={DiverHome} />
             <Redirect exact from="/" to="/home" />
             <Route path="/create" component={AddLog} />

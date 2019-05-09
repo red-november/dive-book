@@ -51,6 +51,7 @@ form div {
 
 .Container {
   display: flex;
+  flex-direction: column;
 }
 .ChartContainer {
   display: flex;

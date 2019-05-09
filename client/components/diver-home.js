@@ -27,64 +27,6 @@ class DiverHome extends Component {
     console.log('this.propssss', this.props)
     const {firstName, id} = this.props.diver
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
-    const timeUnderWaterDateData = diverLogs.reduce((accum, log) => {
-      if (log) {
-        accum.push({
-          date: log.date,
-          value:
-            (TimeStringToFloat(log.timeOut) - TimeStringToFloat(log.timeIn)) *
-            60
-        })
-      }
-      return accum
-    }, [])
-
-    const airEfficiencyDateData = diverLogs.reduce((accum, log) => {
-      if (log) {
-        accum.push({
-          date: log.date,
-          value:
-            (log.tankPressureStart - log.tankPressureEnd) /
-            ((TimeStringToFloat(log.timeOut) - TimeStringToFloat(log.timeIn)) *
-              60)
-        })
-      }
-      return accum
-    }, [])
-
-    // const numberOfDivesComparisonData = allLogs.reduce((accum, log) => {
-    //   if (!accum.myDives && log.diverId === id) {
-    //     accum.myDives = {
-    //       id: log.id,
-    //       name: log.diverId,
-    //       value: 1
-    //     }
-    //   } else if(log.) {
-    //     accum[log.diverId].value += 1
-    //   }
-    // })
-
-    const timeUnderWaterData = {
-      dataByTopic: [
-        {
-          topicName: 'Time Under Water',
-          topic: 'Time Under Water',
-          dates: timeUnderWaterDateData
-        }
-      ]
-    }
-
-    const airEfficiencyData = {
-      dataByTopic: [
-        {
-          topicName: 'Air Consumption per min',
-          topic: 'Air Consumption per min',
-          dates: airEfficiencyDateData
-        }
-      ]
-    }
-    // const chartTimeUnderWaterDate = Object.values(timeUnderWaterData)
-    console.log('time under water', airEfficiencyDateData)
 
     if (allLogs.length === 0) {
       return <h1>LOADING...</h1>
@@ -132,31 +74,6 @@ class DiverHome extends Component {
           ))}
         </div>
         <div className="canva" />
-        <div className="Container">
-          <div className="ChartContainer">
-            <h4>Time Under Water Breakdown</h4>
-            <LineChart data={timeUnderWaterData} />
-          </div>
-          <div className="ChartContainer">
-            <h4>Air Consumption Bar per min Breakdown</h4>
-            <LineChart data={airEfficiencyData} />
-          </div>
-          <div className="ChartContainer">
-            <h4>Number of Dives for All Divers</h4>
-            <BarChart
-              data={[
-                {
-                  value: 1,
-                  name: 'glittering'
-                },
-                {
-                  value: 5,
-                  name: 'luminous'
-                }
-              ]}
-            />
-          </div>
-        </div>
       </div>
     )
   }
