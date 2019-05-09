@@ -5,8 +5,7 @@ const GraphifyDiscoverer = (
   data,
   dimensions,
   margin,
-  axisIntervals,
-
+  axisIntervals
 ) => {
   const minimum = 1
   const axisLabelSpace = 60
@@ -25,7 +24,7 @@ const GraphifyDiscoverer = (
     }
   })
 
-  high = Math.ceil(high/10) * 10
+  high = Math.ceil(high / 10) * 10
 
   for (let i = 1; i <= axisIntervals; i++) {
     xAxisValues.push(high * (i / axisIntervals))
@@ -118,37 +117,64 @@ const GraphifyDiscoverer = (
 
 // eslint-disable-next-line complexity
 const FillDiscoverer = (data, category) => {
-  switch(category) {
+  switch (category) {
     case 'flora':
-      data[0].height = data[0].height + 1;
-      break;
+      data[0].height = data[0].height + 1
+      break
     case 'mollusks':
-      data[1].height = data[1].height + 1;
-      break;
+      data[1].height = data[1].height + 1
+      break
     case 'fish':
-      data[2].height = data[2].height + 1;
-      break;
+      data[2].height = data[2].height + 1
+      break
     case 'coral':
-      data[3].height = data[3].height + 1;
-      break;
+      data[3].height = data[3].height + 1
+      break
     case 'mammals':
-      data[4].height = data[4].height + 1;
-      break;
+      data[4].height = data[4].height + 1
+      break
     case 'other living things':
-      data[5].height = data[5].height + 1;
-      break;
+      data[5].height = data[5].height + 1
+      break
     case 'sponges':
-      data[6].height = data[6].height + 1;
-      break;
+      data[6].height = data[6].height + 1
+      break
     case 'inanimate objects':
-      data[7].height = data[7].height + 1;
-      break;
+      data[7].height = data[7].height + 1
+      break
     default:
-      break;
+      break
   }
-  console.log("TYPE ---> ",category)
-  console.log("DATA ---> ",data)
+  console.log('TYPE ---> ', category)
+  console.log('DATA ---> ', data)
   return data
 }
 
-module.exports = {GraphifyDiscoverer, FillDiscoverer}
+const ColorMaker = input => {
+  console.log('innnputtt', input)
+
+  let colors = []
+
+  if (input) {
+    const growth = (255 - 100) / input.length
+    for (let i = 0; i < input.length; i++) {
+      colors.push(`rgb(0, ${growth * i + 100}, 255)`)
+    }
+  }
+
+  return colors
+}
+
+const TimeStringToFloat = time => {
+  let hoursMinutes = time.split(/[.:]/)
+  let hours = parseInt(hoursMinutes[0], 10)
+  let minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0
+  return hours + minutes / 60
+}
+
+module.exports = {
+  GraphifyDiscoverer,
+  FillDiscoverer,
+  ColorMaker,
+  TimeStringToFloat
+}
