@@ -15,6 +15,7 @@ const {
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
+  await db.query('ALTER TABLE logs ADD COLUMN geog geography(Point);')
 
   const diveShop = await Promise.all([
     DiveShop.create({
@@ -193,7 +194,49 @@ async function seed() {
       wetSuitThickness: 3 /*mm*/,
       hasStrongCurrent: false,
       visibility: 23
+    }),
+    Log.create({
+      diveName: `The Great Barrier Reef`,
+      offeredDiveId: 3,
+      diveshopId: 2,
+      location: `Carins, Australia`,
+      isVerified: true,
+      diverId: 1 /* Cody */,
+      timeIn: `15:00:00`,
+      timeOut: `15:45:00`,
+      date: `2019-04-28`,
+      maxDepth: 85,
+      tankPressureStart: 250,
+      tankPressureEnd: 40,
+      tankType: `Steel`,
+      beltWeight: 25,
+      airMixture: `Oxygen`,
+      description: `This is one massive sink hole!`,
+      wetSuitType: `The Spring Wetsuit`,
+      wetSuitThickness: 3 /*mm*/,
+      hasStrongCurrent: false,
+      visibility: 23
     })
+  ])
+  // 1 = 0101000020E61000008BD4C5B7C164444099DF1FA5C87D52C0
+
+  // 4 = 0101000020E61000009529E620E850314021CB82893FE255C0
+  await Promise.all([
+    db.query(
+      'UPDATE logs set geog = ST_MakePoint(4.1150, 118.6287) where id = 1'
+    ),
+    db.query(
+      'UPDATE logs set geog = ST_MakePoint(40.7871618,-73.9653714) where id = 2'
+    ),
+    db.query(
+      'UPDATE logs set geog = ST_MakePoint(7.353442, 134.485756) where id = 3'
+    ),
+    db.query(
+      'UPDATE logs set geog = ST_MakePoint(17.316042, -87.535128) where id = 4'
+    ),
+    db.query(
+      'UPDATE logs set geog = ST_MakePoint(-20.865115, 151.022436) where id = 5'
+    )
   ])
 
   const observations = await Promise.all([

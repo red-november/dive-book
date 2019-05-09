@@ -183,3 +183,10 @@ router.get('/diver/:diverId/observations', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/test', async (req, res, next) => {
+  // try{
+  // }catch(err){
+  //   next(err)
+  // }
+})
