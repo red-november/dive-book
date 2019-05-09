@@ -4,11 +4,29 @@ import {connect} from 'react-redux'
 import {CircleChart, CircleChartObservation} from './D3Components'
 
 class AllObservations extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {activated: false}
+  }
+
   componentDidMount() {
     this.props.onLoadObservations()
   }
+
+  activated = () => {
+    this.setState({
+      activated: true
+    })
+  }
+  deActivated = () => {
+    this.setState({
+      activated: false
+    })
+  }
+
   render() {
     const {observations} = this.props
+    const {activated} = this.state
     const headers = ['Name', 'Category', 'Occurence']
     const categoryData = observations.reduce((accum, obs) => {
       if (!accum[obs.category]) {
@@ -54,18 +72,33 @@ class AllObservations extends Component {
             <CircleChartObservation data={chartObsData} />
           </div>
         </div>
+        {!activated ? (
+          <button type="button" onClick={this.activated}>
+            {' '}
+            Activate Observations List
+          </button>
+        ) : (
+          <button type="button" onClick={this.deActivated}>
+            {' '}
+            Deactivate Observations List
+          </button>
+        )}
 
-        <table>
-          <tr>{headers.map(header => <th key={header}>{header}</th>)}</tr>
-          {observations.map(obs => (
-            <tr key={obs.name}>
-              <td>{obs.name}</td>
-              <td>{obs.category}</td>
-              <td>{obs.logs.length}</td>{' '}
-              {/* We can make this lead to a link containing the list of dives */}
-            </tr>
-          ))}
-        </table>
+        {activated ? (
+          <table>
+            <tr>{headers.map(header => <th key={header}>{header}</th>)}</tr>
+            {observations.map(obs => (
+              <tr key={obs.name}>
+                <td>{obs.name}</td>
+                <td>{obs.category}</td>
+                <td>{obs.logs.length}</td>{' '}
+                {/* We can make this lead to a link containing the list of dives */}
+              </tr>
+            ))}
+          </table>
+        ) : (
+          <div />
+        )}
       </div>
     )
   }

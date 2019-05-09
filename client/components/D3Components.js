@@ -1,16 +1,20 @@
 import React from 'react'
-import {Donut, Legend, Line, Bar} from 'britecharts-react'
+import {Donut, Legend, Line, Bar, StackedArea, Tooltip} from 'britecharts-react'
 import {ColorMaker} from '../../utilities/d3Utils'
 
 export const CircleChart = ({data}) => {
   const colorSchema = ColorMaker(data)
-  console.log('data in D3TEST', data)
+
   return (
-    <div>
+    <div className="Chart">
       <Donut
         data={data}
         margin={{top: 30, bottom: 30, left: 30, right: 30}}
         colorSchema={colorSchema}
+        width="600"
+        height="600"
+        externalRadius="250"
+        isAnimated="true"
       />
       <Legend
         data={data}
@@ -23,13 +27,17 @@ export const CircleChart = ({data}) => {
 }
 export const CircleChartObservation = ({data}) => {
   const colorSchema = ColorMaker(data)
-  console.log('data in D3TEST', data)
+
   return (
     <div>
       <Donut
         data={data}
         margin={{top: 30, bottom: 30, left: 30, right: 30}}
         colorSchema={colorSchema}
+        width="600"
+        height="600"
+        externalRadius="250"
+        isAnimated="true"
       />
     </div>
   )
@@ -43,7 +51,9 @@ export const LineChart = ({data}) => {
         data={data}
         lineCurve="basis"
         margin={{top: 50, bottom: 50, left: 50, right: 50}}
+        width="700"
         colorSchema={colorSchema}
+        isAnimated="true"
       />
     </div>
   )
@@ -56,9 +66,25 @@ export const BarChart = ({data}) => {
       <Bar
         data={data}
         margin={{top: 50, bottom: 50, left: 50, right: 50}}
-        width={400}
+        width={600}
         colorSchema={colorSchema}
+        isAnimated="true"
       />
+    </div>
+  )
+}
+
+export const DepthChart = ({data}) => {
+  const colorSchema = ColorMaker(data)
+  return (
+    <div>
+      <StackedArea
+        data={data}
+        margin={{top: 50, bottom: 50, left: 50, right: 50}}
+        colorSchema={colorSchema}
+        isAnimated="true"
+      />
+      {/* <Tooltip data={data}  /> */}
     </div>
   )
 }
