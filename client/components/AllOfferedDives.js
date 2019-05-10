@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getAllOfferedDivesThunk} from '../store/index'
+import {Link} from 'react-router-dom'
 
 class AllOfferedDives extends Component {
   componentDidMount() {
@@ -24,20 +25,19 @@ class AllOfferedDives extends Component {
           ))}
         </ul> */}
 
-          <table>
-            <tr>{headers.map(header => <th key={header}>{header}</th>)}</tr>
-            {allOfferedDives.map(dives => (
-              <tr key={dives.name}>
-                    <td>{dives.name}</td>
-                    <td>{dives.location}</td>
-                    <td>{dives.description}</td>
-                    {/* <Link to={`/observations/${dives.id}`}> */}
-                    <td>Link to Entry</td>
-                    {/* </Link> */}
-              </tr>
-            ))}
-          </table>
-
+        <table>
+          <tr>{headers.map(header => <th key={header}>{header}</th>)}</tr>
+          {allOfferedDives.map(dives => (
+            <tr key={dives.name}>
+              <td>{dives.name}</td>
+              <td>{dives.location}</td>
+              <td>{dives.description}</td>
+              <Link to={`/alloffereddives/${dives.id}`}>
+                <td>Link to Entry</td>
+              </Link>
+            </tr>
+          ))}
+        </table>
       </div>
     )
   }
