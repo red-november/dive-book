@@ -65,7 +65,7 @@ form div {
 }
 
 table {
-  margin-top: 30px;
+  margin: 30px, 30px, 30px, 30px;
   border: 3px solid white;
   -webkit-animation: fadein 2s;
 }
@@ -81,5 +81,5 @@ td {
   border: 1px solid black;
   border-collapse: collapse;
   border-spacing: 5px;
-  border-color: #4f0d91;
+  border-color: #0d0f91;
 }

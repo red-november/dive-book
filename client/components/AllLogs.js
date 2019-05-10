@@ -26,6 +26,7 @@ class AllLogs extends Component {
   render() {
     const {logs} = this.props
     const {activated} = this.state
+    const headers = ['Dive Name', 'Date', 'Location', 'Link' ]
     const data = logs.reduce((accum, log) => {
       if (!accum[log.diveName]) {
         accum[log.diveName] = {
@@ -44,6 +45,7 @@ class AllLogs extends Component {
     if (logs.length === 0) {
       return <h1>LOADING</h1>
     }
+    console.log(logs)
 
     return (
       <div className="ChartContainer">
@@ -60,13 +62,20 @@ class AllLogs extends Component {
         )}
 
         {activated ? (
-          logs.map(log => (
-            <ul key={log.id}>
-              <li>
-                {log.id} {log.diveName}
-              </li>
-            </ul>
-          ))
+
+            <table>
+            <tr>{headers.map(header => <th key={header}>{header}</th>)}</tr>
+              {logs.map(log => (
+              <tr key={log.id}>
+                <td>{log.diveName}</td>
+                <td>{log.date.slice(0,10)}</td>
+                <td>{log.location}</td>
+                {/* <Link to={`/observations/${log.id}`}> */}
+                <td>Link to Entry</td>
+                {/* </Link> */}
+              </tr>
+            ))}
+          </table>
         ) : (
           <div />
         )}

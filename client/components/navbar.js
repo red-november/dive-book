@@ -21,6 +21,15 @@ const Navbar = ({handleClick, isLoggedIn, isOwner}) => (
           <Link id="analysis" to="/home/analysis">
             Analysis
           </Link>
+          <Link id="observations" to="/observations">
+            Encyclopedia
+          </Link>
+          <Link id="allLogs" to="/logs">
+            All Dive Logs
+          </Link>
+          <Link id="allOfferedDives" to="/alloffereddives">
+            All Offered Dives
+          </Link>
           {isOwner && <Link to="/shopqr">Generate Shop QR</Link>}
         </div>
       ) : (
