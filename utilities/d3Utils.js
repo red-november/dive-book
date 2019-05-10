@@ -151,7 +151,6 @@ const FillDiscoverer = (data, category) => {
 }
 
 const ColorMaker = input => {
-  console.log('innnputtt', input)
 
   let colors = []
 
