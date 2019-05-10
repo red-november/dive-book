@@ -196,4 +196,34 @@ router.get('/diver/:diverId/observations', async (req, res, next) => {
   }
 })
 
-router.get('/test', async (req, res, next) => {})
+router.get('/distance/:start/:end', async (req, res, next) => {
+  const start = Number(req.params.start)
+  const end = Number(req.params.end)
+  try {
+    const distance = await db.query(
+      `SELECT ST_Distance((SELECT geog from logs where id = ${start}),(SELECT geog from logs where id = ${end}));
+      ;`,
+      {type: Sequelize.QueryTypes.SELECT}
+    )
+    res.json(distance[0])
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/nearest/:coords', async (req, res, next) => {
+  try {
+    const [long, lat] = req.params.coords.split(',')
+    const nearest = await db.query(
+      `SELECT (ST_DISTANCE(ST_GeogFromText('SRID=4326;POINT(${Number(
+        long
+      )} ${Number(lat)})'), geog)) AS dist, geog FROM logs WHERE "diverId" != ${
+        req.user.id
+      } ORDER BY dist LIMIT 1;`,
+      {type: Sequelize.QueryTypes.SELECT}
+    )
+    res.json(nearest)
+  } catch (error) {
+    next(error)
+  }
+})

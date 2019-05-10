@@ -73,3 +73,7 @@ form div {
   display: flex;
   justify-content: space-around;
 }
+
+.nearflag {
+  color: #fff;
+}
