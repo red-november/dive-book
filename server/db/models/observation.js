@@ -35,7 +35,7 @@ const Observation = db.define('observation', {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: '/pictures/observations/GenericObservation.jpg'
+    defaultValue: 'https://i.imgur.com/RZwYAbd.jpg'
   },
   color: {
     type: Sequelize.STRING
