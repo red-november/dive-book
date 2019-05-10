@@ -15,13 +15,27 @@ class SingleDiverMap extends Component {
       latitude: 37.7577,
       longitude: -122.4376,
       zoom: 1.8
-    }
+    },
+    showNearest: false,
+    curLong: 0,
+    curLat: 0
   }
 
   async componentDidMount() {
     if (this.props.logs.length === 0) {
       await this.props.fetchLogs()
     }
+
+    // if ('geolocation' in navigator) {
+    //   navigator.geolocation.getCurrentPosition(pos => {
+    //     this.setState({
+    //       curLong: pos.coords.longitude,
+    //       curLat: pos.coords.latitiude,
+    //       showNearest: true
+    //     })
+    //     console.log('new state:', this.state)
+    //   })
+    // }
   }
 
   render() {
@@ -35,18 +49,21 @@ class SingleDiverMap extends Component {
         onViewportChange={viewport => this.setState({viewport})}
         mapboxApiAccessToken="pk.eyJ1IjoiaGFycmlzb25jb2xlIiwiYSI6ImNqdmgyYW1iejBkeW00NG9jZDVidzNraDMifQ.8UJj9FAH_jJiFPcUAJ22KA"
       >
-        {logs.map(log => (
-          <Marker
-            key={log.id}
-            latitude={log.geog.coordinates[1]}
-            longitude={log.geog.coordinates[0]}
-            offsetLeft={-20}
-            offsetTop={-10}
-          >
-            <i className="fas fa-flag diveflag" />
-            {/* <img src="../../public/diveflag.svg" /> */}
-          </Marker>
-        ))}{' '}
+        {logs.map(
+          log =>
+            log.geog && (
+              <Marker
+                key={log.id}
+                latitude={log.geog.coordinates[1]}
+                longitude={log.geog.coordinates[0]}
+                offsetLeft={-20}
+                offsetTop={-10}
+              >
+                <i className="fas fa-flag diveflag" />
+                {/* <img src="../../public/diveflag.svg" /> */}
+              </Marker>
+            )
+        )}{' '}
       </ReactMapGL>
     )
   }
