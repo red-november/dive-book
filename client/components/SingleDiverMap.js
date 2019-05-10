@@ -53,8 +53,8 @@ class SingleDiverMap extends Component {
 
   renderPopup() {
     const {popupInfo} = this.state
-    return (
-      popupInfo && (
+    if (popupInfo && popupInfo.diveName) {
+      return (
         <Popup
           tipSize={5}
           latitude={popupInfo.geog.coordinates[1]}
@@ -80,7 +80,33 @@ class SingleDiverMap extends Component {
           </div>
         </Popup>
       )
-    )
+    } else if (popupInfo && popupInfo.storeFrontImgUrl) {
+      return (
+        <Popup
+          tipSize={5}
+          latitude={popupInfo.geog.coordinates[1]}
+          longitude={popupInfo.geog.coordinates[0]}
+          anchor="top"
+          onClose={() => this.setState({popupInfo: null})}
+          closeOnClick={false}
+        >
+          <div className="popup">
+            <div>
+              <strong>{popupInfo.name}</strong>
+            </div>
+            <div>
+              <em>{popupInfo.location}</em>
+            </div>
+            <div>
+              <img
+                src={`/pictures/diveshop/${popupInfo.storeFrontImgUrl}`}
+                alt="Store Front Image"
+              />
+            </div>
+          </div>
+        </Popup>
+      )
+    }
   }
 
   renderNearestPopup() {
@@ -168,7 +194,7 @@ class SingleDiverMap extends Component {
           </div>
         </div>
         {this.renderPopup()}
-        {this.renderNearestPopup()}
+        {/* {this.renderNearestPopup()} */}
       </ReactMapGL>
     )
   }
