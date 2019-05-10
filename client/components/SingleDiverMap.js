@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import ReactMapGL, {Marker} from 'react-map-gl'
 import mapboxgl from 'mapbox-gl'
 import {connect} from 'react-redux'
-import {getDiverLogsThunk, getNearestDiveThunk} from '../store'
+import {getDiverLogsThunk, getNearestDiveShopThunk} from '../store'
 // import dotenv from 'dotenv'
 
 // dotenv.config()
@@ -18,7 +18,7 @@ class SingleDiverMap extends Component {
         longitude: -122.4376,
         zoom: 1.8
       },
-      showNearest: false,
+      showNearest: true,
       curLong: 0,
       curLat: 0
     }
@@ -33,6 +33,9 @@ class SingleDiverMap extends Component {
           showNearest: true
         })
       })
+      if (this.state.showNearest) {
+        this.props.fetchNearest(`${this.state.curLong},${this.state.curLat}`)
+      }
     }
   }
 
@@ -41,7 +44,7 @@ class SingleDiverMap extends Component {
       await this.props.fetchDiverLogs(this.props.diver.id)
       if (this.state.showNearest) {
         this.props.fetchNearest(`${this.state.curLong},${this.state.curLat}`)
-        console.log('here:')
+        // this.props.fetchNearest('100.9925,15.8700')
       }
     }
   }
@@ -68,7 +71,6 @@ class SingleDiverMap extends Component {
                 offsetTop={-10}
               >
                 <i className="fas fa-flag diveflag" />
-                {/* <img src="../../public/diveflag.svg" /> */}
               </Marker>
             )
         )}{' '}
@@ -81,9 +83,21 @@ class SingleDiverMap extends Component {
             offsetTop={-10}
           >
             <i className="fas fa-flag nearflag" />
-            {/* <img src="../../public/diveflag.svg" /> */}
           </Marker>
         )}
+        <div className="mapKey">
+          <div className="mapKey-title">Key</div>
+          <div>
+            <i className="fas fa-flag diveflag" />:<span className="mapKey-desc">
+              My Dives
+            </span>
+          </div>
+          <div>
+            <i className="fas fa-flag nearflag" />:<span className="mapKey-desc">
+              Nearest Dive Shop
+            </span>
+          </div>
+        </div>
       </ReactMapGL>
     )
   }
@@ -99,7 +113,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getDiverLogsThunk(id))
   },
   fetchNearest: coords => {
-    dispatch(getNearestDiveThunk(coords))
+    dispatch(getNearestDiveShopThunk(coords))
   }
 })
 

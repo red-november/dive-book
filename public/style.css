@@ -77,3 +77,19 @@ form div {
 .nearflag {
   color: blue;
 }
+
+.mapKey {
+  border: 1px solid black;
+  background-color: white;
+  width: 200px;
+}
+
+.mapKey-desc {
+  margin-left: 20px;
+}
+
+.mapKey-title {
+  border-bottom: 0.5px solid black;
+  margin-bottom: 2px;
+  text-align: center;
+}

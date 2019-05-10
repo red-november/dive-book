@@ -58,9 +58,9 @@ export const logout = () => async dispatch => {
   }
 }
 
-export const getNearestDiveThunk = coords => async dispatch => {
+export const getNearestDiveShopThunk = coords => async dispatch => {
   try {
-    const {data} = await axios.get(`api/logs/nearest/${coords}`)
+    const {data} = await axios.get(`api/diveshops/nearest/${coords}`)
     dispatch(getNearest(data))
   } catch (error) {
     console.error('error in nearest dive thunk')
