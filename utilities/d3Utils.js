@@ -151,14 +151,13 @@ const FillDiscoverer = (data, category) => {
 }
 
 const ColorMaker = input => {
-  console.log('innnputtt', input)
 
   let colors = []
 
   if (input) {
     const growth = (255 - 100) / input.length
     for (let i = 0; i < input.length; i++) {
-      colors.push(`rgb(0, ${growth * i + 100}, 255)`)
+      colors.push(`rgb(0, ${growth * i + 100}, 230`)
     }
   }
 

@@ -8,19 +8,18 @@ import {
   getLogsThunk
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
-import {LineChart, BarChart} from './D3Components'
+import {DiveTimeChartWithToolTip, AirEfficiencyChartWithToolTip, BarChart, DepthChartWithToolTip} from './D3Components'
 
 import {TimeStringToFloat} from '../../utilities/d3Utils'
 
 class DiverAnalysis extends Component {
-  componentDidMount() {
-    this.props.loadDiverLogs(this.props.diver.id)
-    this.props.loadDiverCerts(this.props.diver.id)
-    this.props.loadDiverBadges(this.props.diver.id)
-    this.props.loadAllLogs()
+  async componentDidMount() {
+    await this.props.loadDiverLogs(this.props.diver.id)
+    await this.props.loadDiverCerts(this.props.diver.id)
+    await this.props.loadDiverBadges(this.props.diver.id)
+    await this.props.loadAllLogs()
   }
   render() {
-    console.log('this.propssss', this.props)
     const {firstName, id} = this.props.diver
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
     const timeUnderWaterDateData = diverLogs.reduce((accum, log) => {
@@ -67,14 +66,12 @@ class DiverAnalysis extends Component {
 
     numberOfDivesComparisonData.otherDives =
       numberOfDivesComparisonData.otherDives / (usersThatDive.length - 1)
-    console.log('numberOfDivesComparisonData', numberOfDivesComparisonData)
-    console.log('userThatDive', usersThatDive)
 
     const timeUnderWaterData = {
       dataByTopic: [
         {
-          topicName: 'Time Under Water',
-          topic: 'Time Under Water',
+          topicName: 'Time Under Water in mintues',
+          topic: 'Time Under Water in mintues',
           dates: timeUnderWaterDateData
         }
       ]
@@ -89,21 +86,28 @@ class DiverAnalysis extends Component {
         }
       ]
     }
-    // const chartTimeUnderWaterDate = Object.values(timeUnderWaterData)
-    console.log('time under water', airEfficiencyDateData)
 
-    if (allLogs.length === 0) {
+    const maxDepthData = diverLogs.reduce((accum, log) => {
+      accum.push({
+        date: log.date,
+        name: 'Max Depth',
+        value: log.maxDepth
+      })
+      return accum
+    }, [])
+
+    if (allLogs.length === 0 || diverLogs.length === 0) {
       return <h1>LOADING...</h1>
     }
     return (
       <div className="Container">
         <div className="ChartContainer">
-          <h4>Time Under Water Breakdown</h4>
-          <LineChart data={timeUnderWaterData} />
+          <h4>Time Under Water Breakdown(mins)</h4>
+          <DiveTimeChartWithToolTip data={timeUnderWaterData} />
         </div>
         <div className="ChartContainer">
-          <h4>Air Consumption Bar per min Breakdown</h4>
-          <LineChart data={airEfficiencyData} />
+          <h4>Air Consumption Breakdown (Bar per min)</h4>
+          <AirEfficiencyChartWithToolTip data={airEfficiencyData} />
         </div>
         <div className="ChartContainer">
           <h4>Number of Dives Comparison</h4>
@@ -115,9 +119,15 @@ class DiverAnalysis extends Component {
               },
               {
                 value: numberOfDivesComparisonData.otherDives,
-                name: `Others' Dives`
+                name: 'Avg Number of Dives for Other Divers'
               }
             ]}
+          />
+        </div>
+        <div className="ChartContainer">
+          <h4>Max Depth History</h4>
+          <DepthChartWithToolTip
+            data={maxDepthData}
           />
         </div>
       </div>
@@ -151,3 +161,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiverAnalysis)
+
