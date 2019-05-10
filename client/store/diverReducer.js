@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_DIVER = 'GET_DIVER'
 const REMOVE_DIVER = 'REMOVE_DIVER'
+const GET_NEAREST = 'GET_NEAREST'
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ const defaultDiver = {}
  */
 const getDiver = diver => ({type: GET_DIVER, diver})
 const removeDiver = () => ({type: REMOVE_DIVER})
+const getNearest = dive => ({type: GET_NEAREST, dive})
 
 /**
  * THUNK CREATORS
@@ -56,6 +58,15 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const getNearestDiveThunk = coords => async dispatch => {
+  try {
+    const {data} = await axios.get(`api/logs/nearest/${coords}`)
+    dispatch(getNearest(data))
+  } catch (error) {
+    console.error('error in nearest dive thunk')
+  }
+}
+
 /**
  * REDUCER
  */
@@ -65,6 +76,10 @@ export default function(state = defaultDiver, action) {
       return action.diver
     case REMOVE_DIVER:
       return defaultDiver
+
+    case GET_NEAREST:
+      return {...state, nearest: action.dive[0]}
+
     default:
       return state
   }

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import ReactMapGL, {Marker} from 'react-map-gl'
 import mapboxgl from 'mapbox-gl'
 import {connect} from 'react-redux'
-import {getDiverLogsThunk} from '../store'
+import {getDiverLogsThunk, getNearestDiveThunk} from '../store'
 // import dotenv from 'dotenv'
 
 // dotenv.config()
@@ -32,20 +32,22 @@ class SingleDiverMap extends Component {
           curLat: pos.coords.latitude,
           showNearest: true
         })
-        console.log('new state:', this.state)
       })
     }
   }
 
   async componentDidUpdate() {
     if (this.props.logs.length === 0 && this.props.diver.id) {
-      console.log('updated:', this.props.diver.id)
       await this.props.fetchDiverLogs(this.props.diver.id)
+      if (this.state.showNearest) {
+        this.props.fetchNearest(`${this.state.curLong},${this.state.curLat}`)
+        console.log('here:')
+      }
     }
   }
 
   render() {
-    const {logs} = this.props
+    const {logs, diver} = this.props
     if (logs.length === 0) {
       return <h1>LOADING</h1>
     }
@@ -70,6 +72,18 @@ class SingleDiverMap extends Component {
               </Marker>
             )
         )}{' '}
+        {diver.nearest && (
+          <Marker
+            key={diver.nearest.dist}
+            latitude={diver.nearest.geog.coordinates[1]}
+            longitude={diver.nearest.geog.coordinates[0]}
+            offsetLeft={-20}
+            offsetTop={-10}
+          >
+            <i className="fas fa-flag nearflag" />
+            {/* <img src="../../public/diveflag.svg" /> */}
+          </Marker>
+        )}
       </ReactMapGL>
     )
   }
@@ -83,6 +97,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchDiverLogs: id => {
     dispatch(getDiverLogsThunk(id))
+  },
+  fetchNearest: coords => {
+    dispatch(getNearestDiveThunk(coords))
   }
 })
 

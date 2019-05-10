@@ -217,7 +217,7 @@ router.get('/nearest/:coords', async (req, res, next) => {
     const nearest = await db.query(
       `SELECT (ST_DISTANCE(ST_GeogFromText('SRID=4326;POINT(${Number(
         long
-      )} ${Number(lat)})'), geog)) AS dist FROM logs WHERE "diverId" != ${
+      )} ${Number(lat)})'), geog)) AS dist, geog FROM logs WHERE "diverId" != ${
         req.user.id
       } ORDER BY dist LIMIT 1;`,
       {type: Sequelize.QueryTypes.SELECT}
