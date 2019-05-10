@@ -1,6 +1,7 @@
 import React from 'react'
-import {Donut, Legend, Line, Bar, StackedArea, Tooltip} from 'britecharts-react'
+import {Donut, Legend, Line, Bar, StackedArea, Tooltip, withResponsiveness, ResponsiveContainer} from 'britecharts-react'
 import {ColorMaker} from '../../utilities/d3Utils'
+// const ResponsiveStackedArea = withResponsiveness(StackedArea)
 
 export const CircleChart = ({data}) => {
   const colorSchema = ColorMaker(data)
@@ -25,13 +26,12 @@ export const CircleChart = ({data}) => {
     </div>
   )
 }
-export const CircleChartObservation = ({data}) => {
-  const colorSchema = ColorMaker(data)
+const CircleChartObservation = (props) => {
+  const colorSchema = ColorMaker(props.data)
 
   return (
-    <div>
       <Donut
-        data={data}
+        data={props.data}
         margin={{top: 30, bottom: 30, left: 30, right: 30}}
         colorSchema={colorSchema}
         width="600"
@@ -39,23 +39,22 @@ export const CircleChartObservation = ({data}) => {
         externalRadius="250"
         isAnimated="true"
       />
-    </div>
   )
 }
 
-export const LineChart = ({data}) => {
-  const colorSchema = ColorMaker(data.dataByTopic)
+export const LineChart = (props) => {
+  const colorSchema = ColorMaker(props.data.dataByTopic)
+  console.log(props.data)
   return (
-    <div>
       <Line
-        data={data}
+        data={props.data}
         lineCurve="basis"
         margin={{top: 50, bottom: 50, left: 50, right: 50}}
         width="700"
         colorSchema={colorSchema}
         isAnimated="true"
+        {...props}
       />
-    </div>
   )
 }
 
@@ -69,22 +68,64 @@ export const BarChart = ({data}) => {
         width={600}
         colorSchema={colorSchema}
         isAnimated="true"
+
       />
     </div>
   )
 }
 
-export const DepthChart = ({data}) => {
-  const colorSchema = ColorMaker(data)
+const DepthChart = (props) => {
+  const colorSchema = ColorMaker(props.data)
   return (
     <div>
       <StackedArea
-        data={data}
+        data={props.data}
         margin={{top: 50, bottom: 50, left: 50, right: 50}}
         colorSchema={colorSchema}
         isAnimated="true"
+        {...props}
       />
-      {/* <Tooltip data={data}  /> */}
-    </div>
+      </div>
+  )
+}
+
+export const DepthChartWithToolTip = ({data}) => {
+  return (
+    <Tooltip
+      data = {data}
+      render = {DepthChart}
+      title = "Max Depth"
+    />
+  )
+}
+
+export const DiveTimeChartWithToolTip = ({data}) => {
+  return (
+    <Tooltip
+      data = {data}
+      render = {LineChart}
+      title = "Dive Time"
+      topicLabel="topics"
+    />
+  )
+}
+
+export const AirEfficiencyChartWithToolTip = ({data}) => {
+  return (
+    <Tooltip
+      data = {data}
+      render = {LineChart}
+      title = "Air Efficiency"
+      topicLabel="topics"
+    />
+  )
+}
+
+export const CircleChartObservationToolTip = ({data}) => {
+  return (
+    <Tooltip
+      data = {data}
+      render = {CircleChartObservation}
+    />
   )
 }

@@ -8,17 +8,16 @@ import {
   getLogsThunk
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
-import {LineChart, BarChart, DepthChart} from './D3Components'
-import {Tooltip} from 'britecharts-react'
+import {DiveTimeChartWithToolTip, AirEfficiencyChartWithToolTip, BarChart, DepthChartWithToolTip} from './D3Components'
 
 import {TimeStringToFloat} from '../../utilities/d3Utils'
 
 class DiverAnalysis extends Component {
-  componentDidMount() {
-    this.props.loadDiverLogs(this.props.diver.id)
-    this.props.loadDiverCerts(this.props.diver.id)
-    this.props.loadDiverBadges(this.props.diver.id)
-    this.props.loadAllLogs()
+  async componentDidMount() {
+    await this.props.loadDiverLogs(this.props.diver.id)
+    await this.props.loadDiverCerts(this.props.diver.id)
+    await this.props.loadDiverBadges(this.props.diver.id)
+    await this.props.loadAllLogs()
   }
   render() {
     const {firstName, id} = this.props.diver
@@ -71,8 +70,8 @@ class DiverAnalysis extends Component {
     const timeUnderWaterData = {
       dataByTopic: [
         {
-          topicName: 'Time Under Water',
-          topic: 'Time Under Water',
+          topicName: 'Time Under Water in mintues',
+          topic: 'Time Under Water in mintues',
           dates: timeUnderWaterDateData
         }
       ]
@@ -97,18 +96,18 @@ class DiverAnalysis extends Component {
       return accum
     }, [])
 
-    if (allLogs.length === 0) {
+    if (allLogs.length === 0 || diverLogs.length === 0) {
       return <h1>LOADING...</h1>
     }
     return (
       <div className="Container">
         <div className="ChartContainer">
           <h4>Time Under Water Breakdown(mins)</h4>
-          <LineChart data={timeUnderWaterData} />
+          <DiveTimeChartWithToolTip data={timeUnderWaterData} />
         </div>
         <div className="ChartContainer">
           <h4>Air Consumption Breakdown (Bar per min)</h4>
-          <LineChart data={airEfficiencyData} />
+          <AirEfficiencyChartWithToolTip data={airEfficiencyData} />
         </div>
         <div className="ChartContainer">
           <h4>Number of Dives Comparison</h4>
@@ -127,8 +126,9 @@ class DiverAnalysis extends Component {
         </div>
         <div className="ChartContainer">
           <h4>Max Depth History</h4>
-          <DepthChart data={maxDepthData} />
-          {/* <Tooltip render={DepthChart} /> */}
+          <DepthChartWithToolTip
+            data={maxDepthData}
+          />
         </div>
       </div>
     )
@@ -161,3 +161,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiverAnalysis)
+

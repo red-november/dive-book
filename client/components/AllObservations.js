@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {getObservationsThunk} from '../store/observationsReducer'
 import {connect} from 'react-redux'
-import {CircleChart, CircleChartObservation} from './D3Components'
+import {CircleChart, CircleChartObservationToolTip} from './D3Components'
 
 class AllObservations extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class AllObservations extends Component {
           </div>
           <div className="ChartContainer">
             <h4>Observations Occurence Breakdown</h4>
-            <CircleChartObservation data={chartObsData} />
+            <CircleChartObservationToolTip data={chartObsData} />
           </div>
         </div>
         {!activated ? (
@@ -92,7 +92,6 @@ class AllObservations extends Component {
                 <td>{obs.name}</td>
                 <td>{obs.category}</td>
                 <td>{obs.logs.length}</td>{' '}
-                {/* We can make this lead to a link containing the list of dives */}
               </tr>
             ))}
           </table>
