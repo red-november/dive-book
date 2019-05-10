@@ -15,6 +15,10 @@ nav a {
   margin: 1em;
 }
 
+nav {
+  position: sticky;
+}
+
 form div {
   margin: 1em;
   display: inline-block;
@@ -82,4 +86,9 @@ td {
   border-collapse: collapse;
   border-spacing: 5px;
   border-color: #0d0f91;
+}
+
+.Stamp {
+  height: 150px;
+  height: 150px;
 }

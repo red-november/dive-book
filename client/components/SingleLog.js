@@ -33,7 +33,8 @@ class SingleLog extends Component {
       hasStrongCurrent: false,
       displayText: false,
       offeredDiveId: null,
-      displayQrScanner: false
+      displayQrScanner: false,
+      activate: false
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -62,10 +63,11 @@ class SingleLog extends Component {
       hasStrongCurrent,
       displayText,
       offeredDiveId
-    } = this.props.singleLog
+    } = await this.props.singleLog
+    console.log(diveshopId)
     await this.props.fetchSingleShop(diveshopId)
 
-    this.setState({
+    await this.setState({
       date,
       diveshopId,
       diveName,
@@ -126,29 +128,157 @@ class SingleLog extends Component {
     this.setState({displayQrScanner: !this.state.displayQrScanner})
   }
 
+  activated = () => {
+    this.setState({
+      activated: true
+    })
+  }
+  deActivated = () => {
+    this.setState({
+      activated: false
+    })
+  }
+
   render() {
-    if (!this.props.singleLog.id) {
+    const {activated, date} = this.state
+    const {singleLog, singleShop, diver} = this.props
+    const {id, diveName, location, timeIn, timeOut, maxDepth, tankPressureStart, tankPressureEnd, tankType, beltWeight, wetSuitType, wetSuitThickness, airMixture, description, visibility, hasStrongCurrent, isVerified} = singleLog
+
+    if (!singleLog.id || !date || !singleShop.id) {
       return <h1>LOADING</h1>
     }
 
     return (
       <div>
-        <UpdateForm
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          log={this.state}
-          allShops={this.props.allShops}
-          singleShop={this.props.singleShop}
-        />
-        <Link to="/qr">
-          <button onClick={this.displayScanner}>Toggle QR Scanner</button>{' '}
-        </Link>
+        {diver.id === singleLog.diverId ?
+           (!activated ? (
+            <button type="button" onClick={this.activated}>
+              {' '}
+              Edit Log
+            </button>
+          ) : (
+            <div>
+              <button type="button" onClick={this.deActivated}>
+                {' '}
+                Exit Edit Mode
+              </button>
+            </div>
+          ))
+          : <div/>}
+
+          {!activated ?
+
+          <table>
+            <tr>
+              <th>Description</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td>ID: </td>
+              <td>{id}</td>
+            </tr>
+            <tr>
+              <td>Dive Shop: </td>
+              <td>{singleShop.name}</td>
+            </tr>
+            <tr>
+              <td>Dive Name:</td>
+              <td>{diveName}</td>
+            </tr>
+            <tr>
+              <td>Date: </td>
+              <td>{date.slice(0,10)}</td>
+            </tr>
+            <tr>
+              <td>Time In:</td>
+              <td>{timeIn}</td>
+            </tr>
+            <tr>
+              <td>Time Out:</td>
+              <td>{timeOut}</td>
+            </tr>
+            <tr>
+              <td>Location: </td>
+              <td>{location}</td>
+            </tr>
+            <tr>
+              <td>Max Depth: </td>
+              <td>{maxDepth}</td>
+            </tr>
+            <tr>
+              <td>Tank Pressure Start: </td>
+              <td>{tankPressureStart}</td>
+            </tr>
+            <tr>
+              <td>Tank Pressure End: </td>
+              <td>{tankPressureEnd}</td>
+            </tr>
+            <tr>
+              <td>Tank Type</td>
+              <td>{tankType}</td>
+            </tr>
+            <tr>
+              <td>Belt Weight:</td>
+              <td>{beltWeight}</td>
+            </tr>
+            <tr>
+              <td>Wet Suit Type: </td>
+              <td>{wetSuitType}</td>
+            </tr>
+            <tr>
+              <td>Wet Suit Thickness</td>
+              <td>{wetSuitThickness}</td>
+            </tr>
+            <tr>
+              <td>Air Mixture: </td>
+              <td>{airMixture}</td>
+            </tr>
+            <tr>
+              <td>Visibility: </td>
+              <td>{visibility}</td>
+            </tr>
+            <tr>
+              <td>Strong Current:</td>
+              {hasStrongCurrent ?
+              <td>Yes</td>
+              :
+              <td>No</td>
+            }
+            </tr>
+            <tr>
+              <td>Description: </td>
+              <td>{description}</td>
+            </tr>
+            <tr>
+              <td>Stamp:</td>
+              <td>
+                {isVerified ?
+                <img className="Stamp" src={singleShop.stampImgUrl}/>
+                : 'Not Verified'}
+              </td>
+            </tr>
+          </table>
+          :
+            <div>
+              <UpdateForm
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+                log={this.state}
+                allShops={this.props.allShops}
+                singleShop={this.props.singleShop}
+              />
+              <Link to="/qr">
+                <button onClick={this.displayScanner}>Toggle QR Scanner</button>{' '}
+              </Link>
+            </div>
+        }
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  diver: state.diver,
   singleLog: state.singleLog,
   allShops: state.shops,
   singleShop: state.singleShop

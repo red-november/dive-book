@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {getLogsThunk} from '../store/allLogsReducer'
 import {connect} from 'react-redux'
 import {CircleChart} from './D3Components'
+import {Link} from 'react-router-dom'
 
 class AllLogs extends Component {
   constructor(props) {
@@ -70,9 +71,9 @@ class AllLogs extends Component {
                 <td>{log.diveName}</td>
                 <td>{log.date.slice(0,10)}</td>
                 <td>{log.location}</td>
-                {/* <Link to={`/observations/${log.id}`}> */}
+                <Link to={`/logs/${log.id}`}>
                 <td>Link to Entry</td>
-                {/* </Link> */}
+                </Link>
               </tr>
             ))}
           </table>
