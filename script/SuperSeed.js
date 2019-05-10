@@ -18,6 +18,12 @@ async function seed() {
   await db.query(
     'ALTER TABLE logs ADD COLUMN geog geography(Point,4326);'
   )
+  await db.query(
+    'ALTER TABLE diveshops ADD COLUMN geog geography(Point,4326);'
+  )
+  await db.query(
+    'ALTER TABLE "offeredDives" ADD COLUMN geog geography(Point,4326);'
+  )
 
   await DiveShop.LoadData(DiveShopsData)
   await Diver.LoadData(DiversData)
@@ -433,7 +439,42 @@ async function seed() {
 	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 197'),
 	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 198'),
 	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 199'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 200'),											])
+  db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 200'),											])
+
+  const ShopAddressBook = await Promise.all([				db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 1'),
+				db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 2'),
+				db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 3'),
+				db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 4'),
+				db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 5'),
+				db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 6'),
+				db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-118.400833,34.007778),4326) where id = 7'),
+				db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 8'),
+				db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 9'),
+        db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 10'),										])
+
+  const OfferedDivesAddressBook = await Promise.all([	db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(118.628756,4.114683),4326) where id = 1'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 2'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 3'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 4'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 5'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 6'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 7'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 8'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 9'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 10'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 11'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 12'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 13'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 14'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 15'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-121.9,36.8),4326) where id = 16'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-118.416667,33.383333),4326) where id = 17'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 18'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 19'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 20'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-81.290303,19.327874),4326) where id = 21'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 22'),
+        db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(35.538056,-23.794722),4326) where id = 23'),										])
 
 
   const CertificationsBook = await Promise.all(
