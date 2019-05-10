@@ -2,40 +2,46 @@ import React, {Component} from 'react'
 import ReactMapGL, {Marker} from 'react-map-gl'
 import mapboxgl from 'mapbox-gl'
 import {connect} from 'react-redux'
-import {getLogsThunk} from '../store'
+import {getDiverLogsThunk} from '../store'
 // import dotenv from 'dotenv'
 
 // dotenv.config()
 
 class SingleDiverMap extends Component {
-  state = {
-    viewport: {
-      width: '100vw',
-      height: '100vh',
-      latitude: 37.7577,
-      longitude: -122.4376,
-      zoom: 1.8
-    },
-    showNearest: false,
-    curLong: 0,
-    curLat: 0
+  constructor(props) {
+    super(props)
+    this.state = {
+      viewport: {
+        width: '100vw',
+        height: '100vh',
+        latitude: 37.7577,
+        longitude: -122.4376,
+        zoom: 1.8
+      },
+      showNearest: false,
+      curLong: 0,
+      curLat: 0
+    }
   }
 
   async componentDidMount() {
-    if (this.props.logs.length === 0) {
-      await this.props.fetchLogs()
+    if ('geolocation' in navigator) {
+      await navigator.geolocation.getCurrentPosition(pos => {
+        this.setState({
+          curLong: pos.coords.longitude,
+          curLat: pos.coords.latitude,
+          showNearest: true
+        })
+        console.log('new state:', this.state)
+      })
     }
+  }
 
-    // if ('geolocation' in navigator) {
-    //   navigator.geolocation.getCurrentPosition(pos => {
-    //     this.setState({
-    //       curLong: pos.coords.longitude,
-    //       curLat: pos.coords.latitiude,
-    //       showNearest: true
-    //     })
-    //     console.log('new state:', this.state)
-    //   })
-    // }
+  async componentDidUpdate() {
+    if (this.props.logs.length === 0 && this.props.diver.id) {
+      console.log('updated:', this.props.diver.id)
+      await this.props.fetchDiverLogs(this.props.diver.id)
+    }
   }
 
   render() {
@@ -70,12 +76,13 @@ class SingleDiverMap extends Component {
 }
 
 const mapStateToProps = state => ({
-  logs: state.logs
+  diver: state.diver,
+  logs: state.diverLogs
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchLogs: () => {
-    dispatch(getLogsThunk())
+  fetchDiverLogs: id => {
+    dispatch(getDiverLogsThunk(id))
   }
 })
 
