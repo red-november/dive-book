@@ -30,7 +30,9 @@ router.get('/nearest/:coords', async (req, res, next) => {
     const nearest = await db.query(
       `SELECT (ST_DISTANCE(ST_GeogFromText('SRID=4326;POINT(${Number(
         long
-      )} ${Number(lat)})'), geog)) AS dist, geog FROM diveshops
+      )} ${Number(
+        lat
+      )})'), geog)) AS dist, geog, id, name, "storeFrontImgUrl", location FROM diveshops
       ORDER BY dist LIMIT 1;`,
       {type: Sequelize.QueryTypes.SELECT}
     )

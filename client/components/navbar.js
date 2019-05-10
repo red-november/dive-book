@@ -22,6 +22,7 @@ const Navbar = ({handleClick, isLoggedIn, isOwner}) => (
             Analysis
           </Link>
           {isOwner && <Link to="/shopqr">Generate Shop QR</Link>}
+          <Link to="/mymap">My Map</Link>
         </div>
       ) : (
         <div>

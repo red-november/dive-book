@@ -3,6 +3,7 @@ import ReactMapGL, {Marker, Popup} from 'react-map-gl'
 import mapboxgl from 'mapbox-gl'
 import {connect} from 'react-redux'
 import {getDiverLogsThunk, getNearestDiveShopThunk} from '../store'
+import {Link} from 'react-router-dom'
 // import dotenv from 'dotenv'
 
 // dotenv.config()
@@ -20,7 +21,8 @@ class SingleDiverMap extends Component {
       },
       showNearest: true,
       curLong: 0,
-      curLat: 0
+      curLat: 0,
+      popupInfo: null
     }
   }
 
@@ -49,7 +51,65 @@ class SingleDiverMap extends Component {
     }
   }
 
-  displayPopup() {}
+  renderPopup() {
+    const {popupInfo} = this.state
+    return (
+      popupInfo && (
+        <Popup
+          tipSize={5}
+          latitude={popupInfo.geog.coordinates[1]}
+          longitude={popupInfo.geog.coordinates[0]}
+          anchor="top"
+          onClose={() => this.setState({popupInfo: null})}
+          closeOnClick={false}
+        >
+          <div className="popup">
+            <div>
+              <strong>{popupInfo.diveName}</strong>
+            </div>
+            <div>
+              <em>{popupInfo.location}</em>
+            </div>
+            <div>
+              <em>{popupInfo.date.split('T')[0]}</em>
+            </div>
+            {/* add img here */}
+            <div>
+              <Link to={`/logs/${popupInfo.id}`}>Details</Link>
+            </div>
+          </div>
+        </Popup>
+      )
+    )
+  }
+
+  renderNearestPopup() {
+    const {popupInfo} = this.state
+    return (
+      popupInfo && (
+        <Popup
+          tipSize={5}
+          latitude={popupInfo.geog.coordinates[1]}
+          longitude={popupInfo.geog.coordinates[0]}
+          anchor="top"
+          onClose={() => this.setState({popupInfo: null})}
+          closeOnClick={false}
+        >
+          <div className="popup">
+            <div>
+              <strong>{popupInfo.name}</strong>
+            </div>
+            <div>
+              <em>{popupInfo.location}</em>
+            </div>
+            <div>
+              <img src={popupInfo.storeFrontImgUrl} alt="Store Front Image" />
+            </div>
+          </div>
+        </Popup>
+      )
+    )
+  }
 
   render() {
     const {logs, diver} = this.props
@@ -61,6 +121,7 @@ class SingleDiverMap extends Component {
         {...this.state.viewport}
         onViewportChange={viewport => this.setState({viewport})}
         mapboxApiAccessToken="pk.eyJ1IjoiaGFycmlzb25jb2xlIiwiYSI6ImNqdmgyYW1iejBkeW00NG9jZDVidzNraDMifQ.8UJj9FAH_jJiFPcUAJ22KA"
+        mapStyle="mapbox://styles/mapbox/dark-v9"
       >
         {logs.map(
           log =>
@@ -72,20 +133,11 @@ class SingleDiverMap extends Component {
                   longitude={log.geog.coordinates[0]}
                   offsetLeft={-20}
                   offsetTop={-10}
-                  onClick={() => (this.displayPopup = true)}
                 >
-                  <i className="fas fa-flag diveflag" />
-                  {/* {this.props.displayPopup && (
-                    <Popup
-                      latitude={log.geog.coordinates[1]}
-                      longitude={log.geog.coordinates[0]}
-                      anchor="top"
-                      closeButton={true}
-                      closeOnClick={false}
-                    >
-                      <div>'You are here'</div>
-                    </Popup> */}
-                  {/* )} */}
+                  <i
+                    className="fas fa-flag diveflag"
+                    onClick={() => this.setState({popupInfo: log})}
+                  />
                 </Marker>
               </div>
             )
@@ -98,22 +150,25 @@ class SingleDiverMap extends Component {
             offsetLeft={-20}
             offsetTop={-10}
           >
-            <i className="fas fa-flag nearflag" />
+            <i
+              className="fas fa-flag nearflag"
+              onClick={() => this.setState({popupInfo: diver.nearest})}
+            />
           </Marker>
         )}
         <div className="mapKey">
           <div className="mapKey-title">Key</div>
           <div>
-            <i className="fas fa-flag diveflag" />:<span className="mapKey-desc">
-              My Dives
-            </span>
+            <i className="fas fa-flag diveflag" />
+            <span className="mapKey-desc">My Dives</span>
           </div>
           <div>
-            <i className="fas fa-flag nearflag" />:<span className="mapKey-desc">
-              Nearest Dive Shop
-            </span>
+            <i className="fas fa-flag nearflag" />
+            <span className="mapKey-desc">Nearest Dive Shop</span>
           </div>
         </div>
+        {this.renderPopup()}
+        {this.renderNearestPopup()}
       </ReactMapGL>
     )
   }
