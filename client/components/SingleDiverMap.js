@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import ReactMapGL, {Marker} from 'react-map-gl'
+import ReactMapGL, {Marker, Popup} from 'react-map-gl'
 import mapboxgl from 'mapbox-gl'
 import {connect} from 'react-redux'
 import {getDiverLogsThunk, getNearestDiveShopThunk} from '../store'
@@ -49,6 +49,8 @@ class SingleDiverMap extends Component {
     }
   }
 
+  displayPopup() {}
+
   render() {
     const {logs, diver} = this.props
     if (logs.length === 0) {
@@ -63,15 +65,29 @@ class SingleDiverMap extends Component {
         {logs.map(
           log =>
             log.geog && (
-              <Marker
-                key={log.id}
-                latitude={log.geog.coordinates[1]}
-                longitude={log.geog.coordinates[0]}
-                offsetLeft={-20}
-                offsetTop={-10}
-              >
-                <i className="fas fa-flag diveflag" />
-              </Marker>
+              <div>
+                <Marker
+                  key={log.id}
+                  latitude={log.geog.coordinates[1]}
+                  longitude={log.geog.coordinates[0]}
+                  offsetLeft={-20}
+                  offsetTop={-10}
+                  onClick={() => (this.displayPopup = true)}
+                >
+                  <i className="fas fa-flag diveflag" />
+                  {/* {this.props.displayPopup && (
+                    <Popup
+                      latitude={log.geog.coordinates[1]}
+                      longitude={log.geog.coordinates[0]}
+                      anchor="top"
+                      closeButton={true}
+                      closeOnClick={false}
+                    >
+                      <div>'You are here'</div>
+                    </Popup> */}
+                  {/* )} */}
+                </Marker>
+              </div>
             )
         )}{' '}
         {diver.nearest && (
