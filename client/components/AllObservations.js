@@ -92,7 +92,6 @@ class AllObservations extends Component {
                 <td>{obs.name}</td>
                 <td>{obs.category}</td>
                 <td>{obs.logs.length}</td>{' '}
-                {/* We can make this lead to a link containing the list of dives */}
               </tr>
             ))}
           </table>

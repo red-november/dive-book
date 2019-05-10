@@ -99,12 +99,23 @@ export const DepthChartWithToolTip = ({data}) => {
   )
 }
 
-export const LineChartWithToolTip = ({data}) => {
+export const DiveTimeChartWithToolTip = ({data}) => {
   return (
     <Tooltip
       data = {data}
       render = {LineChart}
-      title = "Line Graph"
+      title = "Dive Time"
+      topicLabel="topics"
+    />
+  )
+}
+
+export const AirEfficiencyChartWithToolTip = ({data}) => {
+  return (
+    <Tooltip
+      data = {data}
+      render = {LineChart}
+      title = "Air Efficiency"
       topicLabel="topics"
     />
   )
