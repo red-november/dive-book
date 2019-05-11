@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import SimpleMenu from './NavMenu'
 
-const Navbar = ({handleClick, isLoggedIn, isOwner}) => (
+const Navbar = ({handleClick, isLoggedIn, isOwner, history}) => (
   <div>
     <h1>DiveBook</h1>
     <nav>
@@ -30,6 +31,7 @@ const Navbar = ({handleClick, isLoggedIn, isOwner}) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
+      <SimpleMenu />
     </nav>
     <hr />
   </div>
