@@ -37,6 +37,7 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "axios": "^0.18.0",
     "britecharts": "^2.11.0",
     "britecharts-react": "^0.5.1",
