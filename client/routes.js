@@ -21,7 +21,8 @@ import {
   ObservationSearch,
   TestMap,
   DiverAnalysis,
-  SingleObservation
+  SingleObservation,
+  SingleOfferedDive
 } from './components'
 import {me} from './store'
 
@@ -43,6 +44,11 @@ class Routes extends Component {
         <Route path="/test" component={TestMap} />
         <Route exact path="/allshops/:shopId" component={SingleShop} />
         <Route exact path="/allshops" component={AllShops} />
+        <Route
+          exact
+          path="/alloffereddives/:diveId"
+          component={SingleOfferedDive}
+        />
         <Route exact path="/alloffereddives" component={AllOfferedDives} />
         <Route exact path="/observations" component={AllObservations} />
 

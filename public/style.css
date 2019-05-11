@@ -92,3 +92,12 @@ td {
   height: 150px;
   height: 150px;
 }
+
+.singleDiveImg {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 350px;
+  height: 300px;
+  padding: 30px;
+}
