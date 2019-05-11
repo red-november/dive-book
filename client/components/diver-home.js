@@ -16,16 +16,29 @@ import {TimeStringToFloat} from '../../utilities/d3Utils'
  * COMPONENT
  */
 class DiverHome extends Component {
-  componentDidMount() {
-    this.props.loadDiverLogs(this.props.diver.id)
-    this.props.loadDiverCerts(this.props.diver.id)
-    this.props.loadDiverBadges(this.props.diver.id)
-    this.props.loadAllLogs()
+  async componentDidMount() {
+    await this.props.loadDiverLogs(this.props.diver.id)
+    await this.props.loadDiverCerts(this.props.diver.id)
+    await this.props.loadDiverBadges(this.props.diver.id)
+    await this.props.loadAllLogs()
   }
+
+  reload = async () => {
+    await this.props.loadDiverLogs(this.props.diver.id)
+    await this.props.loadDiverCerts(this.props.diver.id)
+    await this.props.loadDiverBadges(this.props.diver.id)
+    await this.props.loadAllLogs()
+  }
+
   render() {
-    console.log('this.propssss', this.props)
+
     const {firstName, id} = this.props.diver
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
+
+    if(!diverLogs.length === 0 || !diverCerts || !diverBadges) {
+      this.reload()
+    }
+
     const ObservationsQuery = function (logs) {
       let query = {}
       let found = []
@@ -50,11 +63,13 @@ class DiverHome extends Component {
       return <h1>LOADING...</h1>
     }
 
-    const result = ObservationsQuery(diverLogs)
-    const sights = Object.keys(result)
-    console.log("SIGHTS ----> ",sights)
-    console.log("RESULT ----> ",result)
-    console.log(diverLogs)
+    let result = {}
+    let sights = []
+
+    if (diverLogs.length > 0) {
+      result = ObservationsQuery(diverLogs)
+      sights = Object.keys(result)
+    }
 
     return (
       <div>
