@@ -55,7 +55,6 @@ class DiverHome extends Component {
         },query)
         return query
       })
-      console.log(query)
       return query
     }
 
@@ -66,7 +65,7 @@ class DiverHome extends Component {
     let result = {}
     let sights = []
 
-    if (diverLogs.length > 0) {
+    if (diverLogs[0].observations) {
       result = ObservationsQuery(diverLogs)
       sights = Object.keys(result)
     }
