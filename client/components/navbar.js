@@ -3,9 +3,19 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import SimpleMenu from './NavMenu'
+import NavMenu from './NavMenu'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import {withStyles} from '@material-ui/core/styles'
 
-const Navbar = ({handleClick, isLoggedIn, isOwner, history}) => {
+const styles = {
+  root: {
+    flexGrow: 1
+  }
+}
+
+const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
   const diverMenu = {
     menuName: 'Diver Menu',
     itemArr: [
@@ -16,35 +26,39 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, history}) => {
     ]
   }
 
+  const ownerMenu = {
+    menuName: 'Shop Admin Menu',
+    itemArr: [
+      {name: 'Shop QR', link: '/shopqr'},
+      {name: 'Shop Stats', link: '/home'},
+      {name: 'Edit Dives', link: '/home'}
+    ]
+  }
+
   return (
-    <div>
-      <h1>DiveBook</h1>
-      <nav>
-        {isLoggedIn ? (
-          <div>
-            {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
-            <a href="#" onClick={handleClick}>
-              Logout
-            </a>
-            <Link id="newLog" to="/create">
-              Add a Log
-            </Link>
-            <Link id="analysis" to="/home/analysis">
-              Analysis
-            </Link>
-            {isOwner && <Link to="/shopqr">Generate Shop QR</Link>}
-          </div>
-        ) : (
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-          </div>
-        )}
-        <SimpleMenu {...diverMenu} />
-      </nav>
-      <hr />
+    <div className={classes.root}>
+      <AppBar position="static" color="default">
+        <Toolbar>
+          <Typography variant="h5" color="inherit">
+            DiveBook
+          </Typography>
+        </Toolbar>
+        <nav>
+          {isLoggedIn ? (
+            <div className="main-nav">
+              {/* The navbar will show these links after you log in */}
+              <NavMenu className="main-nav-menu" {...diverMenu} />
+              {isOwner && <NavMenu className="main-nav-menu" {...ownerMenu} />}
+            </div>
+          ) : (
+            <div className="main-nav-menu">
+              {/* The navbar will show these links before you log in */}
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Sign Up</Link>
+            </div>
+          )}
+        </nav>
+      </AppBar>
     </div>
   )
 }
@@ -67,12 +81,13 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(withStyles(styles)(Navbar))
 
 /**
  * PROP TYPES
  */
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  classes: PropTypes.object.isRequired
 }

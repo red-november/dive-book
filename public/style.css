@@ -20,6 +20,16 @@ form div {
   display: inline-block;
 }
 
+.main-nav {
+  margin-left: 40px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.main-nav-menu {
+  margin: 5px;
+}
+
 .OptionComponent {
   display: flex;
   align-items: center;
