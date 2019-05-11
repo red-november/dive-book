@@ -85,7 +85,7 @@ class DiverHome extends Component {
           <h3>Sightings:</h3>
             <ul>
               {sights.map(sight => (
-                <ul key={sight}>{`${sight} - ${result[sight]} Found`}</ul>
+                <li key={sight}>{`${sight} - ${result[sight]} Found`}</li>
               ))}
             </ul>
         </div>
