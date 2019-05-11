@@ -1,9 +1,8 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import {connect} from 'react-redux'
-import {logout} from '../store'
 import {Link} from 'react-router-dom'
 
 class NavMenu extends React.Component {
@@ -18,18 +17,12 @@ class NavMenu extends React.Component {
     this.setState({anchorEl: event.currentTarget})
   }
 
-  handleLogout = () => {
-    this.setState({anchorEl: null})
-    this.props.handleLogOut()
-  }
-
   handleClose = () => {
     this.setState({anchorEl: null})
   }
 
   render() {
     const {anchorEl} = this.state
-    console.log('props:', this.props)
 
     return (
       <div>
@@ -38,7 +31,7 @@ class NavMenu extends React.Component {
           aria-haspopup="true"
           onClick={this.handleClick}
         >
-          Diver Menu
+          {this.props.menuName}
         </Button>
         <Menu
           id="simple-menu"
@@ -46,32 +39,21 @@ class NavMenu extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleClose}>
-            <Link to="/home">Profile</Link>
-          </MenuItem>
-          <MenuItem onClick={this.handleClose}>
-            <Link to="/home/analysis">Analysis</Link>
-          </MenuItem>
-          <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+          {this.props.itemArr.map((menuItem, idx) => (
+            <MenuItem
+              key={`menu${idx}`}
+              onClick={() => {
+                this.handleClose()
+                menuItem.func && menuItem.func()
+              }}
+            >
+              <Link to={menuItem.link}>{menuItem.name}</Link>
+            </MenuItem>
+          ))}
         </Menu>
       </div>
     )
   }
 }
 
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.diver.id,
-    isOwner: !!state.diver.diveshopId
-  }
-}
-
-const mapDispatch = dispatch => {
-  return {
-    handleLogOut() {
-      dispatch(logout())
-    }
-  }
-}
-
-export default connect(mapState, mapDispatch)(NavMenu)
+export default NavMenu
