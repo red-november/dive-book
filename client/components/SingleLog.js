@@ -9,13 +9,14 @@ import {
 import {connect} from 'react-redux'
 import UpdateForm from './UpdateLogForm'
 import {Link} from 'react-router-dom'
+import history from '../history'
 
 class SingleLog extends Component {
   constructor(props) {
     super(props)
     this.state = {
       date: '',
-      diveshopId: null,
+      diveshopId: 1,
       diveName: '',
       timeIn: '',
       timeOut: '',
@@ -32,7 +33,7 @@ class SingleLog extends Component {
       visibility: 0,
       hasStrongCurrent: false,
       displayText: false,
-      offeredDiveId: null,
+      offeredDiveId: 1,
       displayQrScanner: false,
       activate: false
     }
@@ -43,6 +44,7 @@ class SingleLog extends Component {
   async componentDidMount() {
     await this.props.onLoadLog(this.props.match.params.id)
     await this.props.fetchShops()
+
     const {
       date,
       diveshopId,
@@ -61,11 +63,9 @@ class SingleLog extends Component {
       description,
       visibility,
       hasStrongCurrent,
-      displayText,
       offeredDiveId
-    } = await this.props.singleLog
-    console.log(diveshopId)
-    await this.props.fetchSingleShop(diveshopId)
+    } = this.props.singleLog
+
 
     await this.setState({
       date,
@@ -87,6 +87,8 @@ class SingleLog extends Component {
       hasStrongCurrent,
       offeredDiveId
     })
+
+    await this.props.fetchSingleShop(this.props.singleLog.diveshopId)
   }
 
   handleChange = event => {
@@ -133,10 +135,57 @@ class SingleLog extends Component {
       activated: true
     })
   }
-  deActivated = () => {
+
+  deActivated = async () => {
+    const {
+      date,
+      diveshopId,
+      diveName,
+      timeIn,
+      timeOut,
+      location,
+      maxDepth,
+      tankPressureStart,
+      tankPressureEnd,
+      tankType,
+      beltWeight,
+      wetSuitType,
+      wetSuitThickness,
+      airMixture,
+      description,
+      visibility,
+      hasStrongCurrent,
+      displayText,
+      offeredDiveId
+    } = this.props.singleLog
     this.setState({
+      date,
+      diveshopId,
+      diveName,
+      timeIn,
+      timeOut,
+      location,
+      maxDepth,
+      tankPressureStart,
+      tankPressureEnd,
+      tankType,
+      beltWeight,
+      wetSuitType,
+      wetSuitThickness,
+      airMixture,
+      description,
+      visibility,
+      hasStrongCurrent,
+      displayText,
+      offeredDiveId,
       activated: false
     })
+    await this.props.fetchSingleShop(this.props.singleLog.diveshopId)
+  }
+
+  async reload() {
+    await this.props.onLoadLog(this.props.match.params.id)
+    await this.props.fetchSingleShop(this.props.singleLog.diveshopId)
   }
 
   render() {
@@ -144,7 +193,11 @@ class SingleLog extends Component {
     const {singleLog, singleShop, diver} = this.props
     const {id, diveName, location, timeIn, timeOut, maxDepth, tankPressureStart, tankPressureEnd, tankType, beltWeight, wetSuitType, wetSuitThickness, airMixture, description, visibility, hasStrongCurrent, isVerified} = singleLog
 
-    if (!singleLog.id || !date || !singleShop.id) {
+    if( !singleShop.id) {
+      this.reload()
+    }
+
+    if (!singleLog.id || !date ) {
       return <h1>LOADING</h1>
     }
 
@@ -258,6 +311,7 @@ class SingleLog extends Component {
               </td>
             </tr>
           </table>
+
           :
             <div>
               <UpdateForm
@@ -285,12 +339,18 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onLoadLog: id => {
-    dispatch(getSingleLogThunk(id))
+  onLoadLog: async id => {
+    await dispatch(getSingleLogThunk(id))
   },
-  updateLog: (id, data) => dispatch(updateLogThunk(id, data)),
-  fetchShops: () => dispatch(getShopsThunk()),
-  fetchSingleShop: shopId => dispatch(getSingleShopThunk(shopId))
+   updateLog: async (id, data) => {
+    await dispatch(updateLogThunk(id, data))
+  },
+  fetchShops: async () => {
+    await dispatch(getShopsThunk())
+  },
+  fetchSingleShop: async shopId => {
+    await dispatch(getSingleShopThunk(shopId))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleLog)
