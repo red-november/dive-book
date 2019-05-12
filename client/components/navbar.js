@@ -28,11 +28,19 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
   }
 
   const ownerMenu = {
-    menuName: 'Shop Admin Menu',
+    menuName: 'Shop Admin',
     itemArr: [
       {name: 'Shop QR', link: '/shopqr'},
       {name: 'Shop Stats', link: '/home'},
       {name: 'Edit Dives', link: '/home'}
+    ]
+  }
+  const globalMenu = {
+    menuName: 'Global',
+    itemArr: [
+      {name: 'Encyclopedia', link: '/observations'},
+      {name: 'Offered Dives', link: '/alloffereddives'},
+      {name: 'Logs', link: '/logs'}
     ]
   }
 
@@ -49,6 +57,8 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
             <div className="main-nav">
               {/* The navbar will show these links after you log in */}
               <NavMenu className="main-nav-menu" {...diverMenu} />
+              <NavMenu className="main-nav-menu" {...globalMenu} />
+
               {isOwner && <NavMenu className="main-nav-menu" {...ownerMenu} />}
             </div>
           ) : (
