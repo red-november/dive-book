@@ -23,3 +23,13 @@ router.get('/diveshops/:diveshopId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const {id} = req.params
+    const singleOfferedDives = await OfferedDive.findByPk(id)
+    res.status(200).send(singleOfferedDives)
+  } catch (err) {
+    next(err)
+  }
+})

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {getObservationsThunk} from '../store/observationsReducer'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {CircleChart, CircleChartObservationToolTip} from './D3Components'
 
 class AllObservations extends Component {
@@ -27,7 +28,7 @@ class AllObservations extends Component {
   render() {
     const {observations} = this.props
     const {activated} = this.state
-    const headers = ['Name', 'Category', 'Occurence']
+    const headers = ['Name', 'Category', 'Occurence', 'Link']
     const categoryData = observations.reduce((accum, obs) => {
       if (!accum[obs.category]) {
         accum[obs.category] = {
@@ -89,9 +90,12 @@ class AllObservations extends Component {
             <tr>{headers.map(header => <th key={header}>{header}</th>)}</tr>
             {observations.map(obs => (
               <tr key={obs.name}>
-                <td>{obs.name}</td>
-                <td>{obs.category}</td>
-                <td>{obs.logs.length}</td>{' '}
+                    <td>{obs.name}</td>
+                    <td>{obs.category}</td>
+                    <td>{obs.logs.length}</td>
+                    <Link to={`/observations/${obs.id}`}>
+                    <td>Link to Entry</td>
+                    </Link>
               </tr>
             ))}
           </table>

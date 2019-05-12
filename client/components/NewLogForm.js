@@ -31,8 +31,8 @@ class AddLog extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  componentDidMount() {
-    this.props.fetchShops()
+  async componentDidMount() {
+    await this.props.fetchShops()
   }
 
   handleChange(evt) {
