@@ -21,7 +21,6 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
     menuName: 'Diver Menu',
     itemArr: [
       {name: 'Profile', link: '/home'},
-      {name: 'New Log', link: '/create'},
       {name: 'Analysis', link: '/home/analysis'},
       {name: 'Log Out', link: '/home', func: handleClick}
     ]
@@ -60,6 +59,7 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
               <NavMenu className="main-nav-menu" {...globalMenu} />
 
               {isOwner && <NavMenu className="main-nav-menu" {...ownerMenu} />}
+              <LinkButton name="New Log" link="/create" />
             </div>
           ) : (
             <div className="main-nav">
