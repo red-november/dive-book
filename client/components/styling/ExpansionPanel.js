@@ -26,7 +26,7 @@ function SimpleExpansionPanel(props) {
         <div key={`item${idx}`}>
           {' '}
           <ExpansionPanel disabled={item.content.length === 0}>
-            <ExpansionPanelSummary expandIcon={'>'}>
+            <ExpansionPanelSummary expandIcon={'🐠'}>
               <Typography className={classes.heading}>{item.name}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>

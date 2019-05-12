@@ -14,6 +14,7 @@ import {TimeStringToFloat} from '../../utilities/d3Utils'
 import Loading from './styling/Loading'
 import ExpansionPanel from './styling/ExpansionPanel'
 import moment from 'moment'
+import Button from '@material-ui/core/Button'
 
 /**
  * COMPONENT
