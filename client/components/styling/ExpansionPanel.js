@@ -1,122 +1,52 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react'
+import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Typography from '@material-ui/core/Typography'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-const ExpansionPanel = withStyles({
+const styles = theme => ({
   root: {
-    border: '1px solid rgba(0, 0, 0, .125)',
-    boxShadow: 'none',
-    '&:not(:last-child)': {
-      borderBottom: 0
-    },
-    '&:before': {
-      display: 'none'
-    },
-    '&$expanded': {
-      margin: 'auto'
-    }
+    width: '100%'
   },
-  expanded: {}
-})(MuiExpansionPanel)
-
-const ExpansionPanelSummary = withStyles({
-  root: {
-    backgroundColor: 'rgba(0, 0, 0, .03)',
-    borderBottom: '1px solid rgba(0, 0, 0, .125)',
-    marginBottom: -1,
-    minHeight: 56,
-    '&$expanded': {
-      minHeight: 56
-    }
-  },
-  content: {
-    '&$expanded': {
-      margin: '12px 0'
-    }
-  },
-  expanded: {}
-})(MuiExpansionPanelSummary)
-
-const ExpansionPanelDetails = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(2)
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular
   }
-}))(MuiExpansionPanelDetails)
+})
 
-function CustomizedExpansionPanels() {
-  const [expanded, setExpanded] = React.useState('panel1')
-
-  const handleChange = panel => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false)
-  }
-
+function SimpleExpansionPanel(props) {
+  const {classes, itemArr} = props
   return (
-    <div>
-      <ExpansionPanel
-        square
-        expanded={expanded === 'panel1'}
-        onChange={handleChange('panel1')}
-      >
-        <ExpansionPanelSummary
-          aria-controls="panel1d-content"
-          id="panel1d-header"
-        >
-          <Typography>Collapsible Group Item #1</Typography>
+    <div className={classes.root}>
+      {itemArr.map((item, idx) => (
+        <div key={`item${idx}`}>
+          {' '}
+          <ExpansionPanel disabled={!item.content}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography className={classes.heading}>{item.name}</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>{item.content}</Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        </div>
+      ))}
+
+      {/* <ExpansionPanel disabled>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography className={classes.heading}>Disabled Expansion Panel</Typography>
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel
-        square
-        expanded={expanded === 'panel2'}
-        onChange={handleChange('panel2')}
-      >
-        <ExpansionPanelSummary
-          aria-controls="panel2d-content"
-          id="panel2d-header"
-        >
-          <Typography>Collapsible Group Item #2</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel
-        square
-        expanded={expanded === 'panel3'}
-        onChange={handleChange('panel3')}
-      >
-        <ExpansionPanelSummary
-          aria-controls="panel3d-content"
-          id="panel3d-header"
-        >
-          <Typography>Collapsible Group Item #3</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+      </ExpansionPanel> */}
     </div>
   )
 }
 
-export default CustomizedExpansionPanels
+SimpleExpansionPanel.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(SimpleExpansionPanel)
