@@ -31,7 +31,7 @@ class DiverHome extends Component {
     if (!this.props.diver.id) {
       return <Loading />
     }
-    const {firstName} = this.props.diver
+    const {firstName, createdAt} = this.props.diver
     let {diverLogs, diverCerts, diverBadges, allLogs} = this.props
     let sights = ObservationsQuery(diverLogs)
     diverLogs = sortLogsByDate(diverLogs).reverse()
@@ -39,6 +39,9 @@ class DiverHome extends Component {
     return (
       <div className="page-container">
         <h3 className="welcome-bar">Welcome {firstName}!</h3>
+        <h6 className="member-date">
+          memeber since {moment(createdAt).format('YYYY')}
+        </h6>
         <div>
           <ExpansionPanel
             itemArr={[

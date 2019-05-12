@@ -124,3 +124,13 @@ td {
   height: 300px;
   padding: 30px;
 }
+
+.member-date {
+  margin-top: 0;
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+.welcome-bar {
+  margin-bottom: 2px;
+}
