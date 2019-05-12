@@ -30,9 +30,9 @@ class DiverHome extends Component {
       return <Loading />
     }
     const {firstName} = this.props.diver
-    const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
+    let {diverLogs, diverCerts, diverBadges, allLogs} = this.props
     let sights = ObservationsQuery(diverLogs)
-    console.log(sights)
+    diverLogs = sortLogsByDate(diverLogs)
 
     return (
       <div className="page-container">
@@ -42,7 +42,7 @@ class DiverHome extends Component {
             itemArr={[
               {
                 name:
-                  diverLogs.lengght == 1
+                  diverLogs.length == 1
                     ? '1 Logged Dive'
                     : `${diverLogs.length} Logged Dives. ${getBottomTime(
                         diverLogs
@@ -50,7 +50,9 @@ class DiverHome extends Component {
                 content: [
                   diverLogs.map(log => (
                     <li key={log.id}>
-                      <Link to={`/logs/${log.id}`}>{log.diveName}</Link>
+                      <Link to={`/logs/${log.id}`}>
+                        {log.diveName}: {log.date.slice(0, 10)}
+                      </Link>
                     </li>
                   ))
                 ]
@@ -61,7 +63,13 @@ class DiverHome extends Component {
                     ? '1 Sighting'
                     : `${sights.length} Sightings`,
                 content: sights.map(sight => (
-                  <li key={sight}>{`${sight[0]} - ${sight[1]} times`}</li>
+                  <li key={sight}>
+                    {
+                      <Link to={`observations/${sight[1].id}`}>
+                        {sight[0]} - {sight[1].count} times
+                      </Link>
+                    }
+                  </li>
                 ))
               }
             ]}
@@ -137,15 +145,19 @@ function ObservationsQuery(logs) {
   logs.forEach(log => {
     log.observations.reduce((accum, obs) => {
       if (!accum[obs.name]) {
-        accum[obs.name] = 1
+        accum[obs.name] = {id: obs.id, count: 1}
       } else {
-        accum[obs.name] = 1 + accum[obs.name]
+        accum[obs.name].count = 1 + accum[obs.name].count
       }
       return accum
     }, query)
     return query
   })
   return Object.entries(query)
+}
+
+function sortLogsByDate(logs) {
+  return logs.sort((a, b) => b.date - a.date)
 }
 
 /**
