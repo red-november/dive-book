@@ -34,7 +34,7 @@ class DiverHome extends Component {
     const {firstName} = this.props.diver
     let {diverLogs, diverCerts, diverBadges, allLogs} = this.props
     let sights = ObservationsQuery(diverLogs)
-    diverLogs = sortLogsByDate(diverLogs)
+    diverLogs = sortLogsByDate(diverLogs).reverse()
 
     return (
       <div className="page-container">
