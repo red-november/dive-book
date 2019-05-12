@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'roboto', Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -76,4 +76,11 @@ form div {
 .Chart {
   display: flex;
   justify-content: space-around;
+}
+
+.page-container {
+  margin-left: 30px;
+}
+.welcome-bar {
+  /* margin-left: 10px; */
 }

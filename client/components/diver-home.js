@@ -12,6 +12,7 @@ import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
 import {LineChart, BarChart} from './D3Components'
 
 import {TimeStringToFloat} from '../../utilities/d3Utils'
+import Loading from './styling/Loading'
 
 /**
  * COMPONENT
@@ -29,15 +30,15 @@ class DiverHome extends Component {
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
 
     if (allLogs.length === 0) {
-      return <h1>LOADING...</h1>
+      return <Loading />
     }
 
     return (
-      <div>
-        <h3>Welcome {firstName}!</h3>
+      <div className="page-container">
+        <h3 className="welcome-bar">Welcome {firstName}!</h3>
         <div>
           {' '}
-          <h3>Logs:</h3>
+          <h3 className="title">Logs:</h3>
           {diverLogs.map(log => (
             <ul key={log.id}>
               <li>
