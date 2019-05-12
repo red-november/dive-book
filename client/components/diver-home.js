@@ -12,6 +12,7 @@ import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
 import {LineChart, BarChart} from './D3Components'
 import {TimeStringToFloat} from '../../utilities/d3Utils'
 import Loading from './styling/Loading'
+import ExpansionPanel from './styling/ExpansionPanel'
 
 /**
  * COMPONENT
@@ -32,28 +33,26 @@ class DiverHome extends Component {
   }
 
   render() {
-
     const {firstName, id} = this.props.diver
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
 
-    if(!diverLogs.length === 0 || !diverCerts || !diverBadges) {
+    if (!diverLogs.length === 0 || !diverCerts || !diverBadges) {
       this.reload()
     }
 
-    const ObservationsQuery = function (logs) {
+    const ObservationsQuery = function(logs) {
       let query = {}
       let found = []
-      logs.forEach((log) =>{
+      logs.forEach(log => {
         log.observations.reduce((accum, obs) => {
-          if(found.indexOf(obs.name) === -1) {
+          if (found.indexOf(obs.name) === -1) {
             accum[obs.name] = 1
             found.push(obs.name)
-          }
-          else {
+          } else {
             accum[obs.name] = 1 + accum[obs.name]
           }
           return accum
-        },query)
+        }, query)
         return query
       })
       console.log(query)
@@ -76,15 +75,34 @@ class DiverHome extends Component {
       <div className="page-container">
         <h3 className="welcome-bar">Welcome {firstName}!</h3>
         <div>
-          {' '}
-          <h3 className="title">Logs:</h3>
-          {diverLogs.map(log => (
-            <ul key={log.id}>
-              <li>
-                <Link to={`/logs/${log.id}`}>{log.diveName}</Link>
-              </li>
-            </ul>
-          ))}
+          <ExpansionPanel
+            itemArr={[
+              {
+                name:
+                  diverLogs.lengght == 1
+                    ? '1 Logged Dive'
+                    : `${diverLogs.length} Logged Dives. ${getBottomTime(
+                        diverLogs
+                      )} total bottom time.`,
+                content: [
+                  diverLogs.map(log => (
+                    <li key={log.id}>
+                      <Link to={`/logs/${log.id}`}>{log.diveName}</Link>
+                    </li>
+                  ))
+                ]
+              },
+              {
+                name:
+                  sights.length === 1
+                    ? '1 Sighting'
+                    : `${sights.length} Sightings`,
+                content: sights.map(sight => (
+                  <li key={sight}>{`${sight} - ${result[sight]} times`}</li>
+                ))
+              }
+            ]}
+          />
         </div>
         <div>
           {' '}
@@ -98,15 +116,6 @@ class DiverHome extends Component {
           ))}
         </div>
         <div>
-          <h3>Sightings:</h3>
-            <ul>
-              {sights.map(sight => (
-                <li key={sight}>{`${sight} - ${result[sight]} Found`}</li>
-              ))}
-            </ul>
-        </div>
-        <div>
-
           <h3>Certifications:</h3>
           {diverCerts.map(cert => (
             <ul key={cert.id}>
@@ -121,8 +130,6 @@ class DiverHome extends Component {
             <Link to="/certs/create">Create New Certification</Link>
           </button>
         </div>
-
-        <div className="canva" />
       </div>
     )
   }
@@ -157,6 +164,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiverHome)
+
+function getBottomTime(logArr) {
+  return logArr.reduce((accum, log) => accum + (log.timeIn - log.timeOut), 0)
+}
 
 /**
  * PROP TYPES

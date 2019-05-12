@@ -6,7 +6,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Typography from '@material-ui/core/Typography'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 const styles = theme => ({
   root: {
@@ -25,8 +25,8 @@ function SimpleExpansionPanel(props) {
       {itemArr.map((item, idx) => (
         <div key={`item${idx}`}>
           {' '}
-          <ExpansionPanel disabled={!item.content}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <ExpansionPanel disabled={item.content.length === 0}>
+            <ExpansionPanelSummary expandIcon={'>'}>
               <Typography className={classes.heading}>{item.name}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
