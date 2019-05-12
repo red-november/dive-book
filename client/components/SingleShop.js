@@ -17,7 +17,10 @@ class SingleShop extends Component {
         {this.props.singleShop.offeredDives.map(offeredDive => (
           <ul key={offeredDive.id}>
             <li>
-              {offeredDive.name}:<p />
+              <a href={`/alloffereddives/${offeredDive.id}`}>
+                {offeredDive.name}:
+              </a>
+              <p />
               {offeredDive.description}
               <p />
             </li>

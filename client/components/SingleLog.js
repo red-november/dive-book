@@ -251,11 +251,17 @@ class SingleLog extends Component {
             <tr>
               {/* <td><a href={`/allshops/${}`}></a> </td> */}
               <td>Dive Shop:</td>
-              <td>{singleShop.name}</td>
+              <td>
+                <a href={`/allshops/${singleShop.id}`}> {singleShop.name}</a>
+              </td>
             </tr>
             <tr>
               <td>Dive Name:</td>
-              <td>{diveName}</td>
+              <td>
+                <a href={`/alloffereddives/${singleLog.offeredDiveId}`}>
+                  {diveName}
+                </a>
+              </td>
             </tr>
             <tr>
               <td>Date: </td>

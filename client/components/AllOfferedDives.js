@@ -10,7 +10,7 @@ class AllOfferedDives extends Component {
 
   render() {
     const {allOfferedDives} = this.props
-    const headers = ['Name', 'Location', 'Description', 'Link']
+    const headers = ['Name', 'Location', 'Description']
     if (allOfferedDives.length === 0) return <h1>Loading...</h1>
     return (
       <div>
@@ -29,12 +29,11 @@ class AllOfferedDives extends Component {
           <tr>{headers.map(header => <th key={header}>{header}</th>)}</tr>
           {allOfferedDives.map(dives => (
             <tr key={dives.name}>
-              <td>{dives.name}</td>
+              <td>
+                <a href={`alloffereddives/${dives.id}`}>{dives.name}</a>
+              </td>
               <td>{dives.location}</td>
               <td>{dives.description}</td>
-              <Link to={`/alloffereddives/${dives.id}`}>
-                <td>Link to Entry</td>
-              </Link>
             </tr>
           ))}
         </table>
