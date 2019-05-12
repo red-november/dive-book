@@ -27,7 +27,7 @@ class AllLogs extends Component {
   render() {
     const {logs} = this.props
     const {activated} = this.state
-    const headers = ['Dive Name', 'Date', 'Location', 'Link' ]
+    const headers = ['Dive Name', 'Date', 'Location', 'Link']
     const data = logs.reduce((accum, log) => {
       if (!accum[log.diveName]) {
         accum[log.diveName] = {
@@ -63,17 +63,21 @@ class AllLogs extends Component {
         )}
 
         {activated ? (
-
-            <table>
+          <table>
             <tr>{headers.map(header => <th key={header}>{header}</th>)}</tr>
-              {logs.map(log => (
+            {logs.map(log => (
               <tr key={log.id}>
-                <td>{log.diveName}</td>
-                <td>{log.date.slice(0,10)}</td>
+                <td>
+                  <a href={`/alloffereddives/${log.offeredDiveId}`}>
+                    {log.diveName}
+                  </a>
+                </td>
+                <td>{log.date.slice(0, 10)}</td>
                 <td>{log.location}</td>
-                <Link to={`/logs/${log.id}`}>
-                <td>Link to Entry</td>
-                </Link>
+
+                <td>
+                  <a href={`/logs/${log.id}`}>Link to Log</a>
+                </td>
               </tr>
             ))}
           </table>
