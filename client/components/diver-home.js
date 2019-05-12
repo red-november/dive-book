@@ -25,51 +25,14 @@ class DiverHome extends Component {
     await this.props.loadAllLogs()
   }
 
-  reload = async () => {
-    await this.props.loadDiverLogs(this.props.diver.id)
-    await this.props.loadDiverCerts(this.props.diver.id)
-    await this.props.loadDiverBadges(this.props.diver.id)
-    await this.props.loadAllLogs()
-  }
-
   render() {
-    const {firstName, id} = this.props.diver
-    const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
-
-    if (!diverLogs.length === 0 || !diverCerts || !diverBadges) {
-      this.reload()
-    }
-
-    const ObservationsQuery = function(logs) {
-      let query = {}
-      let found = []
-      logs.forEach(log => {
-        log.observations.reduce((accum, obs) => {
-          if (found.indexOf(obs.name) === -1) {
-            accum[obs.name] = 1
-            found.push(obs.name)
-          } else {
-            accum[obs.name] = 1 + accum[obs.name]
-          }
-          return accum
-        }, query)
-        return query
-      })
-      console.log(query)
-      return query
-    }
-
-    if (allLogs.length === 0) {
+    if (!this.props.diver.id) {
       return <Loading />
     }
-
-    let result = {}
-    let sights = []
-
-    if (diverLogs.length > 0) {
-      result = ObservationsQuery(diverLogs)
-      sights = Object.keys(result)
-    }
+    const {firstName} = this.props.diver
+    const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
+    let sights = ObservationsQuery(diverLogs)
+    console.log(sights)
 
     return (
       <div className="page-container">
@@ -98,7 +61,7 @@ class DiverHome extends Component {
                     ? '1 Sighting'
                     : `${sights.length} Sightings`,
                 content: sights.map(sight => (
-                  <li key={sight}>{`${sight} - ${result[sight]} times`}</li>
+                  <li key={sight}>{`${sight[0]} - ${sight[1]} times`}</li>
                 ))
               }
             ]}
@@ -167,6 +130,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(DiverHome)
 
 function getBottomTime(logArr) {
   return logArr.reduce((accum, log) => accum + (log.timeIn - log.timeOut), 0)
+}
+
+function ObservationsQuery(logs) {
+  let query = {}
+  logs.forEach(log => {
+    log.observations.reduce((accum, obs) => {
+      if (!accum[obs.name]) {
+        accum[obs.name] = 1
+      } else {
+        accum[obs.name] = 1 + accum[obs.name]
+      }
+      return accum
+    }, query)
+    return query
+  })
+  return Object.entries(query)
 }
 
 /**
