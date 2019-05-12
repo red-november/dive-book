@@ -13,6 +13,7 @@ import {LineChart, BarChart} from './D3Components'
 import {TimeStringToFloat} from '../../utilities/d3Utils'
 import Loading from './styling/Loading'
 import ExpansionPanel from './styling/ExpansionPanel'
+import moment from 'moment'
 
 /**
  * COMPONENT
@@ -44,9 +45,11 @@ class DiverHome extends Component {
                 name:
                   diverLogs.length == 1
                     ? '1 Logged Dive'
-                    : `${diverLogs.length} Logged Dives. ${getBottomTime(
+                    : `${
+                        diverLogs.length
+                      } Logged Dives. Total bottom time: ${getBottomTime(
                         diverLogs
-                      )} total bottom time.`,
+                      )} hours.`,
                 content: [
                   diverLogs.map(log => (
                     <li key={log.id}>
@@ -137,20 +140,42 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(DiverHome)
 
 function getBottomTime(logArr) {
-  return logArr.reduce((accum, log) => accum + (log.timeIn - log.timeOut), 0)
+  return Math.round(
+    logArr.reduce((accum, log) => {
+      let hrIn = Number(log.timeIn.slice(0, 2))
+      let minIn = Number(log.timeIn.slice(3, 5))
+      let timeIn = moment()
+        .hour(hrIn)
+        .minute(minIn)
+
+      let hrOut = Number(log.timeOut.slice(0, 2))
+      let minOut = Number(log.timeOut.slice(3, 5))
+      let timeOut = moment()
+        .hour(hrOut)
+        .minute(minOut)
+
+      let bottomTime = moment.duration(timeOut.diff(timeIn))
+      let minutesUnder = bottomTime._data.minutes + bottomTime._data.hours * 60
+      console.log('mins:', minutesUnder)
+      if (minutesUnder > 0 && minutesUnder < 300) {
+        return accum + minutesUnder
+      }
+    }, 0) / 60
+  )
 }
 
 function ObservationsQuery(logs) {
   let query = {}
   logs.forEach(log => {
-    log.observations.reduce((accum, obs) => {
-      if (!accum[obs.name]) {
-        accum[obs.name] = {id: obs.id, count: 1}
-      } else {
-        accum[obs.name].count = 1 + accum[obs.name].count
-      }
-      return accum
-    }, query)
+    log.observations &&
+      log.observations.reduce((accum, obs) => {
+        if (!accum[obs.name]) {
+          accum[obs.name] = {id: obs.id, count: 1}
+        } else {
+          accum[obs.name].count = 1 + accum[obs.name].count
+        }
+        return accum
+      }, query)
     return query
   })
   return Object.entries(query)
