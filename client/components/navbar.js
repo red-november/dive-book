@@ -8,6 +8,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
+import LinkButton from './LinkButton'
 
 const styles = {
   root: {
@@ -43,7 +44,7 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
             DiveBook
           </Typography>
         </Toolbar>
-        <nav>
+        <nav className="navBar">
           {isLoggedIn ? (
             <div className="main-nav">
               {/* The navbar will show these links after you log in */}
@@ -51,10 +52,10 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
               {isOwner && <NavMenu className="main-nav-menu" {...ownerMenu} />}
             </div>
           ) : (
-            <div className="main-nav-menu">
+            <div className="main-nav">
               {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
+              <LinkButton name="Log In" link="/login" />
+              <LinkButton name="Sign Up" link="/signup" />
             </div>
           )}
         </nav>

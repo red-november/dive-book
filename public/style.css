@@ -30,6 +30,10 @@ form div {
   margin: 5px;
 }
 
+/* .navBar {
+  height: 36px;
+} */
+
 .OptionComponent {
   display: flex;
   align-items: center;
