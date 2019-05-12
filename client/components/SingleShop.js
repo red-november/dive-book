@@ -13,6 +13,10 @@ class SingleShop extends Component {
     return (
       <div>
         <h1>{this.props.singleShop.name}</h1>
+        <img
+          className="singleDiveImg"
+          src={`/pictures/diveshop/${this.props.singleShop.storeFrontImgUrl}`}
+        />
         <h2>Offered Dives:</h2>
         {this.props.singleShop.offeredDives.map(offeredDive => (
           <ul key={offeredDive.id}>
