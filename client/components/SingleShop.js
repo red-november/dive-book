@@ -8,6 +8,7 @@ class SingleShop extends Component {
   }
 
   render() {
+    console.log(this.props)
     if (!this.props.singleShop.name) return <h1>Loading...</h1>
     return (
       <div>

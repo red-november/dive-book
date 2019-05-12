@@ -15,6 +15,10 @@ nav a {
   margin: 1em;
 }
 
+nav {
+  position: sticky;
+}
+
 form div {
   margin: 1em;
   display: inline-block;
@@ -62,4 +66,38 @@ form div {
 .Chart {
   display: flex;
   justify-content: space-around;
+}
+
+table {
+  margin: 30px, 30px, 30px, 30px;
+  border: 3px solid white;
+  -webkit-animation: fadein 2s;
+}
+
+td,
+th {
+  padding: 5px 15px 5px 15px;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  border-spacing: 5px;
+  border-color: #0d0f91;
+}
+
+.Stamp {
+  height: 150px;
+  height: 150px;
+}
+
+.singleDiveImg {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 350px;
+  height: 300px;
+  padding: 30px;
 }
