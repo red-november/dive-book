@@ -36,8 +36,10 @@ async function seed() {
     Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
     Badge.create({name: 'Voyager', description: 'Dived in over 10 places'})
   ])
+  console.log("Badges Load Success!")
 
-  const DiveBook = await Promise.all([			Log.create(	{		diveName: "Liberty", 	location: "Bali, Indonesia", 	isVerified: true, 	date: "2015-01-12", 	timeIn: "17:16:00", 	timeOut: "17:50:00", 	maxDepth: 21, 	tankPressureStart: 224, 	tankPressureEnd: 15, 	tankType: "Steel", 	beltWeight: 13, 	wetSuitType: "Dry Suit", 	wetSuitThickness: 3, 	airMixture: "Nitrox", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 31, 	diverId: 8, 	offeredDiveId: 10, 	diveshopId: 6	}),
+  const DiveBook = await Promise.all([
+  Log.create(	{		diveName: "Liberty", 	location: "Bali, Indonesia", 	isVerified: true, 	date: "2015-01-12", 	timeIn: "17:16:00", 	timeOut: "17:50:00", 	maxDepth: 21, 	tankPressureStart: 224, 	tankPressureEnd: 15, 	tankType: "Steel", 	beltWeight: 13, 	wetSuitType: "Dry Suit", 	wetSuitThickness: 3, 	airMixture: "Nitrox", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 31, 	diverId: 8, 	offeredDiveId: 10, 	diveshopId: 6	}),
   Log.create(	{		diveName: "Shark And Yolanda Reefs", 	location: "Ras Mohammed, Egypt", 	isVerified: true, 	date: "2015-01-21", 	timeIn: "08:33:00", 	timeOut: "08:48:00", 	maxDepth: 33, 	tankPressureStart: 219, 	tankPressureEnd: 60, 	tankType: "Steel", 	beltWeight: 7, 	wetSuitType: "None", 	wetSuitThickness: 0, 	airMixture: "Air", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 15, 	diverId: 7, 	offeredDiveId: 6, 	diveshopId: 4	}),
   Log.create(	{		diveName: "The Coral Garden", 	location: "Bali, Indonesia", 	isVerified: true, 	date: "2015-01-26", 	timeIn: "06:59:00", 	timeOut: "07:29:00", 	maxDepth: 33, 	tankPressureStart: 228, 	tankPressureEnd: 18, 	tankType: "Steel", 	beltWeight: 9, 	wetSuitType: "None", 	wetSuitThickness: 0, 	airMixture: "Nitrox", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 18, 	diverId: 15, 	offeredDiveId: 11, 	diveshopId: 6	}),
   Log.create(	{		diveName: "Palawan", 	location: "Palawan, Philippines", 	isVerified: true, 	date: "2015-03-11", 	timeIn: "07:38:00", 	timeOut: "08:09:00", 	maxDepth: 21, 	tankPressureStart: 216, 	tankPressureEnd: 15, 	tankType: "Steel", 	beltWeight: 9, 	wetSuitType: "None", 	wetSuitThickness: 0, 	airMixture: "Air", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 21, 	diverId: 15, 	offeredDiveId: 12, 	diveshopId: 1	}),
@@ -238,7 +240,7 @@ async function seed() {
   Log.create(	{		diveName: "Wreck Valley", 	location: "New York, NY", 	isVerified: true, 	date: "2019-04-10", 	timeIn: "01:27:00", 	timeOut: "02:12:00", 	maxDepth: 19, 	tankPressureStart: 214, 	tankPressureEnd: 25, 	tankType: "Steel", 	beltWeight: 10, 	wetSuitType: "Dry Suit", 	wetSuitThickness: 1, 	airMixture: "Air", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 3, 	diverId: 11, 	offeredDiveId: 20, 	diveshopId: 9	}),
   Log.create(	{		diveName: "Darwin Arch", 	location: "Galapagos Islands, Ecuador", 	isVerified: true, 	date: "2019-04-15", 	timeIn: "09:07:00", 	timeOut: "09:55:00", 	maxDepth: 24, 	tankPressureStart: 214, 	tankPressureEnd: 15, 	tankType: "Aluminum", 	beltWeight: 6, 	wetSuitType: "Shortie", 	wetSuitThickness: 3, 	airMixture: "Air", 	description: "Best dive ever!!!", 	hasStrongCurrent: true, 	visibility: 24, 	diverId: 5, 	offeredDiveId: 13, 	diveshopId: 2	}),	])
 
-
+  console.log(`DiveBook Load Success! ${DiveBook.length} logs available`)
 
   const AddressBook = await Promise.all([	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 1'),
 	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 2'),
@@ -476,6 +478,7 @@ async function seed() {
         db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 22'),
         db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(35.538056,-23.794722),4326) where id = 23'),										])
 
+        console.log(`Location Load Success!`)
 
   const CertificationsBook = await Promise.all(
     [	Certification.create({ provider: "SSI", level: "Open Water", certId: "368SSI", date: "2016-08-06", diverId: 1, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "927NAUI", date: "2019-01-05", diverId: 1, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "752NAUI", date: "2018-04-05", diverId: 1, instructorId: "HCOLE1234"}),
@@ -498,6 +501,8 @@ async function seed() {
     Certification.create({ provider: "PADI", level: "Open Water", certId: "283PADI", date: "2016-03-24", diverId: 18, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "046PADI", date: "2015-03-16", diverId: 18, instructorId: "HCOLE1234"}),	Certification.create({ provider: "Other", level: "Deep Diver", certId: "997Other", date: "2019-04-26", diverId: 18, instructorId: "HCOLE1234"}),
     Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 19, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 19, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 19, instructorId: "HCOLE1234"}),
     Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 20, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 20, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 20, instructorId: "HCOLE1234"}),	])
+
+    console.log(`Certification Load Success!`)
 
   await TourGuide(DiveBook, ObservationOddsByOfferedDiveData, ObservationHash)
 

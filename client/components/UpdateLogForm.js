@@ -24,7 +24,10 @@ const UpdateForm = props => {
     displayText,
     offeredDiveId
   } = props.log
-  date = date.split('T')[0]
+
+  if(date) {
+    date = date.split('T')[0]
+  }
 
   let tankTypeOptions = ['Aluminum', 'Steel', 'Other']
   let wetSuitTypeOptions = [
@@ -36,6 +39,10 @@ const UpdateForm = props => {
     'Other'
   ]
   let airMixtureOptions = ['Air', 'Nitrox', 'Hydreliox', 'Oxygen']
+
+  // if(!date) {
+  //   return <div/>
+  // }
 
   return (
     <div>

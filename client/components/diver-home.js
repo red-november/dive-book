@@ -3,33 +3,72 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {
-  getDiverLogsThunk,
+  getDiverLogsWithObservationsThunk,
   getDiverCertsThunk,
   // getBadgesThunk,
   getLogsThunk
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
 import {LineChart, BarChart} from './D3Components'
-
 import {TimeStringToFloat} from '../../utilities/d3Utils'
 
 /**
  * COMPONENT
  */
 class DiverHome extends Component {
-  componentDidMount() {
-    this.props.loadDiverLogs(this.props.diver.id)
-    this.props.loadDiverCerts(this.props.diver.id)
-    this.props.loadDiverBadges(this.props.diver.id)
-    this.props.loadAllLogs()
+  async componentDidMount() {
+    await this.props.loadDiverLogs(this.props.diver.id)
+    await this.props.loadDiverCerts(this.props.diver.id)
+    await this.props.loadDiverBadges(this.props.diver.id)
+    await this.props.loadAllLogs()
   }
+
+  reload = async () => {
+    await this.props.loadDiverLogs(this.props.diver.id)
+    await this.props.loadDiverCerts(this.props.diver.id)
+    await this.props.loadDiverBadges(this.props.diver.id)
+    await this.props.loadAllLogs()
+  }
+
   render() {
-    console.log('this.propssss', this.props)
+
     const {firstName, id} = this.props.diver
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
 
+    if(!diverLogs.length === 0 || !diverCerts || !diverBadges) {
+      this.reload()
+    }
+
+    const ObservationsQuery = function (logs) {
+      let query = {}
+      let found = []
+      logs.forEach((log) =>{
+        log.observations.reduce((accum, obs) => {
+          if(found.indexOf(obs.name) === -1) {
+            accum[obs.name] = 1
+            found.push(obs.name)
+          }
+          else {
+            accum[obs.name] = 1 + accum[obs.name]
+          }
+          return accum
+        },query)
+        return query
+      })
+      console.log(query)
+      return query
+    }
+
     if (allLogs.length === 0) {
       return <h1>LOADING...</h1>
+    }
+
+    let result = {}
+    let sights = []
+
+    if (diverLogs.length > 0) {
+      result = ObservationsQuery(diverLogs)
+      sights = Object.keys(result)
     }
 
     return (
@@ -48,6 +87,25 @@ class DiverHome extends Component {
         </div>
         <div>
           {' '}
+          <h3>Badges:</h3>
+          {diverBadges.map(badge => (
+            <ul key={badge.id}>
+              <li>
+                {badge.name} {badge.description}
+              </li>
+            </ul>
+          ))}
+        </div>
+        <div>
+          <h3>Sightings:</h3>
+            <ul>
+              {sights.map(sight => (
+                <li key={sight}>{`${sight} - ${result[sight]} Found`}</li>
+              ))}
+            </ul>
+        </div>
+        <div>
+
           <h3>Certifications:</h3>
           {diverCerts.map(cert => (
             <ul key={cert.id}>
@@ -62,17 +120,7 @@ class DiverHome extends Component {
             <Link to="/certs/create">Create New Certification</Link>
           </button>
         </div>
-        <div>
-          {' '}
-          <h3>Badges:</h3>
-          {diverBadges.map(badge => (
-            <ul key={badge.id}>
-              <li>
-                {badge.name} {badge.description}
-              </li>
-            </ul>
-          ))}
-        </div>
+
         <div className="canva" />
       </div>
     )
@@ -94,7 +142,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   loadDiverLogs: diverId => {
-    dispatch(getDiverLogsThunk(diverId))
+    dispatch(getDiverLogsWithObservationsThunk(diverId))
   },
   loadDiverCerts: diverId => {
     dispatch(getDiverCertsThunk(diverId))
