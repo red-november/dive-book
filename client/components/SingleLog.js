@@ -66,7 +66,6 @@ class SingleLog extends Component {
       offeredDiveId
     } = this.props.singleLog
 
-
     await this.setState({
       date,
       diveshopId,
@@ -191,20 +190,38 @@ class SingleLog extends Component {
   render() {
     const {activated, date} = this.state
     const {singleLog, singleShop, diver} = this.props
-    const {id, diveName, location, timeIn, timeOut, maxDepth, tankPressureStart, tankPressureEnd, tankType, beltWeight, wetSuitType, wetSuitThickness, airMixture, description, visibility, hasStrongCurrent, isVerified} = singleLog
+    const {
+      id,
+      diveName,
+      location,
+      timeIn,
+      timeOut,
+      maxDepth,
+      tankPressureStart,
+      tankPressureEnd,
+      tankType,
+      beltWeight,
+      wetSuitType,
+      wetSuitThickness,
+      airMixture,
+      description,
+      visibility,
+      hasStrongCurrent,
+      isVerified
+    } = singleLog
 
-    if( !singleShop.id) {
+    if (!singleShop.id) {
       this.reload()
     }
 
-    if (!singleLog.id || !date ) {
+    if (!singleLog.id || !date) {
       return <h1>LOADING</h1>
     }
 
     return (
       <div>
-        {diver.id === singleLog.diverId ?
-           (!activated ? (
+        {diver.id === singleLog.diverId && !singleLog.isVerified ? (
+          !activated ? (
             <button type="button" onClick={this.activated}>
               {' '}
               Edit Log
@@ -216,11 +233,12 @@ class SingleLog extends Component {
                 Exit Edit Mode
               </button>
             </div>
-          ))
-          : <div/>}
+          )
+        ) : (
+          <div />
+        )}
 
-          {!activated ?
-
+        {!activated ? (
           <table>
             <tr>
               <th>Description</th>
@@ -240,7 +258,7 @@ class SingleLog extends Component {
             </tr>
             <tr>
               <td>Date: </td>
-              <td>{date.slice(0,10)}</td>
+              <td>{date.slice(0, 10)}</td>
             </tr>
             <tr>
               <td>Time In:</td>
@@ -292,11 +310,7 @@ class SingleLog extends Component {
             </tr>
             <tr>
               <td>Strong Current:</td>
-              {hasStrongCurrent ?
-              <td>Yes</td>
-              :
-              <td>No</td>
-            }
+              {hasStrongCurrent ? <td>Yes</td> : <td>No</td>}
             </tr>
             <tr>
               <td>Description: </td>
@@ -305,27 +319,28 @@ class SingleLog extends Component {
             <tr>
               <td>Stamp:</td>
               <td>
-                {isVerified ?
-                <img className="Stamp" src={singleShop.stampImgUrl}/>
-                : 'Not Verified'}
+                {isVerified ? (
+                  <img className="Stamp" src={singleShop.stampImgUrl} />
+                ) : (
+                  'Not Verified'
+                )}
               </td>
             </tr>
           </table>
-
-          :
-            <div>
-              <UpdateForm
-                handleChange={this.handleChange}
-                handleSubmit={this.handleSubmit}
-                log={this.state}
-                allShops={this.props.allShops}
-                singleShop={this.props.singleShop}
-              />
-              <Link to="/qr">
-                <button onClick={this.displayScanner}>Toggle QR Scanner</button>{' '}
-              </Link>
-            </div>
-        }
+        ) : (
+          <div>
+            <UpdateForm
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+              log={this.state}
+              allShops={this.props.allShops}
+              singleShop={this.props.singleShop}
+            />
+            <Link to="/qr">
+              <button onClick={this.displayScanner}>Toggle QR Scanner</button>{' '}
+            </Link>
+          </div>
+        )}
       </div>
     )
   }
@@ -342,7 +357,7 @@ const mapDispatchToProps = dispatch => ({
   onLoadLog: async id => {
     await dispatch(getSingleLogThunk(id))
   },
-   updateLog: async (id, data) => {
+  updateLog: async (id, data) => {
     await dispatch(updateLogThunk(id, data))
   },
   fetchShops: async () => {
