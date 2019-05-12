@@ -34,9 +34,14 @@ form div {
   margin: 5px;
 }
 
-/* .navBar {
-  height: 36px;
-} */
+.navBar {
+  /* background-color: #03a9f4; */
+}
+
+.color-bar {
+  background-color: #1769aa;
+  height: 20px;
+}
 
 .OptionComponent {
   display: flex;

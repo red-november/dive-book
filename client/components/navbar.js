@@ -45,6 +45,7 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
 
   return (
     <div className={classes.root}>
+      <div className="color-bar" />
       <AppBar position="static" color="default">
         <Toolbar>
           <Typography variant="h5" color="inherit">
