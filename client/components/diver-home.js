@@ -10,17 +10,34 @@ import {
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
 import {LineChart, BarChart} from './D3Components'
-import {TimeStringToFloat} from '../../utilities/d3Utils'
+import {TimeStringToFloat, Bubbles} from '../../utilities/d3Utils'
+import * as d3 from 'd3'
 
 /**
  * COMPONENT
  */
 class DiverHome extends Component {
+  constructor () {
+    super()
+    this.state = {
+      BubblifyActivated: false
+    }
+  }
   async componentDidMount() {
     await this.props.loadDiverLogs(this.props.diver.id)
     await this.props.loadDiverCerts(this.props.diver.id)
     await this.props.loadDiverBadges(this.props.diver.id)
     await this.props.loadAllLogs()
+  }
+
+  BubblifyObservations = async (data) => {
+    const canvas = d3.select('.canva')
+    if(!this.state.BubblifyActivated) {
+      await Bubbles(canvas, data)
+      this.setState({
+        BubblifyActivated: true
+      })
+    }
   }
 
   reload = async () => {
@@ -64,11 +81,22 @@ class DiverHome extends Component {
 
     let result = {}
     let sights = []
+    let data = {children: []}
 
-    if (diverLogs[0].observations) {
+    if (diverLogs[0]) {
       result = ObservationsQuery(diverLogs)
       sights = Object.keys(result)
+      sights.forEach(sight => {
+        data.children.push({
+          Name: sight,
+          Count: result[sight]
+        })
+      })
     }
+
+    setTimeout(async () => {
+        await this.BubblifyObservations(data)
+      }, 50)
 
     return (
       <div>
@@ -97,11 +125,12 @@ class DiverHome extends Component {
         </div>
         <div>
           <h3>Sightings:</h3>
-            <ul>
+            {/* <ul>
               {sights.map(sight => (
                 <li key={sight}>{`${sight} - ${result[sight]} Found`}</li>
               ))}
-            </ul>
+            </ul> */}
+            <div className="canva"/>
         </div>
         <div>
 
@@ -119,8 +148,6 @@ class DiverHome extends Component {
             <Link to="/certs/create">Create New Certification</Link>
           </button>
         </div>
-
-        <div className="canva" />
       </div>
     )
   }
