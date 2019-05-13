@@ -22,6 +22,7 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
     itemArr: [
       {name: 'Profile', link: '/home'},
       {name: 'Analysis', link: '/home/analysis'},
+      {name: 'My Map', link: '/mymap'},
       {name: 'Log Out', link: '/home', func: handleClick}
     ]
   }
