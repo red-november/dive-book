@@ -62,7 +62,7 @@ class AllObservations extends Component {
     }
 
     return (
-      <div>
+      <div className="ChartContainer">
         <div className="Container">
           <div className="ChartContainer">
             <h4>Category Breakdown</h4>
