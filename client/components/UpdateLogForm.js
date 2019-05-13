@@ -25,24 +25,13 @@ const UpdateForm = props => {
     offeredDiveId
   } = props.log
 
-  if(date) {
+  if (date) {
     date = date.split('T')[0]
   }
 
   let tankTypeOptions = ['Aluminum', 'Steel', 'Other']
-  let wetSuitTypeOptions = [
-    'Shortie',
-    'Fulljohn',
-    'The Full Wetsuit',
-    'Dry Suit',
-    'None',
-    'Other'
-  ]
-  let airMixtureOptions = ['Air', 'Nitrox', 'Hydreliox', 'Oxygen']
-
-  // if(!date) {
-  //   return <div/>
-  // }
+  let wetSuitTypeOptions = ['Shortie', 'Fulljohn', 'Dry Suit', 'None', 'Other']
+  let airMixtureOptions = ['Air', 'Nitrox', 'Hydreliox']
 
   return (
     <div>

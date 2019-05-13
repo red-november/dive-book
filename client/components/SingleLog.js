@@ -10,6 +10,7 @@ import {connect} from 'react-redux'
 import UpdateForm from './UpdateLogForm'
 import {Link} from 'react-router-dom'
 import history from '../history'
+import Loading from './styling/Loading'
 
 class SingleLog extends Component {
   constructor(props) {
@@ -215,13 +216,13 @@ class SingleLog extends Component {
     }
 
     if (!singleLog.id || !date) {
-      return <h1>LOADING</h1>
+      return <Loading />
     }
 
     return (
       <div>
-        {diver.id === singleLog.diverId ? (
-          !activated ? (
+        {diver.id === singleLog.diverId &&
+          (!activated ? (
             <button type="button" onClick={this.activated}>
               {' '}
               Edit Log
@@ -233,10 +234,7 @@ class SingleLog extends Component {
                 Exit Edit Mode
               </button>
             </div>
-          )
-        ) : (
-          <div />
-        )}
+          ))}
 
         {!activated ? (
           <table>
