@@ -9,12 +9,9 @@ import {
   getLogsThunk
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
-import {LineChart, BarChart} from './D3Components'
-import {TimeStringToFloat} from '../../utilities/d3Utils'
 import Loading from './styling/Loading'
 import ExpansionPanel from './styling/ExpansionPanel'
 import moment from 'moment'
-import Button from '@material-ui/core/Button'
 
 /**
  * COMPONENT
@@ -54,30 +51,38 @@ class DiverHome extends Component {
                       } Logged Dives. Total bottom time: ${getBottomTime(
                         diverLogs
                       )} hours.`,
-                content: [
-                  diverLogs.map(log => (
-                    <li key={log.id}>
-                      <Link to={`/logs/${log.id}`}>
-                        {log.diveName}: {log.date.slice(0, 10)}
-                      </Link>
-                    </li>
-                  ))
-                ]
+                content: (
+                  <ul>
+                    {' '}
+                    {diverLogs.map(log => (
+                      <li key={log.id}>
+                        <Link to={`/logs/${log.id}`}>
+                          {log.diveName}: {log.date.slice(0, 10)}
+                        </Link>
+                      </li>
+                    ))}{' '}
+                  </ul>
+                )
               },
               {
                 name:
                   sights.length === 1
                     ? '1 Sighting'
                     : `${sights.length} Sightings`,
-                content: sights.map(sight => (
-                  <li key={sight}>
-                    {
-                      <Link to={`observations/${sight[1].id}`}>
-                        {sight[0]} - {sight[1].count} times
-                      </Link>
-                    }
-                  </li>
-                ))
+                content: (
+                  <ul>
+                    {' '}
+                    {sights.map(sight => (
+                      <li key={sight}>
+                        {
+                          <Link to={`observations/${sight[1].id}`}>
+                            {sight[0]} - {sight[1].count} times
+                          </Link>
+                        }
+                      </li>
+                    ))}
+                  </ul>
+                )
               }
             ]}
           />
@@ -104,8 +109,10 @@ class DiverHome extends Component {
               </li>
             </ul>
           ))}
-          <button type="button">
-            <Link to="/certs/create">Create New Certification</Link>
+          <button type="button" className="btn-main btn-cert">
+            <Link className="rrLink" to="/certs/create">
+              Add Certification
+            </Link>
           </button>
         </div>
       </div>

@@ -134,3 +134,27 @@ td {
 .welcome-bar {
   margin-bottom: 2px;
 }
+
+.rrLink {
+  color: white;
+  text-transform: none;
+}
+.rrLink:hover {
+  color: black;
+}
+
+.btn-main {
+  border-radius: 20px;
+  text-transform: none;
+  background-color: #0288d1;
+  color: #fff;
+}
+
+.btn-main:hover {
+  background-color: #eee;
+  color: black;
+}
+
+.btn-cert {
+  margin-left: 20px;
+}
