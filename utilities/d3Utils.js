@@ -176,7 +176,7 @@ const Bubbles = (canvas, dataset) => {
     const bubble = d3.pack(dataset)
         .size([diameter, diameter])
         .padding(1.5);
-    
+
     // if(dataset.children.length > 0) {
 
       let svg = canvas
@@ -184,14 +184,14 @@ const Bubbles = (canvas, dataset) => {
           .attr("width", diameter)
           .attr("height", diameter)
           .attr("class", "bubble")
-  
+
       let defs = svg.append("defs")
-  
+
       let nodes = d3.hierarchy(dataset)
           .sum(function(d) { return d.Count; });
-  
+
       let pattern = defs.selectAll('pattern')
-  
+
       pattern
           .data(dataset.children)
           .enter()
@@ -206,7 +206,7 @@ const Bubbles = (canvas, dataset) => {
           .attr("preserveAspectRatio", "none")
           .attr("xmlns:xlink","http://www.w3.org/1999/xlink")
           .attr("xlink:href",d => (`${d.imageUrl}`))
-  
+
       let node = svg.selectAll(".node")
           .data(bubble(nodes).descendants())
           .enter()
@@ -214,19 +214,19 @@ const Bubbles = (canvas, dataset) => {
           .append("g")
           .attr("class", "node")
           .attr("transform", (d) => "translate(" + d.x + "," + d.y + ")");
-  
+
       node.append("title")
           .text(function(d) {
               return d.Name + ": " + d.Count;
           });
-  
+
       node.append("circle")
           .attr("r", function(d) {
               return d.r;
           })
           .style("fill","blue")
           .style("fill", d => `url(#${d.data.Name.replace(/\s/g, '')})`)
-  
+
       node.append("text")
           .attr("dy", ".2em")
           .style("text-anchor", "middle")
@@ -238,7 +238,7 @@ const Bubbles = (canvas, dataset) => {
               return d.r/5;
           })
           .attr("fill", "white");
-  
+
       node.append("text")
           .attr("dy", "1.3em")
           .style("text-anchor", "middle")
@@ -250,20 +250,53 @@ const Bubbles = (canvas, dataset) => {
               return d.r/5;
           })
           .attr("fill", "white");
-  
+
       d3.select(self.frameElement)
           .style("height", diameter + "px");
     // }
 
   }
 
-  
 
+  const TestForce = (canvas) => {
+    let width = 300, height = 300
+    let nodes = [{}, {}, {}, {}, {}]
+
+    let svg = canvas
+      .append("svg")
+      .attr("width", 600)
+      .attr("height", 600)
+
+    let simulation = d3.forceSimulation(nodes)
+      .force('charge', d3.forceManyBody())
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .on('tick', ticked);
+
+      function ticked() {
+        var u = d3.select('svg')
+          .selectAll('circle')
+          .data(nodes)
+
+        u.enter()
+          .append('circle')
+          .attr('r', 5)
+          .merge(u)
+          .attr('cx', function(d) {
+            return d.x
+          })
+          .attr('cy', function(d) {
+            return d.y
+          })
+
+        u.exit().remove()
+      }
+  }
 
 module.exports = {
   GraphifyDiscoverer,
   FillDiscoverer,
   ColorMaker,
   TimeStringToFloat,
-  Bubbles
+  Bubbles,
+  TestForce
 }
