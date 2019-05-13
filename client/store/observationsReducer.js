@@ -10,7 +10,6 @@ const getObservations = observations => ({type: GET_OBSERVATIONS, observations})
 export const getObservationsThunk = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/observations')
-    console.log('here:', data)
     dispatch(getObservations(data))
   } catch (error) {
     console.error(error)

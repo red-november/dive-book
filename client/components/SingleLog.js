@@ -101,28 +101,26 @@ class SingleLog extends Component {
   handleChange = event => {
     if (event.target.name === 'provider' && event.target.value === 'Other') {
       this.setState({displayText: true})
-    }
-    if (event.target.name === 'diveshopId') {
+    } else if (event.target.name === 'diveshopId') {
       //fetch single shop if id is not null
       event.target.value && this.props.fetchSingleShop(event.target.value)
       this.setState({displayText: false})
-    }
-
-    if (
+    } else if (
       (event.target.name === 'diveName' && event.target.value === 'Other') ||
       (event.target.name === 'diveshopId' && event.target.value === '')
     ) {
       this.setState({displayText: true})
-    }
-    if (event.target.name === 'diveName' && !this.state.displayText) {
+    } else if (event.target.name === 'diveName' && !this.state.displayText) {
       let [diveName, offeredDiveId] = event.target.value.split('^')
+      console.log('event value', event.target.value)
+      console.log('dive name', diveName)
+      console.log('dive id', offeredDiveId)
+
       this.setState({
         diveName,
         offeredDiveId
       })
-    }
-
-    if (event.target.name === 'search') {
+    } else if (event.target.name === 'search') {
       let currentObs = event.target.value
       let currentObsArr = [...this.state.diverObservations]
       if (!currentObsArr.find(obs => obs.id === JSON.parse(currentObs).id)) {
@@ -140,7 +138,7 @@ class SingleLog extends Component {
 
   handleSubmit = async event => {
     event.preventDefault()
-
+    //adjust observations to only include ids
     await this.props.updateLog(this.props.singleLog.id, this.state)
   }
 
@@ -168,7 +166,7 @@ class SingleLog extends Component {
       )
       let currentObsArr = [...this.state.diverObservations]
       if (!currentObsArr.find(obs => obs.id === topSelection.id)) {
-        currentObsArr.push(topSelection)
+        currentObsArr.push({id: topSelection.id, name: topSelection.name})
         this.setState({diverObservations: currentObsArr})
       }
     }
