@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 import {
   getDiverLogsWithObservationsThunk,
   getDiverCertsThunk,
-  // getBadgesThunk,
   getLogsThunk
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
@@ -52,7 +51,7 @@ class DiverHome extends Component {
     const {firstName, id} = this.props.diver
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
 
-    if(!diverLogs.length === 0 || !diverCerts || !diverBadges) {
+    if(!diverCerts || !diverBadges) {
       this.reload()
     }
 
@@ -62,29 +61,9 @@ class DiverHome extends Component {
       logs.forEach((log) =>{
         log.observations.reduce((accum, obs) => {
           if(found.indexOf(obs.name) === -1) {
-            accum[obs.name] = 1
-            found.push(obs.name)
-          }
-          else {
-            accum[obs.name] = 1 + accum[obs.name]
-          }
-          return accum
-        },query)
-        return query
-      })
-      return query
-    }
-
-    const ObservationsQueryTest = function (logs) {
-      let query = {}
-      let found = []
-      logs.forEach((log) =>{
-        log.observations.reduce((accum, obs) => {
-          if(found.indexOf(obs.name) === -1) {
             accum[obs.name] = {
               Count: 1,
-              // imageUrl: obs.imageUrl
-              imageUrl: "https://i.imgur.com/4DNOql4.jpg"
+              imageUrl: obs.imageUrl
             }
             found.push(obs.name)
           }
@@ -102,25 +81,12 @@ class DiverHome extends Component {
       return <h1>LOADING...</h1>
     }
 
-    // console.log(ObservationsQueryTest(diverLogs))
-
     let result = {}
     let sights = []
     let data = {children: []}
 
-    // if (diverLogs[0]) {
-    //   result = ObservationsQuery(diverLogs)
-    //   sights = Object.keys(result)
-    //   sights.forEach(sight => {
-    //     data.children.push({
-    //       Name: sight,
-    //       Count: result[sight]
-    //     })
-    //   })
-    // }
-
     if (diverLogs[0]) {
-      result = ObservationsQueryTest(diverLogs)
+      result = ObservationsQuery(diverLogs)
       sights = Object.keys(result)
       sights.forEach(sight => {
         data.children.push({
@@ -130,8 +96,6 @@ class DiverHome extends Component {
         })
       })
     }
-
-    console.log(data)
 
     setTimeout(async () => {
         await this.BubblifyObservations(data)
@@ -143,13 +107,15 @@ class DiverHome extends Component {
         <div>
           {' '}
           <h3>Logs:</h3>
-          {diverLogs.map(log => (
+          {diverLogs.length > 0 ?
+          diverLogs.map(log => (
             <ul key={log.id}>
               <li>
                 <Link to={`/logs/${log.id}`}>{log.diveName}</Link>
               </li>
             </ul>
-          ))}
+          )) : 
+          <div>No Logs Recorded</div>}
         </div>
         <div>
           {' '}
@@ -164,11 +130,6 @@ class DiverHome extends Component {
         </div>
         <div>
           <h3>Sightings:</h3>
-            {/* <ul>
-              {sights.map(sight => (
-                <li key={sight}>{`${sight} - ${result[sight]} Found`}</li>
-              ))}
-            </ul> */}
             <div className="canva"/>
         </div>
         <div>

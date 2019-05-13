@@ -47,13 +47,13 @@ const Observation = db.define('observation', {
 
 Observation.LoadData = async function(dataArray) {
   await dataArray.map(async data => {
-    let {id, name, category, description, imageURL} = data
+    let {id, name, category, description, imageUrl} = data
     await Observation.create({
       id,
       name,
       category,
       description,
-      imageURL
+      imageUrl
     })
   })
   console.log('Observation Load Success!')
