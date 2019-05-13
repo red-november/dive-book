@@ -159,8 +159,8 @@ td {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
-  width: 350px;
-  height: 300px;
+  width: 600px;
+  height: 400px;
   padding: 30px;
 }
 

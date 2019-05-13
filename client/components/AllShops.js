@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getShopsThunk} from '../store/index'
+import {getShopsThunk, getSingleShopThunk} from '../store/index'
 
 class AllShops extends Component {
   componentDidMount() {
@@ -14,7 +14,12 @@ class AllShops extends Component {
         <h1>All Shops:</h1>
         <ul>
           {this.props.allShops.map(shop => (
-            <li key={shop.id}> {shop.name} </li>
+            <li key={shop.id}>
+              {' '}
+              <a href={`/allshops/${this.props.allShops.id}`}>
+                {shop.name}
+              </a>{' '}
+            </li>
           ))}
         </ul>
       </div>

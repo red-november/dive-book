@@ -8,12 +8,18 @@ class SingleObservation extends Component {
   }
 
   render() {
-    const {name, category, description, imageUrl, logs} = this.props.singleObservation
+    const {
+      name,
+      category,
+      description,
+      imageUrl,
+      logs
+    } = this.props.singleObservation
     if (!name) return <h1>Loading...</h1>
     return (
       <div className="ChartContainer">
         <h2>{name}</h2>
-        <img src={imageUrl} />
+        <img className="singleDiveImg" src={imageUrl} />
         <p>Category: {category}</p>
         <p>{description}</p>
         <table>
@@ -24,7 +30,7 @@ class SingleObservation extends Component {
           </tr>
           {logs.map(log => (
             <tr key={log.id}>
-              <td>{log.date.slice(0,10)}</td>
+              <td>{log.date.slice(0, 10)}</td>
               <td>{log.diveName}</td>
               <td>{log.location}</td>
             </tr>
