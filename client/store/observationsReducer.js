@@ -9,8 +9,9 @@ const getObservations = observations => ({type: GET_OBSERVATIONS, observations})
 
 export const getObservationsThunk = () => async dispatch => {
   try {
-    const res = await axios.get('api/observations')
-    dispatch(getObservations(res.data))
+    const {data} = await axios.get('/api/observations')
+    console.log('here:', data)
+    dispatch(getObservations(data))
   } catch (error) {
     console.error(error)
   }
@@ -18,7 +19,7 @@ export const getObservationsThunk = () => async dispatch => {
 
 export default function(state = initialState, action) {
   let newState = [...state]
-  switch(action.type) {
+  switch (action.type) {
     case GET_OBSERVATIONS:
       newState = action.observations
       return newState

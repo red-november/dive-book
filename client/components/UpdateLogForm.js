@@ -1,8 +1,19 @@
 /* eslint-disable no-lone-blocks */
 import React from 'react'
+import {ObservationSearch} from './index'
 
 const UpdateForm = props => {
-  const {handleChange, handleSubmit, allShops, singleShop} = props
+  const {
+    handleChange,
+    handleSubmit,
+    allShops,
+    singleShop,
+    enterObservation,
+    keyup,
+    currentList,
+    diverObservations,
+    removeFromList
+  } = props
   let {
     date,
     diveshopId,
@@ -214,6 +225,14 @@ const UpdateForm = props => {
         </select>
         <button type="submit">Submit</button>
       </form>
+      <ObservationSearch
+        enterObservation={enterObservation}
+        keyup={keyup}
+        handleChange={handleChange}
+        currentList={currentList}
+        diverObservations={diverObservations}
+        removeFromList={removeFromList}
+      />
     </div>
   )
 }

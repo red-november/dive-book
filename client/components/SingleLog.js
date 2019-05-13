@@ -4,14 +4,15 @@ import {
   getSingleLogThunk,
   updateLogThunk,
   getShopsThunk,
-  getSingleShopThunk
+  getSingleShopThunk,
+  getObservationsThunk
 } from '../store/index'
 import {connect} from 'react-redux'
 import UpdateForm from './UpdateLogForm'
 import {Link} from 'react-router-dom'
 import history from '../history'
 import Loading from './styling/Loading'
-import {SingleLogTable} from './index'
+import {SingleLogTable, ObservationSearch} from './index'
 
 class SingleLog extends Component {
   constructor(props) {
@@ -37,11 +38,16 @@ class SingleLog extends Component {
       displayText: false,
       offeredDiveId: 1,
       displayQrScanner: false,
-      activate: false
+      activate: false,
+      currentList: [],
+      diverObservations: []
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.keyup = this.keyup.bind(this)
+    this.enterObservation = this.enterObservation.bind(this)
+    this.removeFromList = this.removeFromList.bind(this)
   }
   async componentDidMount() {
     await this.props.onLoadLog(this.props.match.params.id)
@@ -114,6 +120,17 @@ class SingleLog extends Component {
         diveName,
         offeredDiveId
       })
+    }
+
+    if (event.target.name === 'search') {
+      let currentObs = event.target.value
+      let currentObsArr = [...this.state.diverObservations]
+      if (!currentObsArr.find(obs => obs.id === JSON.parse(currentObs).id)) {
+        currentObsArr.push(JSON.parse(currentObs))
+        this.setState({
+          diverObservations: currentObsArr
+        })
+      }
     } else {
       this.setState({
         [event.target.name]: event.target.value
@@ -127,11 +144,42 @@ class SingleLog extends Component {
     await this.props.updateLog(this.props.singleLog.id, this.state)
   }
 
+  //keyup, removeFromList and enterObservation all used for observation search bar
+  keyup(evt) {
+    let word = evt.target.value
+    let newList = this.props.observations.filter(obs => {
+      if (obs.name.toLowerCase().includes(word.toLowerCase())) {
+        return obs.name
+      }
+    })
+    this.setState({currentList: newList})
+  }
+
+  removeFromList(id) {
+    let currentObsArr = [...this.state.diverObservations]
+    currentObsArr = currentObsArr.filter(obs => obs.id !== id)
+    this.setState({diverObservations: currentObsArr})
+  }
+
+  enterObservation(evt) {
+    if (evt.keyCode === 13) {
+      let topSelection = JSON.parse(
+        document.getElementById('observation-selector').value
+      )
+      let currentObsArr = [...this.state.diverObservations]
+      if (!currentObsArr.find(obs => obs.id === topSelection.id)) {
+        currentObsArr.push(topSelection)
+        this.setState({diverObservations: currentObsArr})
+      }
+    }
+  }
+
   displayScanner = () => {
     this.setState({displayQrScanner: !this.state.displayQrScanner})
   }
 
   activated = () => {
+    this.props.fetchObservations()
     this.setState({
       activated: true
     })
@@ -238,12 +286,14 @@ class SingleLog extends Component {
           ))}
 
         {!activated ? (
-          <SingleLogTable
-            {...this.props.singleLog}
-            singleShop={singleShop}
-            diveName={diveName}
-            singleLog={singleLog}
-          />
+          <div>
+            <SingleLogTable
+              {...this.props.singleLog}
+              singleShop={singleShop}
+              diveName={diveName}
+              singleLog={singleLog}
+            />
+          </div>
         ) : (
           <div>
             <UpdateForm
@@ -252,7 +302,13 @@ class SingleLog extends Component {
               log={this.state}
               allShops={this.props.allShops}
               singleShop={this.props.singleShop}
+              enterObservation={this.enterObservation}
+              keyup={this.keyup}
+              currentList={this.state.currentList}
+              diverObservations={this.state.diverObservations}
+              removeFromList={this.removeFromList}
             />
+
             <Link to="/qr">
               <button onClick={this.displayScanner}>Toggle QR Scanner</button>{' '}
             </Link>
@@ -267,7 +323,8 @@ const mapStateToProps = state => ({
   diver: state.diver,
   singleLog: state.singleLog,
   allShops: state.shops,
-  singleShop: state.singleShop
+  singleShop: state.singleShop,
+  observations: state.observations
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -282,6 +339,9 @@ const mapDispatchToProps = dispatch => ({
   },
   fetchSingleShop: async shopId => {
     await dispatch(getSingleShopThunk(shopId))
+  },
+  fetchObservations: () => {
+    dispatch(getObservationsThunk())
   }
 })
 
