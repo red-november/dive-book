@@ -37,8 +37,63 @@ class SingleDiverMap extends Component {
       })
       if (this.state.showNearest) {
         this.props.fetchNearest(`${this.state.curLong},${this.state.curLat}`)
+        console.log(
+          'first fetcher - First return is always zeroes  ¯\\_(ツ)_/¯ '
+        )
+        console.log('currentLong ---->', this.state.curLong)
+        console.log('currentLat ---->', this.state.curLat)
       }
     }
+
+    if (this.state.curLong === 0) {
+      await setTimeout(() => {
+        if ('geolocation' in navigator) {
+          navigator.geolocation.getCurrentPosition(pos => {
+            this.setState({
+              curLong: pos.coords.longitude,
+              curLat: pos.coords.latitude,
+              showNearest: true
+            })
+          })
+          if (this.state.showNearest) {
+            this.props.fetchNearest(
+              `${this.state.curLong},${this.state.curLat}`
+            )
+            console.log('second fetcher - Our true fetch')
+            console.log('currentLong ---->', this.state.curLong)
+            console.log('currentLat ---->', this.state.curLat)
+          }
+        }
+      }, 50)
+    }
+
+    let counter = 0
+
+    // This interval is needed because the pos.coords reset after around 10-30 seconds.
+    // Notice that random /200 request pop up instead of /304 - This means new data.
+    // That inactivity will cause the page to not render the nearest diveshop.
+    // Mitigate this by calling fetchNearest every 5 seconds.
+    // This also serves as insurance during unforeseen bugs:
+    // Cue the line --> "Sometimes it takes a while to load because of how many data we have
+
+    this.interval = setInterval(() => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          this.setState({
+            curLong: pos.coords.longitude,
+            curLat: pos.coords.latitude,
+            showNearest: true
+          })
+        })
+        if (this.state.showNearest) {
+          this.props.fetchNearest(`${this.state.curLong},${this.state.curLat}`)
+          counter++
+          console.log('interval ------->', counter)
+          console.log('currentLong ---->', this.state.curLong)
+          console.log('currentLat ----->', this.state.curLat)
+        }
+      }
+    }, 5000)
   }
 
   async componentDidUpdate() {
@@ -49,6 +104,10 @@ class SingleDiverMap extends Component {
         // this.props.fetchNearest('100.9925,15.8700')
       }
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   renderPopup() {
