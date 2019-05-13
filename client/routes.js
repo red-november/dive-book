@@ -19,7 +19,7 @@ import {
   SingleCert,
   CreateCert,
   ObservationSearch,
-  TestMap,
+  SingleDiverMap,
   DiverAnalysis,
   SingleObservation,
   SingleOfferedDive
@@ -41,7 +41,7 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/qr" component={Scanner} />
-        <Route path="/test" component={TestMap} />
+        <Route path="/mymap" component={SingleDiverMap} />
         <Route exact path="/allshops/:shopId" component={SingleShop} />
         <Route exact path="/allshops" component={AllShops} />
         <Route

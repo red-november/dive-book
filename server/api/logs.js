@@ -1,10 +1,15 @@
 const router = require('express').Router()
 const {Log, EarnedBadge, Diver, Observation} = require('../db/models')
+const db = require('../db')
+const Sequelize = require('sequelize')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const allLogs = await Log.findAll()
+    // const allLogs = await Log.findAll()
+    const allLogs = await db.query('SELECT * FROM logs', {
+      type: Sequelize.QueryTypes.SELECT
+    })
     res.status(200).json(allLogs)
   } catch (error) {
     next(error)
@@ -38,10 +43,14 @@ router.delete('/:logId', async (req, res, next) => {
 router.get('/diver/:diverId', async (req, res, next) => {
   try {
     const diverId = Number(req.params.diverId)
-    const logs = await Log.findAll({
-      where: {diverId: diverId},
-      order: [['date', 'ASC']]
-    })
+    // const logs = await Log.findAll({
+    //   where: {diverId: diverId},
+    //   order: [['date', 'ASC']]
+    // })
+    const logs = await db.query(
+      `SELECT * FROM logs WHERE "diverId" = ${diverId} ORDER BY date ASC`,
+      {type: Sequelize.QueryTypes.SELECT}
+    )
     res.status(200).send(logs)
   } catch (error) {
     next(error)
@@ -184,5 +193,37 @@ router.get('/diver/:diverId/observations', async (req, res, next) => {
     res.status(200).send(logs)
   } catch (err) {
     next(err)
+  }
+})
+
+router.get('/distance/:start/:end', async (req, res, next) => {
+  const start = Number(req.params.start)
+  const end = Number(req.params.end)
+  try {
+    const distance = await db.query(
+      `SELECT ST_Distance((SELECT geog from logs where id = ${start}),(SELECT geog from logs where id = ${end}));
+      ;`,
+      {type: Sequelize.QueryTypes.SELECT}
+    )
+    res.json(distance[0])
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/nearest/:coords', async (req, res, next) => {
+  try {
+    const [long, lat] = req.params.coords.split(',')
+    const nearest = await db.query(
+      `SELECT (ST_DISTANCE(ST_GeogFromText('SRID=4326;POINT(${Number(
+        long
+      )} ${Number(lat)})'), geog)) AS dist, geog FROM logs WHERE "diverId" != ${
+        req.user.id
+      } ORDER BY dist LIMIT 1;`,
+      {type: Sequelize.QueryTypes.SELECT}
+    )
+    res.json(nearest)
+  } catch (error) {
+    next(error)
   }
 })
