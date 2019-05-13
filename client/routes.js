@@ -20,7 +20,9 @@ import {
   CreateCert,
   ObservationSearch,
   SingleDiverMap,
-  DiverAnalysis
+  DiverAnalysis,
+  SingleObservation,
+  SingleOfferedDive
 } from './components'
 import {me} from './store'
 
@@ -42,14 +44,20 @@ class Routes extends Component {
         <Route path="/mymap" component={SingleDiverMap} />
         <Route exact path="/allshops/:shopId" component={SingleShop} />
         <Route exact path="/allshops" component={AllShops} />
+        <Route
+          exact
+          path="/alloffereddives/:diveId"
+          component={SingleOfferedDive}
+        />
         <Route exact path="/alloffereddives" component={AllOfferedDives} />
+        <Route exact path="/observations" component={AllObservations} />
 
         <Route path="/login" component={Login} />
         <Route path="/badges/:diverId" component={SingleBadge} />
         <Route path="/signup" component={Signup} />
         <Route path="/logs/:id" component={SingleLog} />
         <Route path="/logs" component={AllLogs} />
-        <Route path="/observations" component={AllObservations} />
+        <Route path="/observations/:obsId" component={SingleObservation} />
         <Route path="/search" component={ObservationSearch} />
         <Route path="/certs/create" component={CreateCert} />
         <Route path="/certs/:id" component={SingleCert} />

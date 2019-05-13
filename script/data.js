@@ -4,15 +4,16 @@ const {
 } = require('../server/db/models')
 
 const DiveShopsData = [
-  {name: "Big Blue Explorer", location: "Palawan, Philippines", email: "bbe@email.com", storeFrontImgUrl: "BigBlueExplorer.jpg"},
-  {name: "Aqua Scuba Center", location: "Belize, C.A.", email: "acb@email.com", storeFrontImgUrl: "AquaScubaCenter.jpeg"},
-  {name: "Centurion Cruises", location: "Yongala, Australia", email: "cc@email.com", storeFrontImgUrl: "CenturionCruises.jpg"},
-  {name: "Sea Serpent", location: "Sharm El Sheikh, Egypt", email: "ss@email.com", storeFrontImgUrl: "SeaSerpent.jpg"},
-  {name: "Kona Honu Divers", location: "Honolulu, Hawaii", email: "khu@email.com", storeFrontImgUrl: "KonaHonuDivers.jpg"},
-  {name: "Ocean King", location: "Bali, Indonesia", email: "oc@email.com", storeFrontImgUrl: "OceanKing.png"},
-  {name: "Eco Dive Center", location: "Culver City, California", email: "edc@email.com", storeFrontImgUrl: "EcoDiveCenter.png"},
-  {name: "Florida Keys Dive Center", location: "Florida Keys, Florida", email: "fkdc@email.com", storeFrontImgUrl: "FloridaKeysDiveCenter.png"},
-  {name: "Adventure Scuba", location: "New York NY", email: "as@email.com", storeFrontImgUrl: "AdventureScuba.jpg"},
+  {id: 1, name: "Big Blue Explorer", location: "Palawan, Philippines", email: "bbe@email.com", storeFrontImgUrl: "BigBlueExplorer.jpg"},
+  {id: 2, name: "Aqua Scuba Center", location: "Belize City, Belize", email: "acb@email.com", storeFrontImgUrl: "AquaScubaCenter.jpeg"},
+  {id: 3, name: "Centurion Cruises", location: "Yongala, Australia", email: "cc@email.com", storeFrontImgUrl: "CenturionCruises.jpg"},
+  {id: 4, name: "Sea Serpent", location: "Sharm El Sheikh, Egypt", email: "ss@email.com", storeFrontImgUrl: "SeaSerpent.jpg"},
+  {id: 5, name: "Kona Honu Divers", location: "Honolulu, Hawaii", email: "khu@email.com", storeFrontImgUrl: "KonaHonuDivers.jpg"},
+  {id: 6, name: "Ocean King", location: "Bali, Indonesia", email: "oc@email.com", storeFrontImgUrl: "OceanKing.png"},
+  {id: 7, name: "Eco Dive Center", location: "Culver City, California", email: "edc@email.com", storeFrontImgUrl: "EcoDiveCenter.png"},
+  {id: 8, name: "Florida Keys Dive Center", location: "Florida Keys, Florida", email: "fkdc@email.com", storeFrontImgUrl: "FloridaKeysDiveCenter.png"},
+  {id: 9, name: "Adventure Scuba", location: "New York, NY", email: "as@email.com", storeFrontImgUrl: "AdventureScuba.jpg"},
+  {id: 10, name: "Immerse Yourself Safaris", location: "Sodwana Bay, South Africa", email: "iys@email.com", storeFrontImgUrl: "ImmerseYourselfSafaris.jpg"}
 ]
 
 const OfferedDivesData =[
@@ -284,13 +285,11 @@ const TourGuide = async function (DiveBook, OddsBook, Encyclopedia) {
   let fail = 0
   for(let i = 0; i < DiveBook.length; i++) {
     let {id, offeredDiveId} = DiveBook[i]
-    console.log("Offered Dive Id ---> ",offeredDiveId)
 
     let seen = Dice(OddsBook[offeredDiveId - 1])
     for(let j = 0; j < seen.length; ) {
       let seeing = seen.splice(0,1)[0]
       if(seen.indexOf(seeing) === -1) {
-        console.log('Seen this dive ------>',seeing)
         counter++
         try {
           await Sighting.create({
@@ -300,13 +299,13 @@ const TourGuide = async function (DiveBook, OddsBook, Encyclopedia) {
         } catch (error) {
           console.log(error)
           fail++
-          console.log('fail ------------->',fail)
+          console.log('fail ------------------>',fail)
         }
       }
     }
   }
-  console.log("Total Counter ------> ",counter)
-  console.log("Total Fail ------> ",fail)
+  console.log("Total Observations ------> ",counter)
+  console.log("Total Fail --------------> ",fail)
 }
 
 const CertificationsData =

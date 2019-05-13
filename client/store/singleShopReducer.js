@@ -2,12 +2,12 @@ import axios from 'axios'
 
 //ACTION TYPE
 
-const SET_SINGLE_SHOP = 'SET_SINGLE_SHOP'
+const GET_SINGLE_SHOP = 'GET_SINGLE_SHOP'
 
 //ACTION CREATOR
 
-const setSingleShop = singleShop => ({
-    type: SET_SINGLE_SHOP,
+const getSingleShop = singleShop => ({
+    type: GET_SINGLE_SHOP,
     singleShop
 })
 
@@ -15,7 +15,7 @@ const setSingleShop = singleShop => ({
 export const getSingleShopThunk = (shopId) => async dispatch => {
     try {
         const { data } = await axios.get(`/api/diveshops/${shopId}`)
-        dispatch(setSingleShop(data))
+        dispatch(getSingleShop(data))
     } catch (error) {
         console.error('error in singleShop thunk')
     }
@@ -25,7 +25,7 @@ const initialState = {}
 
 const singleShopReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_SINGLE_SHOP:
+        case GET_SINGLE_SHOP:
             return action.singleShop
         default:
             return state
