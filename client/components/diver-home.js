@@ -161,7 +161,6 @@ function getBottomTime(logArr) {
 
       let bottomTime = moment.duration(timeOut.diff(timeIn))
       let minutesUnder = bottomTime._data.minutes + bottomTime._data.hours * 60
-      console.log('mins:', minutesUnder)
       if (minutesUnder > 0 && minutesUnder < 300) {
         return accum + minutesUnder
       }

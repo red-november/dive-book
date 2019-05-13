@@ -27,6 +27,7 @@ class SingleDiverMap extends Component {
   }
 
   async componentDidMount() {
+    await this.props.fetchDiverLogs(this.props.diver.id)
     if ('geolocation' in navigator) {
       await navigator.geolocation.getCurrentPosition(pos => {
         this.setState({
@@ -37,11 +38,6 @@ class SingleDiverMap extends Component {
       })
       if (this.state.showNearest) {
         this.props.fetchNearest(`${this.state.curLong},${this.state.curLat}`)
-        console.log(
-          'first fetcher - First return is always zeroes  ¯\\_(ツ)_/¯ '
-        )
-        console.log('currentLong ---->', this.state.curLong)
-        console.log('currentLat ---->', this.state.curLat)
       }
     }
 
@@ -59,9 +55,6 @@ class SingleDiverMap extends Component {
             this.props.fetchNearest(
               `${this.state.curLong},${this.state.curLat}`
             )
-            console.log('second fetcher - Our true fetch')
-            console.log('currentLong ---->', this.state.curLong)
-            console.log('currentLat ---->', this.state.curLat)
           }
         }
       }, 50)
@@ -88,9 +81,6 @@ class SingleDiverMap extends Component {
         if (this.state.showNearest) {
           this.props.fetchNearest(`${this.state.curLong},${this.state.curLat}`)
           counter++
-          console.log('interval ------->', counter)
-          console.log('currentLong ---->', this.state.curLong)
-          console.log('currentLat ----->', this.state.curLat)
         }
       }
     }, 5000)
