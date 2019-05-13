@@ -75,24 +75,63 @@ class DiverHome extends Component {
       return query
     }
 
+    const ObservationsQueryTest = function (logs) {
+      let query = {}
+      let found = []
+      logs.forEach((log) =>{
+        log.observations.reduce((accum, obs) => {
+          if(found.indexOf(obs.name) === -1) {
+            accum[obs.name] = {
+              Count: 1,
+              // imageUrl: obs.imageUrl
+              imageUrl: "https://i.imgur.com/4DNOql4.jpg"
+            }
+            found.push(obs.name)
+          }
+          else {
+            accum[obs.name].Count = 1 + accum[obs.name].Count
+          }
+          return accum
+        },query)
+        return query
+      })
+      return query
+    }
+
     if (allLogs.length === 0) {
       return <h1>LOADING...</h1>
     }
+
+    // console.log(ObservationsQueryTest(diverLogs))
 
     let result = {}
     let sights = []
     let data = {children: []}
 
+    // if (diverLogs[0]) {
+    //   result = ObservationsQuery(diverLogs)
+    //   sights = Object.keys(result)
+    //   sights.forEach(sight => {
+    //     data.children.push({
+    //       Name: sight,
+    //       Count: result[sight]
+    //     })
+    //   })
+    // }
+
     if (diverLogs[0]) {
-      result = ObservationsQuery(diverLogs)
+      result = ObservationsQueryTest(diverLogs)
       sights = Object.keys(result)
       sights.forEach(sight => {
         data.children.push({
           Name: sight,
-          Count: result[sight]
+          Count: result[sight].Count,
+          imageUrl: result[sight].imageUrl
         })
       })
     }
+
+    console.log(data)
 
     setTimeout(async () => {
         await this.BubblifyObservations(data)

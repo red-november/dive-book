@@ -188,6 +188,21 @@ const Bubbles = (canvas, dataset, /*calledFlag*/) => {
         .attr("height", diameter)
         .attr("class", "bubble");
 
+    // let pattern = svg.append("def")
+    //     .append("pattern")
+    //     .attr("height","100%")
+    //     .attr("width","100%")
+    //     .attr("patternContentUnits","objectBoundingBox")
+
+    // pattern.append("image")
+    //     .attr('id', 'generic')
+    //     .attr("height", "1")
+    //     .attr("width", "1")
+    //     .attr("preserveAspectRatio", "none")
+    //     .attr("xmlns:xlink","http://www.w3.org/1999/xlink")
+    //     // .attr("xlink:href",d => (`${d.data.imageUrl}`))
+    //     .attr("xlink:href", "https://i.imgur.com/P7xS7wy.png")
+
     let nodes = d3.hierarchy(dataset)
         .sum(function(d) { return d.Count; });
 
@@ -212,10 +227,13 @@ const Bubbles = (canvas, dataset, /*calledFlag*/) => {
         .attr("r", function(d) {
             return d.r;
         })
-        .style("fill", "blue");
-        // .style("fill", function(d,i) {
-        //     return color(i);
-        // });
+        .style("fill","blue")
+        // .style("fill","url(#generic)")
+        // .style("fill", d => {
+        //   console.log(d.data.imageUrl)
+        //   return d.data.imageUrl});
+
+
 
     node.append("text")
         .attr("dy", ".2em")
@@ -241,12 +259,38 @@ const Bubbles = (canvas, dataset, /*calledFlag*/) => {
         })
         .attr("fill", "white");
 
+    // let pattern = svg.append("def")
+    //     .append("pattern")
+    //     .attr("height","100%")
+    //     .attr("width","100%")
+    //     .attr("patternContentUnits","objectBoundingBox")
+
+    // pattern.append("image")
+    //     .attr("height", "1")
+    //     .attr("width", "1")
+    //     .attr("preserveAspectRatio", "none")
+    //     .attr("xmlns:xlink","http://www.w3.org/1999/xlink")
+    //     // .attr("xlink:href",d => (`${d.data.imageUrl}`))
+    //     .attr("xlink:href", "https://i.imgur.com/P7xS7wy.png")
+
+  //   svg.append("defs")
+  //    .append('pattern')
+  //    .attr('id', 'locked2')
+  //    .attr('patternUnits', 'userSpaceOnUse')
+  //    .attr('width', 4)
+  //    .attr('height', 4)
+  //    .append("image")
+  //    .attr("xlink:href", d => (`${d.data.imageUrl}`))
+  //    .attr('width', 4)
+  //    .attr('height', 4);
+
+
     d3.select(self.frameElement)
         .style("height", diameter + "px");
 
-    //     calledFlag = true
-    //     return calledFlag
-    // }
+  //   //     calledFlag = true
+  //   //     return calledFlag
+  //   // }
   }
 
 
