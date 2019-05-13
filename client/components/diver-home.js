@@ -53,7 +53,7 @@ class DiverHome extends Component {
                       )} hours.`,
                 content: diverLogs.map(log => (
                   <li key={log.id}>
-                    <Link to={`/logs/${log.id}`}>
+                    <Link className="rrLink" to={`/logs/${log.id}`}>
                       {log.diveName}: {log.date.slice(0, 10)}
                     </Link>
                   </li>
@@ -68,7 +68,10 @@ class DiverHome extends Component {
                 content: sights.map(sight => (
                   <li key={sight}>
                     {
-                      <Link to={`observations/${sight[1].id}`}>
+                      <Link
+                        className="rrLink"
+                        to={`observations/${sight[1].id}`}
+                      >
                         {sight[0]} - {sight[1].count} times
                       </Link>
                     }
@@ -94,14 +97,14 @@ class DiverHome extends Component {
           {diverCerts.map(cert => (
             <ul key={cert.id}>
               <li>
-                <Link to={`/certs/${cert.id}`}>
+                <Link className="rrLink" to={`/certs/${cert.id}`}>
                   {cert.provider} {cert.level}
                 </Link>
               </li>
             </ul>
           ))}
           <button type="button" className="btn-main btn-cert">
-            <Link className="rrLink" to="/certs/create">
+            <Link className="rrLink-btn" to="/certs/create">
               Add Certification
             </Link>
           </button>

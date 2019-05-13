@@ -135,12 +135,21 @@ td {
   margin-bottom: 2px;
 }
 
-.rrLink {
+.rrLink-btn {
   color: white;
   text-transform: none;
 }
-.rrLink:hover {
+.rrLink-btn:hover {
   color: black;
+}
+
+.rrLink {
+  color: black;
+  text-transform: none;
+}
+
+.rrLink:hover {
+  color: #03a9f4;
 }
 
 .btn-main {
