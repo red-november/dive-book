@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'roboto', Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -22,6 +22,25 @@ nav {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.main-nav {
+  margin-left: 40px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.main-nav-menu {
+  margin: 5px;
+}
+
+.navBar {
+  /* background-color: #03a9f4; */
+}
+
+.color-bar {
+  background-color: #1769aa;
+  height: 20px;
 }
 
 .OptionComponent {
@@ -68,6 +87,10 @@ form div {
   justify-content: space-around;
 }
 
+.page-container {
+  margin-left: 30px;
+}
+
 table {
   margin: 30px, 30px, 30px, 30px;
   border: 3px solid white;
@@ -100,4 +123,47 @@ td {
   width: 350px;
   height: 300px;
   padding: 30px;
+}
+
+.member-date {
+  margin-top: 0;
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+.welcome-bar {
+  margin-bottom: 2px;
+}
+
+.rrLink-btn {
+  color: white;
+  text-transform: none;
+}
+.rrLink-btn:hover {
+  color: black;
+}
+
+.rrLink {
+  color: black;
+  text-transform: none;
+}
+
+.rrLink:hover {
+  color: #03a9f4;
+}
+
+.btn-main {
+  border-radius: 20px;
+  text-transform: none;
+  background-color: #0288d1;
+  color: #fff;
+}
+
+.btn-main:hover {
+  background-color: #eee;
+  color: black;
+}
+
+.btn-cert {
+  margin-left: 20px;
 }
