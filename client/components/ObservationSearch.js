@@ -47,7 +47,9 @@ class ObservationSearch extends Component {
 
   enterObservation(evt) {
     if (evt.keyCode === 13) {
-      let topSelection = this.state.currentList[0]
+      let topSelection = JSON.parse(
+        document.getElementById('observation-selector').value
+      )
       let currentObsArr = [...this.state.diverObservations]
       if (!currentObsArr.find(obs => obs.id === topSelection.id)) {
         currentObsArr.push(topSelection)
@@ -66,7 +68,7 @@ class ObservationSearch extends Component {
           onKeyUp={this.keyup}
           onKeyDown={this.enterObservation}
         />
-        <select onChange={this.handleChange}>
+        <select onChange={this.handleChange} id="observation-selector">
           {this.state.currentList.map(obs => (
             <option value={JSON.stringify(obs)} name={obs.name} key={obs.id}>
               {obs.name}

@@ -19,7 +19,8 @@ const SingleLogTable = ({
   isVerified,
   date,
   singleLog,
-  description
+  description,
+  id
 }) => {
   return (
     <table>
