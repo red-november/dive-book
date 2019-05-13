@@ -22,7 +22,8 @@ import {
   TestMap,
   DiverAnalysis,
   SingleObservation,
-  SingleOfferedDive
+  SingleOfferedDive,
+  ObservationsMap
 } from './components'
 import {me} from './store'
 
@@ -57,6 +58,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/logs/:id" component={SingleLog} />
         <Route path="/logs" component={AllLogs} />
+        <Route path="/observations/map/:obsId" component={ObservationsMap} />
         <Route path="/observations/:obsId" component={SingleObservation} />
         <Route path="/search" component={ObservationSearch} />
         <Route path="/certs/create" component={CreateCert} />
