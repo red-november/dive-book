@@ -14,9 +14,9 @@ const {
 } = require('../server/db/models')
 async function seed() {
   await db.sync({force: true})
-  await db.query('CREATE EXTENSION postgis;')
+  await db.query('CREATE EXTENSION IF NOT EXISTS postgis;')
   console.log('db synced!')
-  await db.query('SELECT postgis_full_version();')
+  // await db.query('SELECT postgis_full_version();')
 
   await db.query('ALTER TABLE logs ADD COLUMN geog geography(Point);')
 
