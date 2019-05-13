@@ -51,38 +51,29 @@ class DiverHome extends Component {
                       } Logged Dives. Total bottom time: ${getBottomTime(
                         diverLogs
                       )} hours.`,
-                content: (
-                  <ul>
-                    {' '}
-                    {diverLogs.map(log => (
-                      <li key={log.id}>
-                        <Link to={`/logs/${log.id}`}>
-                          {log.diveName}: {log.date.slice(0, 10)}
-                        </Link>
-                      </li>
-                    ))}{' '}
-                  </ul>
-                )
+                content: diverLogs.map(log => (
+                  <li key={log.id}>
+                    <Link to={`/logs/${log.id}`}>
+                      {log.diveName}: {log.date.slice(0, 10)}
+                    </Link>
+                  </li>
+                ))
               },
+
               {
                 name:
                   sights.length === 1
                     ? '1 Sighting'
                     : `${sights.length} Sightings`,
-                content: (
-                  <ul>
-                    {' '}
-                    {sights.map(sight => (
-                      <li key={sight}>
-                        {
-                          <Link to={`observations/${sight[1].id}`}>
-                            {sight[0]} - {sight[1].count} times
-                          </Link>
-                        }
-                      </li>
-                    ))}
-                  </ul>
-                )
+                content: sights.map(sight => (
+                  <li key={sight}>
+                    {
+                      <Link to={`observations/${sight[1].id}`}>
+                        {sight[0]} - {sight[1].count} times
+                      </Link>
+                    }
+                  </li>
+                ))
               }
             ]}
           />
