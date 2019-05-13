@@ -28,7 +28,7 @@ class DiverHome extends Component {
     if (!this.props.diver.id) {
       return <Loading />
     }
-    const {firstName, createdAt} = this.props.diver
+    const {firstName, id, createdAt} = this.props.diver
     let {diverLogs, diverCerts, diverBadges, allLogs} = this.props
     let sights = ObservationsQuery(diverLogs)
     diverLogs = sortLogsByDate(diverLogs).reverse()
@@ -161,7 +161,6 @@ function getBottomTime(logArr) {
 
       let bottomTime = moment.duration(timeOut.diff(timeIn))
       let minutesUnder = bottomTime._data.minutes + bottomTime._data.hours * 60
-      console.log('mins:', minutesUnder)
       if (minutesUnder > 0 && minutesUnder < 300) {
         return accum + minutesUnder
       }
