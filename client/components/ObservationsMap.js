@@ -4,10 +4,6 @@ import mapboxgl from 'mapbox-gl'
 import {connect} from 'react-redux'
 import {getObservationCoordThunk} from '../store'
 import {Link} from 'react-router-dom'
-// import HeatmapOverlay from 'react-map-gl-heatmap-overlay'
-// import dotenv from 'dotenv'
-
-// dotenv.config()
 
 class ObservationsMap extends Component {
   constructor(props) {
@@ -185,8 +181,8 @@ class ObservationsMap extends Component {
           </div>
 
         </div>
-        {/* {this.renderPopup()} */}
-        {/* {this.renderNearestPopup()} */}
+        {this.renderPopup()}
+        {/* {this.renderNearestPopup()*/}
       </ReactMapGL>
     )
   }
