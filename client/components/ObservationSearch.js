@@ -12,27 +12,29 @@ const ObservationSearch = ({
   removeFromList
 }) => {
   return (
-    <div>
-      <label htmlFor="search">Add an observation</label>
-      <input
-        type="text"
-        name="search"
-        onKeyUp={keyup}
-        onKeyDown={enterObservation}
-      />
-      <select
-        onChange={handleChange}
-        name="search-selector"
-        id="observation-selector"
-      >
-        {currentList.map(obs => (
-          <option value={JSON.stringify(obs)} name={obs.name} key={obs.id}>
-            {obs.name}
-          </option>
-        ))}
-      </select>
+    <div className="observation-container">
+      <div className="observation-search">
+        <label htmlFor="search">Add an observation</label>
+        <input
+          type="text"
+          name="search"
+          onKeyUp={keyup}
+          onKeyDown={enterObservation}
+        />
+        <select
+          onChange={handleChange}
+          name="search-selector"
+          id="observation-selector"
+        >
+          {currentList.map(obs => (
+            <option value={JSON.stringify(obs)} name={obs.name} key={obs.id}>
+              {obs.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <h4>Observations selected:</h4>
-      <ol>
+      <div className="observation-group">
         {diverObservations.map(obs => (
           <Chip
             key={obs.id}
@@ -41,7 +43,7 @@ const ObservationSearch = ({
             imageUrl={obs.imageUrl}
           />
         ))}
-      </ol>
+      </div>
     </div>
   )
 }

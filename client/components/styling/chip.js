@@ -15,14 +15,6 @@ const styles = theme => ({
   }
 })
 
-function handleDelete() {
-  alert('You clicked the delete icon.') // eslint-disable-line no-alert
-}
-
-function handleClick() {
-  alert('You clicked the Chip.') // eslint-disable-line no-alert
-}
-
 function Chips({classes, label, handleDelete, imageUrl}) {
   return (
     <div className={classes.root}>
@@ -30,7 +22,7 @@ function Chips({classes, label, handleDelete, imageUrl}) {
         avatar={<Avatar alt={label} src={imageUrl} />}
         label={label}
         onDelete={handleDelete}
-        className={classes.chip}
+        // className={classes.chip}
       />
     </div>
   )

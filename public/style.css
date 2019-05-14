@@ -215,5 +215,24 @@ td {
   margin-left: 20px;
 }
 
-.log-input {
+.btn-observation-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.observation-container {
+  margin: 0;
+  padding: 0;
+  width: 300px;
+}
+
+.observation-search {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.btn-form {
+  width: 80px;
 }

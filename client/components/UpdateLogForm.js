@@ -384,17 +384,23 @@ const UpdateForm = props => {
             </tr>
           </tbody>
         </table>
-        <button type="button" className="btn-main" onClick={handleSubmit}>
-          Submit
-        </button>
-        <ObservationSearch
-          enterObservation={enterObservation}
-          keyup={keyup}
-          handleChange={handleChange}
-          currentList={currentList}
-          diverObservations={diverObservations}
-          removeFromList={removeFromList}
-        />
+        <div className="btn-observation-container">
+          <button
+            type="button"
+            className="btn-main btn-form"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+          <ObservationSearch
+            enterObservation={enterObservation}
+            keyup={keyup}
+            handleChange={handleChange}
+            currentList={currentList}
+            diverObservations={diverObservations}
+            removeFromList={removeFromList}
+          />
+        </div>
       </form>
     </div>
   )
