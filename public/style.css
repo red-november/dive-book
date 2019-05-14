@@ -238,3 +238,8 @@ td {
   text-align: center;
   margin-bottom: 20px;
 }
+
+.bubbles {
+  width: 600px;
+  height: 600px;
+}

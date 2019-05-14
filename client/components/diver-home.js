@@ -37,7 +37,7 @@ class DiverHome extends Component {
   componentDidUpdate () {
     let data = ObservationsQuery(this.props.diverLogs)
     console.log(data)
-    if(this.props.diverLogs.length > 0) {
+    if(this.props) {
       this.BubblifyObservations(data)
     }
   }
@@ -92,7 +92,7 @@ class DiverHome extends Component {
                   name: `${data.children.length} Sightings.`,
                   content:
                   <div>
-                    <div className="canva"/>
+                    <div className="canva bubbles"/>
                   </div>
                 }
 
