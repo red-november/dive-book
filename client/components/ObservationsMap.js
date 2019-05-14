@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl'
 import {connect} from 'react-redux'
 import {getObservationCoordThunk} from '../store'
 import {Link} from 'react-router-dom'
+// import HeatmapOverlay from 'react-map-gl-heatmap-overlay'
 // import dotenv from 'dotenv'
 
 // dotenv.config()
@@ -121,7 +122,24 @@ class ObservationsMap extends Component {
 
   render() {
     const {observations} = this.props
-    console.log(this.props)
+
+    let query = observations.reduce((accum, obs) => {
+      if(!accum[obs.location]) {
+        accum[obs.location] = {
+          location: obs.location,
+          coordinates: obs.geog.coordinates,
+          counter: 1
+        }
+      }
+      else {
+        accum[obs.location].counter = 1 + accum[obs.location].counter
+      }
+      return accum
+    },{})
+
+    let data = Object.entries(query)
+    console.log(data)
+
     if (observations.length === 0) {
       return <h1>LOADING</h1>
     }
@@ -132,11 +150,39 @@ class ObservationsMap extends Component {
         mapboxApiAccessToken="pk.eyJ1IjoiaGFycmlzb25jb2xlIiwiYSI6ImNqdmgyYW1iejBkeW00NG9jZDVidzNraDMifQ.8UJj9FAH_jJiFPcUAJ22KA"
         mapStyle="mapbox://styles/mapbox/dark-v9"
       >
-        {observations.map(
+        {data.map(obs => obs[1].coordinates && (
+          <div key={obs[0]}>
+          {console.log(obs)}
+            <Marker
+              latitude={obs[1].coordinates[1]}
+              longitude={obs[1].coordinates[0]}
+              offsetLeft={-20}
+              offsetTop={-10}
+            >
+            {obs[1].counter < 6 ?
+            <i
+              className="fas fa-flag tierOne"
+              // onClick={() => this.setState({popupInfo: log})}
+            />
+            :
+            obs[1].counter < 11 ?
+            <i
+              className="fas fa-flag tierTwo"
+            // onClick={() => this.setState({popupInfo: log})}
+            />
+            :
+            <i
+              className="fas fa-flag tierThree"
+              // onClick={() => this.setState({popupInfo: log})}
+            />
+            }
+            </Marker>
+          </div>
+        ))}
+        {/* {observations.map(
           obs =>
           obs.geog && (
               <div>
-                {console.log(obs.geog)}
                 <Marker
                   key={obs.id}
                   latitude={obs.geog.coordinates[1]}
@@ -151,7 +197,7 @@ class ObservationsMap extends Component {
                 </Marker>
               </div>
             )
-        )}{' '}
+        )}{' '} */}
         <div className="mapKey">
           <div className="mapKey-title">Key</div>
           <div>
