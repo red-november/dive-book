@@ -22,7 +22,8 @@ class DiverHome extends Component {
   constructor () {
     super()
     this.state = {
-      BubblifyActivated: false
+      BubblifyActivated: false,
+      // data: {}
     }
   }
   async componentDidMount() {
@@ -30,6 +31,15 @@ class DiverHome extends Component {
     await this.props.loadDiverCerts(this.props.diver.id)
     await this.props.loadDiverBadges(this.props.diver.id)
     await this.props.loadAllLogs()
+
+  }
+
+  componentDidUpdate () {
+    let data = ObservationsQuery(this.props.diverLogs)
+    console.log(data)
+    if(this.props.diverLogs.length > 0) {
+      this.BubblifyObservations(data)
+    }
   }
 
   BubblifyObservations = async (data) => {
@@ -50,10 +60,6 @@ class DiverHome extends Component {
     let {diverLogs, diverCerts, diverBadges, allLogs} = this.props
     let data = ObservationsQuery(diverLogs)
     diverLogs = sortLogsByDate(diverLogs).reverse()
-
-    setTimeout(async () => {
-        await this.BubblifyObservations(data)
-      }, 2000)
 
     return (
       <div className="page-container">

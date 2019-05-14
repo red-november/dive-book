@@ -177,7 +177,7 @@ const Bubbles = async (canvas, dataset) => {
         .size([diameter, diameter])
         .padding(1.5);
 
-    // if(dataset.children.length > 0) {
+    if(dataset.children.length > 0) {
 
       let svg = canvas
           .append("svg")
@@ -253,7 +253,7 @@ const Bubbles = async (canvas, dataset) => {
 
       d3.select(self.frameElement)
           .style("height", diameter + "px");
-    // }
+    }
 
   }
 
