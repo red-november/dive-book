@@ -10,22 +10,33 @@ const styles = theme => ({
     flexWrap: 'wrap'
   },
   chip: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+    'margin-left': 0
   }
 })
 
 function Chips({arr, classes, handleDelete}) {
   return (
     <div className={classes.root}>
-      {arr.map(elem => (
-        <Chip
-          key={elem.id}
-          avatar={<Avatar alt={elem.name} src={elem.imageUrl} />}
-          label={elem.name}
-          onDelete={() => handleDelete(elem.id)}
-          className={classes.chip}
-        />
-      ))}
+      {arr.map(
+        elem =>
+          handleDelete ? (
+            <Chip
+              key={elem.id}
+              avatar={<Avatar alt={elem.name} src={elem.imageUrl} />}
+              label={elem.name}
+              onDelete={() => handleDelete(elem.id)}
+              className={classes.chip}
+            />
+          ) : (
+            <Chip
+              key={elem.id}
+              avatar={<Avatar alt={elem.name} src={elem.imageUrl} />}
+              label={elem.name}
+              className={classes.chip}
+            />
+          )
+      )}
     </div>
   )
 }

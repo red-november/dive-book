@@ -1,4 +1,5 @@
 import React from 'react'
+import Chip from './styling/chip'
 
 const SingleLogTable = ({
   singleShop,
@@ -20,10 +21,11 @@ const SingleLogTable = ({
   date,
   singleLog,
   description,
-  id
+  id,
+  observations
 }) => {
   return (
-    <table>
+    <table className="log-table">
       <tr>
         <th>Description</th>
         <th>Value</th>
@@ -113,6 +115,13 @@ const SingleLogTable = ({
           ) : (
             'Not Verified'
           )}
+        </td>
+      </tr>
+      <tr>
+        <td>Observations:</td>
+        <td>
+          {' '}
+          <Chip arr={observations} handleDelete={null} />
         </td>
       </tr>
     </table>

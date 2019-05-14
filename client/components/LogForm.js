@@ -2,7 +2,7 @@
 import React from 'react'
 import {ObservationSearch} from './index'
 
-const UpdateForm = props => {
+const LogForm = props => {
   const {
     handleChange,
     handleSubmit,
@@ -45,7 +45,7 @@ const UpdateForm = props => {
   let airMixtureOptions = ['Air', 'Nitrox', 'Hydreliox']
 
   return (
-    <div className="page-container">
+    <div className="page-container ChartContainer">
       <form>
         <table>
           <tbody>
@@ -406,4 +406,4 @@ const UpdateForm = props => {
   )
 }
 
-export default UpdateForm
+export default LogForm

@@ -8,7 +8,7 @@ import {
   getObservationsThunk
 } from '../store/index'
 import {connect} from 'react-redux'
-import UpdateForm from './UpdateLogForm'
+import LogForm from './LogForm'
 import {Link} from 'react-router-dom'
 import history from '../history'
 import Loading from './styling/Loading'
@@ -201,7 +201,7 @@ class SingleLog extends Component {
   }
 
   render() {
-    const {activated, date} = this.state
+    const {activated, date, diverObservations} = this.state
     const {singleLog, singleShop, diver} = this.props
 
     if (!singleShop.id) {
@@ -213,44 +213,54 @@ class SingleLog extends Component {
     }
 
     return (
-      <div className="page-container form-container">
-        {diver.id === singleLog.diverId &&
-          !activated && (
-            <button type="button" className="btn-main" onClick={this.activated}>
-              {' '}
-              <i class="far fa-edit" />
-            </button>
+      <div className="page-container form-container ChartContainer">
+        <div className="flex-start-container">
+          {diver.id === singleLog.diverId &&
+            !activated && (
+              <button
+                type="button"
+                className="btn-main btn-edit"
+                onClick={this.activated}
+              >
+                {' '}
+                <i class="far fa-edit" />
+              </button>
+            )}
+
+          {!activated ? (
+            <div className="top-buffer">
+              <SingleLogTable
+                {...this.props.singleLog}
+                singleShop={singleShop}
+                diveName={singleLog.diveName}
+                singleLog={singleLog}
+              />
+            </div>
+          ) : (
+            <div className="top-buffer">
+              <LogForm
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+                log={this.state}
+                allShops={this.props.allShops}
+                singleShop={this.props.singleShop}
+                enterObservation={this.enterObservation}
+                keyup={this.keyup}
+                removeFromList={this.removeFromList}
+              />
+              <div className="btn-ctr">
+                <Link to="/qr">
+                  <button
+                    className="btn-main  btn-qr"
+                    onClick={this.displayScanner}
+                  >
+                    Toggle QR Scanner
+                  </button>{' '}
+                </Link>
+              </div>
+            </div>
           )}
-
-        {!activated ? (
-          <div className="top-buffer">
-            <SingleLogTable
-              {...this.props.singleLog}
-              singleShop={singleShop}
-              diveName={singleLog.diveName}
-              singleLog={singleLog}
-            />
-          </div>
-        ) : (
-          <div>
-            <UpdateForm
-              handleChange={this.handleChange}
-              handleSubmit={this.handleSubmit}
-              log={this.state}
-              allShops={this.props.allShops}
-              singleShop={this.props.singleShop}
-              enterObservation={this.enterObservation}
-              keyup={this.keyup}
-              removeFromList={this.removeFromList}
-            />
-
-            <Link to="/qr">
-              <button className="btn-main" onClick={this.displayScanner}>
-                Toggle QR Scanner
-              </button>{' '}
-            </Link>
-          </div>
-        )}
+        </div>
       </div>
     )
   }

@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getShopsThunk, addLogThunk, getSingleShopThunk} from '../store/index'
-import UpdateForm from './UpdateLogForm'
+import LogForm from './LogForm'
 
 class AddLog extends Component {
   constructor() {
@@ -95,7 +95,7 @@ class AddLog extends Component {
     return (
       <div className="form-container ChartContainer">
         <h3 className="page-container">New Log: </h3>
-        <UpdateForm
+        <LogForm
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           log={this.state}

@@ -33,10 +33,7 @@ const ObservationSearch = ({
           ))}
         </select>
       </div>
-      <h5>Observations selected:</h5>
-      <div className="observation-group">
-        <Chip arr={diverObservations} handleDelete={removeFromList} />
-      </div>
+      <Chip arr={diverObservations} handleDelete={removeFromList} />
     </div>
   )
 }
