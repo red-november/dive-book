@@ -29,10 +29,9 @@ class DiverHome extends Component {
   }
 
   componentDidUpdate () {
-    let success = false
-    while(this.props.diverLogs.length > 0 && !success) {
+    if(this.props.diverLogs.length > 0) {
       let data = ObservationsQuery(this.props.diverLogs)
-      success = this.BubblifyObservations(data, success)
+      this.BubblifyObservations(data)
     }
   }
 
@@ -41,11 +40,13 @@ class DiverHome extends Component {
     let success = await Bubbles(canvas, data)
     let svgAll = document.querySelectorAll("svg")
     let counter = svgAll.length
+    console.log(counter)
     while(counter > 1) {
       svgAll = document.querySelectorAll("svg")
       let svgSelected = document.querySelectorAll("svg")[1]
       svgSelected.parentNode.removeChild(svgSelected)
       counter--
+      console.log(counter)
     }
     return success
   }

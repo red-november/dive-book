@@ -220,7 +220,9 @@ const Bubbles = async (canvas, dataset) => {
               return d.name + ": " + d.count;
           });
 
-      node.append("circle")
+      node.append("a")
+          .attr("href",d => `/observations/${d.data.id}`)
+          .append("circle")
           .attr("r", function(d) {
               return d.r;
           })
@@ -254,11 +256,6 @@ const Bubbles = async (canvas, dataset) => {
       d3.select(self.frameElement)
           .style("height", diameter + "px");
 
-      return true
-
-    }
-    else {
-      return false
     }
   }
 
