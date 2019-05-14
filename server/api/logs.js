@@ -141,26 +141,33 @@ router.put('/diver/:logId', async (req, res, next) => {
     if (!log) {
       res.send(404)
     }
-    let logUpdate = await log.update({
-      date,
-      diveName,
-      timeIn,
-      timeOut,
-      location,
-      maxDepth,
-      tankPressureStart,
-      tankPressureEnd,
-      tankType,
-      beltWeight,
-      wetSuitThickness,
-      wetSuitType,
-      airMixture,
-      description,
-      visibility,
-      hasStrongCurrent,
-      diveshopId,
-      offeredDiveId
-    })
+    let logUpdate
+    if (!log.isVerified) {
+      logUpdate = await log.update({
+        date,
+        diveName,
+        timeIn,
+        timeOut,
+        location,
+        maxDepth,
+        tankPressureStart,
+        tankPressureEnd,
+        tankType,
+        beltWeight,
+        wetSuitThickness,
+        wetSuitType,
+        airMixture,
+        description,
+        visibility,
+        hasStrongCurrent,
+        diveshopId,
+        offeredDiveId
+      })
+    } else {
+      logUpdate = await log.update({
+        description
+      })
+    }
 
     //add sightings to log
     await Sighting.addBulk(diverObservations)
