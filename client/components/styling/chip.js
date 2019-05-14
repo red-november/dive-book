@@ -7,7 +7,6 @@ import Chip from '@material-ui/core/Chip'
 const styles = theme => ({
   root: {
     display: 'flex',
-    justifyContent: 'center',
     flexWrap: 'wrap'
   },
   chip: {
@@ -15,15 +14,18 @@ const styles = theme => ({
   }
 })
 
-function Chips({classes, label, handleDelete, imageUrl}) {
+function Chips({arr, classes, handleDelete}) {
   return (
     <div className={classes.root}>
-      <Chip
-        avatar={<Avatar alt={label} src={imageUrl} />}
-        label={label}
-        onDelete={handleDelete}
-        // className={classes.chip}
-      />
+      {arr.map(elem => (
+        <Chip
+          key={elem.id}
+          avatar={<Avatar alt={elem.name} src={elem.imageUrl} />}
+          label={elem.name}
+          onDelete={() => handleDelete(elem.id)}
+          className={classes.chip}
+        />
+      ))}
     </div>
   )
 }

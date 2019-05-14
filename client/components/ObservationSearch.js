@@ -33,16 +33,9 @@ const ObservationSearch = ({
           ))}
         </select>
       </div>
-      <h4>Observations selected:</h4>
+      <h5>Observations selected:</h5>
       <div className="observation-group">
-        {diverObservations.map(obs => (
-          <Chip
-            key={obs.id}
-            handleDelete={() => removeFromList(obs.id)}
-            label={obs.name}
-            imageUrl={obs.imageUrl}
-          />
-        ))}
+        <Chip arr={diverObservations} handleDelete={removeFromList} />
       </div>
     </div>
   )

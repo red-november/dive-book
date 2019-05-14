@@ -233,6 +233,11 @@ td {
   width: 100%;
 }
 
+.observation-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .btn-form {
   width: 80px;
 }
