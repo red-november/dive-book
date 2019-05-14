@@ -88,6 +88,14 @@ class DiverHome extends Component {
                 ))
               },
 
+                {
+                  name: `${data.children.length} Sightings.`,
+                  content:
+                  <div>
+                    <div className="canva"/>
+                  </div>
+                }
+
               // {
               //   name:
               //     sights.length === 1
@@ -106,8 +114,8 @@ class DiverHome extends Component {
               //     </li>
               //   ))
               // }
-            ]}
-          />
+
+            ]}/>
         </div>
         <div>
           {' '}
@@ -120,12 +128,8 @@ class DiverHome extends Component {
             </ul>
           ))}
         </div>
-        <div>
-          <h3>Sightings:</h3>
-            <div className="canva"/>
-        </div>
-        <div>
 
+        <div>
           <h3>Certifications:</h3>
           {diverCerts.map(cert => (
             <ul key={cert.id}>
