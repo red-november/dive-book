@@ -174,10 +174,18 @@ class ObservationsMap extends Component {
           </div>
         ))}
         <div className="mapKey">
-          <div className="mapKey-title">Key</div>
+          <div className="mapKey-title">Number of Sightings</div>
           <div>
-            <i className="fas fa-flag diveflag" />
-            <span className="mapKey-desc">My Observations</span>
+            <i className="fas fa-flag tierOne" />
+            <span className="mapKey-desc">1 to 5</span>
+          </div>
+          <div>
+            <i className="fas fa-flag tierTwo" />
+            <span className="mapKey-desc">6 to 10</span>
+          </div>
+          <div>
+            <i className="fas fa-flag tierThree" />
+            <span className="mapKey-desc">11+</span>
           </div>
 
         </div>
