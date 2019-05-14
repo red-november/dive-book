@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:logId', async (req, res, next) => {
   const id = Number(req.params.logId)
   try {
-    const log = await Log.findByPk(id)
+    const log = await Log.findByPk(id, {include: [{model: Observation}]})
     res.status(200).send(log)
   } catch (error) {
     next(error)
@@ -168,9 +168,21 @@ router.put('/diver/:logId', async (req, res, next) => {
         description
       })
     }
+    //get existing sightings
+    const sightings = await Sighting.findAll({where: {logId: req.params.logId}})
 
-    //add sightings to log
-    await Sighting.addBulk(diverObservations)
+    //split between new ones and ones to remove
+    const [add, remove] = splitSightings(diverObservations, sightings)
+
+    //add new sightings to log
+    if (add.length > 0) {
+      await Sighting.addBulk(add)
+    }
+
+    //remove old sightings from log
+    if (remove.length > 0) {
+      await Sighting.destroyBulk(remove)
+    }
     res.status(200).send(logUpdate)
   } catch (err) {
     next(err)
@@ -240,3 +252,23 @@ router.get('/nearest/:coords', async (req, res, next) => {
     next(error)
   }
 })
+
+function splitSightings(frontEnd, backEnd) {
+  const frontEndMap = arrToMap(frontEnd)
+  const add = frontEnd
+  const remove = []
+  backEnd.forEach(
+    obs => !frontEndMap.has(obs.observationId) && remove.push(obs)
+  )
+
+  return [add, remove]
+}
+
+function arrToMap(arr) {
+  const result = new Map()
+  arr.forEach(
+    elem =>
+      !result.has(elem.observationId) && result.set(elem.observationId, true)
+  )
+  return result
+}

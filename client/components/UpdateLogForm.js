@@ -10,8 +10,7 @@ const UpdateForm = props => {
     singleShop,
     enterObservation,
     keyup,
-    currentList,
-    diverObservations,
+
     removeFromList
   } = props
   let {
@@ -33,7 +32,8 @@ const UpdateForm = props => {
     visibility,
     hasStrongCurrent,
     displayText,
-    offeredDiveId
+    currentList,
+    diverObservations
   } = props.log
 
   if (date) {

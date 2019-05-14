@@ -72,7 +72,8 @@ class SingleLog extends Component {
       description,
       visibility,
       hasStrongCurrent,
-      offeredDiveId
+      offeredDiveId,
+      observations
     } = this.props.singleLog
 
     await this.setState({
@@ -93,7 +94,8 @@ class SingleLog extends Component {
       description,
       visibility,
       hasStrongCurrent,
-      offeredDiveId
+      offeredDiveId,
+      diverObservations: observations
     })
 
     await this.props.fetchSingleShop(this.props.singleLog.diveshopId)
@@ -286,8 +288,6 @@ class SingleLog extends Component {
               singleShop={this.props.singleShop}
               enterObservation={this.enterObservation}
               keyup={this.keyup}
-              currentList={this.state.currentList}
-              diverObservations={this.state.diverObservations}
               removeFromList={this.removeFromList}
             />
 
