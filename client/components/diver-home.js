@@ -42,65 +42,6 @@ class DiverHome extends Component {
     }
   }
 
-  // reload = async () => {
-  //   await this.props.loadDiverLogs(this.props.diver.id)
-  //   await this.props.loadDiverCerts(this.props.diver.id)
-  //   await this.props.loadDiverBadges(this.props.diver.id)
-  //   await this.props.loadAllLogs()
-  // }
-
-  // render() {
-
-  //   const {firstName, id} = this.props.diver
-  //   const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
-
-    // if(!diverCerts || !diverBadges) {
-    //   this.reload()
-    // }
-
-    // const ObservationsQuery = function (logs) {
-    //   let query = {}
-    //   let found = []
-    //   logs.forEach((log) =>{
-    //     log.observations.reduce((accum, obs) => {
-    //       if(found.indexOf(obs.name) === -1) {
-    //         accum[obs.name] = {
-    //           Count: 1,
-    //           imageUrl: obs.imageUrl
-    //         }
-    //         found.push(obs.name)
-    //       }
-    //       else {
-    //         accum[obs.name].Count = 1 + accum[obs.name].Count
-    //       }
-    //       return accum
-    //     },query)
-    //     return query
-    //   })
-    //   return query
-    // }
-
-    // if (allLogs.length === 0) {
-    //   return <h1>LOADING...</h1>
-    // }
-
-    // let result = {}
-    // let sights = []
-    // let data = {children: []}
-
-    // if (diverLogs[0]) {
-    //   result = ObservationsQuery(diverLogs)
-    //   sights = Object.keys(result)
-    //   sights.forEach(sight => {
-    //     data.children.push({
-    //       name: sight,
-    //       count: result[sight].Count,
-    //       imageUrl: result[sight].imageUrl
-    //     })
-    //   })
-
-
-
   render() {
     if (!this.props.diver.id) {
       return <Loading />
