@@ -46,7 +46,7 @@ const UpdateForm = props => {
 
   return (
     <div>
-      <h2>Log: </h2>
+      <h3>Log: </h3>
       <form onSubmit={handleSubmit}>
         <label htmlFor="diveshopId">Dive Shop:</label>
         <select name="diveshopId" onChange={handleChange}>
@@ -55,7 +55,7 @@ const UpdateForm = props => {
             shop =>
               shop.id === diveshopId ? (
                 <option key={shop.id} value={shop.id} selected>
-                  {shop.id}. {shop.name}
+                  {shop.name}
                 </option>
               ) : (
                 <option key={shop.id} value={shop.id}>
