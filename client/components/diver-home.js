@@ -19,13 +19,7 @@ import moment from 'moment'
  * COMPONENT
  */
 class DiverHome extends Component {
-  constructor () {
-    super()
-    this.state = {
-      BubblifyActivated: false,
-      // data: {}
-    }
-  }
+
   async componentDidMount() {
     await this.props.loadDiverLogs(this.props.diver.id)
     await this.props.loadDiverCerts(this.props.diver.id)
@@ -35,20 +29,17 @@ class DiverHome extends Component {
   }
 
   componentDidUpdate () {
-    if(this.props.diverLogs.length > 0) {
+    let success = false
+    while(this.props.diverLogs.length > 0 && !success) {
       let data = ObservationsQuery(this.props.diverLogs)
-      this.BubblifyObservations(data)
+      success = this.BubblifyObservations(data, success)
     }
   }
 
   BubblifyObservations = async (data) => {
     const canvas = d3.select('.canva')
-    if(!this.state.BubblifyActivated) {
-      await Bubbles(canvas, data)
-      this.setState({
-        BubblifyActivated: true
-      })
-    }
+    let success = await Bubbles(canvas, data)
+    return success
   }
 
   render() {
