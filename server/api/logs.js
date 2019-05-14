@@ -115,6 +115,7 @@ router.post('/', async (req, res, next) => {
 
 router.put('/diver/:logId', async (req, res, next) => {
   const {
+    date,
     diveName,
     timeIn,
     timeOut,
@@ -141,6 +142,7 @@ router.put('/diver/:logId', async (req, res, next) => {
       res.send(404)
     }
     let logUpdate = await log.update({
+      date,
       diveName,
       timeIn,
       timeOut,
