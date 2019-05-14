@@ -77,7 +77,11 @@ const ObservationSearch = ({
         onKeyUp={keyup}
         onKeyDown={enterObservation}
       />
-      <select onChange={handleChange} id="observation-selector">
+      <select
+        onChange={handleChange}
+        name="search-selector"
+        id="observation-selector"
+      >
         {currentList.map(obs => (
           <option value={JSON.stringify(obs)} name={obs.name} key={obs.id}>
             {obs.name}

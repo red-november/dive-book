@@ -161,7 +161,6 @@ router.put('/diver/:logId', async (req, res, next) => {
     })
 
     //add sightings to log
-    console.log('diver obssss', diverObservations)
     await Sighting.addBulk(diverObservations)
     res.status(200).send(logUpdate)
   } catch (err) {

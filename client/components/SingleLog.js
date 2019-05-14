@@ -99,6 +99,7 @@ class SingleLog extends Component {
   }
 
   handleChange = event => {
+    console.log('target:', event.target.name)
     if (event.target.name === 'provider' && event.target.value === 'Other') {
       this.setState({displayText: true})
     } else if (event.target.name === 'diveshopId') {
@@ -112,15 +113,12 @@ class SingleLog extends Component {
       this.setState({displayText: true})
     } else if (event.target.name === 'diveName' && !this.state.displayText) {
       let [diveName, offeredDiveId] = event.target.value.split('^')
-      console.log('event value', event.target.value)
-      console.log('dive name', diveName)
-      console.log('dive id', offeredDiveId)
 
       this.setState({
         diveName,
         offeredDiveId
       })
-    } else if (event.target.name === 'search') {
+    } else if (event.target.name === 'search-selector') {
       let currentObs = event.target.value
       let currentObsArr = [...this.state.diverObservations]
       if (!currentObsArr.find(obs => obs.id === JSON.parse(currentObs).id)) {
@@ -143,7 +141,6 @@ class SingleLog extends Component {
       observationId: obs.id,
       logId: Number(this.props.match.params.id)
     }))
-    console.log('obs', observations)
     await this.setState({diverObservations: observations})
     await this.props.updateLog(this.props.singleLog.id, this.state)
   }
