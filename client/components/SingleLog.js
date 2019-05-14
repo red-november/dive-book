@@ -139,6 +139,12 @@ class SingleLog extends Component {
   handleSubmit = async event => {
     event.preventDefault()
     //adjust observations to only include ids
+    let observations = this.state.diverObservations.map(obs => ({
+      observationId: obs.id,
+      logId: Number(this.props.match.params.id)
+    }))
+    console.log('obs', observations)
+    await this.setState({diverObservations: observations})
     await this.props.updateLog(this.props.singleLog.id, this.state)
   }
 

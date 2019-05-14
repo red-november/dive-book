@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Log, EarnedBadge, Diver, Observation} = require('../db/models')
+const {Log, Sighting, EarnedBadge, Diver, Observation} = require('../db/models')
 const db = require('../db')
 const Sequelize = require('sequelize')
 module.exports = router
@@ -131,7 +131,8 @@ router.put('/diver/:logId', async (req, res, next) => {
     visibility,
     hasStrongCurrent,
     diveshopId,
-    offeredDiveId
+    offeredDiveId,
+    diverObservations
   } = req.body
   try {
     const logId = req.params.logId
@@ -158,6 +159,10 @@ router.put('/diver/:logId', async (req, res, next) => {
       diveshopId,
       offeredDiveId
     })
+
+    //add sightings to log
+    console.log('diver obssss', diverObservations)
+    await Sighting.addBulk(diverObservations)
     res.status(200).send(logUpdate)
   } catch (err) {
     next(err)
