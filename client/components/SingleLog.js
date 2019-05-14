@@ -13,6 +13,7 @@ import {Link} from 'react-router-dom'
 import history from '../history'
 import Loading from './styling/Loading'
 import {SingleLogTable, ObservationSearch} from './index'
+import {CircleChartObservationToolTip} from './D3Components'
 
 class SingleLog extends Component {
   constructor(props) {
@@ -141,7 +142,10 @@ class SingleLog extends Component {
       observationId: obs.id,
       logId: Number(this.props.match.params.id)
     }))
-    await this.setState({diverObservations: observations})
+    await this.setState({
+      diverObservations: observations,
+      currentList: []
+    })
     await this.props.updateLog(this.props.singleLog.id, this.state)
   }
 
@@ -164,6 +168,9 @@ class SingleLog extends Component {
 
   enterObservation(evt) {
     if (evt.keyCode === 13) {
+      // if (evt.target.name === 'search') {
+      //   evt.preventDefault()
+      // }
       let topSelection = JSON.parse(
         document.getElementById('observation-selector').value
       )

@@ -46,7 +46,7 @@ const UpdateForm = props => {
 
   return (
     <div className="page-container">
-      <form onSubmit={handleSubmit}>
+      <form>
         <table>
           <tbody>
             <tr>
@@ -384,17 +384,18 @@ const UpdateForm = props => {
             </tr>
           </tbody>
         </table>
-
-        <button type="submit">Submit</button>
+        <ObservationSearch
+          enterObservation={enterObservation}
+          keyup={keyup}
+          handleChange={handleChange}
+          currentList={currentList}
+          diverObservations={diverObservations}
+          removeFromList={removeFromList}
+        />
+        <button type="button" onClick={handleSubmit}>
+          Submit
+        </button>
       </form>
-      <ObservationSearch
-        enterObservation={enterObservation}
-        keyup={keyup}
-        handleChange={handleChange}
-        currentList={currentList}
-        diverObservations={diverObservations}
-        removeFromList={removeFromList}
-      />
     </div>
   )
 }
