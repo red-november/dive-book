@@ -35,9 +35,8 @@ class DiverHome extends Component {
   }
 
   componentDidUpdate () {
-    let data = ObservationsQuery(this.props.diverLogs)
-    console.log(data)
-    if(this.props) {
+    if(this.props.diverLogs.length > 0) {
+      let data = ObservationsQuery(this.props.diverLogs)
       this.BubblifyObservations(data)
     }
   }

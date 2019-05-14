@@ -253,8 +253,13 @@ const Bubbles = async (canvas, dataset) => {
 
       d3.select(self.frameElement)
           .style("height", diameter + "px");
-    }
 
+      return true
+
+    }
+    else {
+      return false
+    }
   }
 
 
