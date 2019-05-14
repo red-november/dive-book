@@ -186,52 +186,52 @@ class SingleLog extends Component {
     })
   }
 
-  deActivated = async () => {
-    const {
-      date,
-      diveshopId,
-      diveName,
-      timeIn,
-      timeOut,
-      location,
-      maxDepth,
-      tankPressureStart,
-      tankPressureEnd,
-      tankType,
-      beltWeight,
-      wetSuitType,
-      wetSuitThickness,
-      airMixture,
-      description,
-      visibility,
-      hasStrongCurrent,
-      displayText,
-      offeredDiveId
-    } = this.props.singleLog
-    this.setState({
-      date,
-      diveshopId,
-      diveName,
-      timeIn,
-      timeOut,
-      location,
-      maxDepth,
-      tankPressureStart,
-      tankPressureEnd,
-      tankType,
-      beltWeight,
-      wetSuitType,
-      wetSuitThickness,
-      airMixture,
-      description,
-      visibility,
-      hasStrongCurrent,
-      displayText,
-      offeredDiveId,
-      activated: false
-    })
-    await this.props.fetchSingleShop(this.props.singleLog.diveshopId)
-  }
+  // deActivated = async () => {
+  //   const {
+  //     date,
+  //     diveshopId,
+  //     diveName,
+  //     timeIn,
+  //     timeOut,
+  //     location,
+  //     maxDepth,
+  //     tankPressureStart,
+  //     tankPressureEnd,
+  //     tankType,
+  //     beltWeight,
+  //     wetSuitType,
+  //     wetSuitThickness,
+  //     airMixture,
+  //     description,
+  //     visibility,
+  //     hasStrongCurrent,
+  //     displayText,
+  //     offeredDiveId
+  //   } = this.props.singleLog
+  //   this.setState({
+  //     date,
+  //     diveshopId,
+  //     diveName,
+  //     timeIn,
+  //     timeOut,
+  //     location,
+  //     maxDepth,
+  //     tankPressureStart,
+  //     tankPressureEnd,
+  //     tankType,
+  //     beltWeight,
+  //     wetSuitType,
+  //     wetSuitThickness,
+  //     airMixture,
+  //     description,
+  //     visibility,
+  //     hasStrongCurrent,
+  //     displayText,
+  //     offeredDiveId,
+  //     activated: false
+  //   })
+  //   await this.props.fetchSingleShop(this.props.singleLog.diveshopId)
+  // }
 
   async reload() {
     await this.props.onLoadLog(this.props.match.params.id)
@@ -241,25 +241,6 @@ class SingleLog extends Component {
   render() {
     const {activated, date} = this.state
     const {singleLog, singleShop, diver} = this.props
-    const {
-      id,
-      diveName,
-      location,
-      timeIn,
-      timeOut,
-      maxDepth,
-      tankPressureStart,
-      tankPressureEnd,
-      tankType,
-      beltWeight,
-      wetSuitType,
-      wetSuitThickness,
-      airMixture,
-      description,
-      visibility,
-      hasStrongCurrent,
-      isVerified
-    } = singleLog
 
     if (!singleShop.id) {
       this.reload()
@@ -270,28 +251,21 @@ class SingleLog extends Component {
     }
 
     return (
-      <div>
+      <div className="page-container form-container">
         {diver.id === singleLog.diverId &&
-          (!activated ? (
-            <button type="button" onClick={this.activated}>
+          !activated && (
+            <button type="button" className="btn-main" onClick={this.activated}>
               {' '}
-              Edit Log
+              <i class="far fa-edit" />
             </button>
-          ) : (
-            <div>
-              <button type="button" onClick={this.deActivated}>
-                {' '}
-                Exit Edit Mode
-              </button>
-            </div>
-          ))}
+          )}
 
         {!activated ? (
-          <div>
+          <div className="top-buffer">
             <SingleLogTable
               {...this.props.singleLog}
               singleShop={singleShop}
-              diveName={diveName}
+              diveName={singleLog.diveName}
               singleLog={singleLog}
             />
           </div>

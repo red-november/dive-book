@@ -45,9 +45,173 @@ const UpdateForm = props => {
   let airMixtureOptions = ['Air', 'Nitrox', 'Hydreliox']
 
   return (
-    <div>
-      <h3>Log: </h3>
+    <div className="page-container">
       <form onSubmit={handleSubmit}>
+        <table>
+          <tbody>
+            <tr>
+              <th>Description</th>
+              <th>Value</th>
+            </tr>
+
+            <tr>
+              {/* <td><a href={`/allshops/${}`}></a> </td> */}
+              <td>
+                {' '}
+                <label htmlFor="diveshopId">Dive Shop:</label>
+              </td>
+              <td>
+                <select name="diveshopId" onChange={handleChange}>
+                  {allShops.map(
+                    shop =>
+                      shop.id === diveshopId ? (
+                        <option key={shop.id} value={shop.id} selected>
+                          {shop.name}
+                        </option>
+                      ) : (
+                        <option key={shop.id} value={shop.id}>
+                          {shop.name}
+                        </option>
+                      )
+                  )}
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {' '}
+                <label htmlFor="diveName">Dive Name:</label>
+              </td>
+              <td>
+                {singleShop.offeredDives && !displayText ? (
+                  <select name="diveName" onChange={handleChange}>
+                    <option value="Other">Select dive</option>
+                    {singleShop.offeredDives.map(
+                      dive =>
+                        dive.name === diveName ? (
+                          <option
+                            key={dive.id}
+                            value={`${dive.name}^${dive.id}`}
+                            selected
+                          >
+                            {dive.name}
+                          </option>
+                        ) : (
+                          <option
+                            key={dive.id}
+                            value={`${dive.name}^${dive.id}`}
+                          >
+                            {dive.name}
+                          </option>
+                        )
+                    )}
+                    <option value="Other">Other</option>
+                  </select>
+                ) : (
+                  <input
+                    type="text"
+                    name="diveName"
+                    value={diveName}
+                    onChange={handleChange}
+                    placeholder="Enter dive here..."
+                  />
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {' '}
+                <label htmlFor="date">Date:</label>{' '}
+              </td>
+              <td>
+                {' '}
+                <input
+                  type="date"
+                  name="date"
+                  value={date}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {' '}
+                <label htmlFor="timeIn">Time In:</label>
+              </td>
+              <td>
+                {' '}
+                <input
+                  type="time"
+                  name="timeIn"
+                  value={timeIn}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Time Out:</td>
+              <td>{timeOut}</td>
+            </tr>
+            <tr>
+              <td>Location: </td>
+              <td>{location}</td>
+            </tr>
+            <tr>
+              <td>Max Depth: </td>
+              <td>{maxDepth}</td>
+            </tr>
+            <tr>
+              <td>Tank Pressure Start: </td>
+              <td>{tankPressureStart}</td>
+            </tr>
+            <tr>
+              <td>Tank Pressure End: </td>
+              <td>{tankPressureEnd}</td>
+            </tr>
+            <tr>
+              <td>Tank Type</td>
+              <td>{tankType}</td>
+            </tr>
+            <tr>
+              <td>Belt Weight:</td>
+              <td>{beltWeight}</td>
+            </tr>
+            <tr>
+              <td>Wet Suit Type: </td>
+              <td>{wetSuitType}</td>
+            </tr>
+            <tr>
+              <td>Wet Suit Thickness</td>
+              <td>{wetSuitThickness}</td>
+            </tr>
+            <tr>
+              <td>Air Mixture: </td>
+              <td>{airMixture}</td>
+            </tr>
+            <tr>
+              <td>Visibility: </td>
+              <td>{visibility}</td>
+            </tr>
+            <tr>
+              <td>Strong Current:</td>
+              {hasStrongCurrent ? <td>Yes</td> : <td>No</td>}
+            </tr>
+            <tr>
+              <td>Description: </td>
+              <td>{description}</td>
+            </tr>
+            <tr>
+              <td>Stamp:</td>
+              {/* <td>
+                {isVerified ? (
+                  <img className="Stamp" src={singleShop.stampImgUrl} />
+                ) : (
+                  'Not Verified'
+                )}
+              </td> */}
+            </tr>
+          </tbody>
+        </table>
         <label htmlFor="diveshopId">Dive Shop:</label>
         <select name="diveshopId" onChange={handleChange}>
           {/* <option value="">Select dive shop</option> */}
