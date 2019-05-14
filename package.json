@@ -37,6 +37,7 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "axios": "^0.18.0",
     "britecharts": "^2.11.0",
     "britecharts-react": "^0.5.1",
@@ -50,6 +51,7 @@
     "history": "^4.9.0",
     "immutable": "^4.0.0-rc.12",
     "mapbox-gl": "^0.54.0",
+    "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",

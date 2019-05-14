@@ -169,7 +169,7 @@ const TimeStringToFloat = time => {
   return hours + minutes / 60
 }
 
-const Bubbles = (canvas, dataset) => {
+const Bubbles = async (canvas, dataset) => {
 
     const diameter = 600;
 
@@ -192,7 +192,7 @@ const Bubbles = (canvas, dataset) => {
 
       let pattern = defs.selectAll('pattern')
 
-      pattern
+      await pattern
           .data(dataset.children)
           .enter()
           .append('pattern')

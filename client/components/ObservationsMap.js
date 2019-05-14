@@ -32,12 +32,12 @@ class ObservationsMap extends Component {
 
   renderPopup() {
     const {popupInfo} = this.state
-    if (popupInfo && popupInfo.diveName) {
+     if (popupInfo && popupInfo.imageUrl) {
       return (
         <Popup
           tipSize={5}
-          latitude={popupInfo.geog.coordinates[1]}
-          longitude={popupInfo.geog.coordinates[0]}
+          latitude={popupInfo.coordinates[1]}
+          longitude={popupInfo.coordinates[0]}
           anchor="top"
           onClose={() => this.setState({popupInfo: null})}
           closeOnClick={false}
@@ -50,37 +50,16 @@ class ObservationsMap extends Component {
               <em>{popupInfo.location}</em>
             </div>
             <div>
-              <em>{popupInfo.date.split('T')[0]}</em>
-            </div>
-            {/* add img here */}
-            <div>
-              <Link to={`/logs/${popupInfo.id}`}>Details</Link>
-            </div>
-          </div>
-        </Popup>
-      )
-    } else if (popupInfo && popupInfo.storeFrontImgUrl) {
-      return (
-        <Popup
-          tipSize={5}
-          latitude={popupInfo.geog.coordinates[1]}
-          longitude={popupInfo.geog.coordinates[0]}
-          anchor="top"
-          onClose={() => this.setState({popupInfo: null})}
-          closeOnClick={false}
-        >
-          <div className="popup">
-            <div>
-              <strong>{popupInfo.name}</strong>
-            </div>
-            <div>
-              <em>{popupInfo.location}</em>
+              {`Sightings: ${popupInfo.counter}`}
             </div>
             <div>
               <img
-                src={`/pictures/diveshop/${popupInfo.storeFrontImgUrl}`}
-                alt="Store Front Image"
+                src={`${popupInfo.imageUrl}`}
+                alt="Observation Image"
               />
+            </div>
+            <div>
+                <Link to={`/observations/${popupInfo.id}`}>Details</Link>
             </div>
           </div>
         </Popup>
@@ -88,43 +67,20 @@ class ObservationsMap extends Component {
     }
   }
 
-  // renderNearestPopup() {
-  //   const {popupInfo} = this.state
-  //   return (
-  //     popupInfo && (
-  //       <Popup
-  //         tipSize={5}
-  //         latitude={popupInfo.geog.coordinates[1]}
-  //         longitude={popupInfo.geog.coordinates[0]}
-  //         anchor="top"
-  //         onClose={() => this.setState({popupInfo: null})}
-  //         closeOnClick={false}
-  //       >
-  //         <div className="popup">
-  //           <div>
-  //             <strong>{popupInfo.name}</strong>
-  //           </div>
-  //           <div>
-  //             <em>{popupInfo.location}</em>
-  //           </div>
-  //           <div>
-  //             <img src={popupInfo.storeFrontImgUrl} alt="Store Front Image" />
-  //           </div>
-  //         </div>
-  //       </Popup>
-  //     )
-  //   )
-  // }
-
   render() {
     const {observations} = this.props
 
     let query = observations.reduce((accum, obs) => {
       if(!accum[obs.location]) {
         accum[obs.location] = {
+          id: obs.observationId,
           location: obs.location,
           coordinates: obs.geog.coordinates,
-          counter: 1
+          counter: 1,
+          diveName: obs.diveName,
+          date: obs.date,
+          logId: obs.logId,
+          imageUrl: obs.imageUrl
         }
       }
       else {
@@ -155,18 +111,18 @@ class ObservationsMap extends Component {
             >
             {obs[1].counter < 6 ?
             <i
-              className="fas fa-flag tierOne"
+              className="fas fa-fish fa-lg tierOne"
               onClick={() => this.setState({popupInfo: obs[1]})}
             />
             :
             obs[1].counter < 11 ?
             <i
-              className="fas fa-flag tierTwo"
+              className="fas fa-fish fa-2x tierTwo"
             onClick={() => this.setState({popupInfo: obs[1]})}
             />
             :
             <i
-              className="fas fa-flag tierThree"
+              className="fas fa-fish fa-3x tierThree"
               onClick={() => this.setState({popupInfo: obs[1]})}
             />
             }
@@ -174,23 +130,22 @@ class ObservationsMap extends Component {
           </div>
         ))}
         <div className="mapKey">
-          <div className="mapKey-title">Number of Sightings</div>
+          <div className="mapKey-title">{`Number of Sightings of ${observations[0].name}`}</div>
           <div>
-            <i className="fas fa-flag tierOne" />
+            <i className="fas fa-fish tierOne" />
             <span className="mapKey-desc">1 to 5</span>
           </div>
           <div>
-            <i className="fas fa-flag tierTwo" />
+            <i className="fas fa-fish tierTwo" />
             <span className="mapKey-desc">6 to 10</span>
           </div>
           <div>
-            <i className="fas fa-flag tierThree" />
+            <i className="fas fa-fish tierThree" />
             <span className="mapKey-desc">11+</span>
           </div>
 
         </div>
         {this.renderPopup()}
-        {/* {this.renderNearestPopup()*/}
       </ReactMapGL>
     )
   }

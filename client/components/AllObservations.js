@@ -28,7 +28,7 @@ class AllObservations extends Component {
   render() {
     const {observations} = this.props
     const {activated} = this.state
-    const headers = ['Name', 'Category', 'Occurence', 'Link']
+    const headers = ['Name', 'Category', 'Occurence']
     const categoryData = observations.reduce((accum, obs) => {
       if (!accum[obs.category]) {
         accum[obs.category] = {
@@ -62,7 +62,7 @@ class AllObservations extends Component {
     }
 
     return (
-      <div>
+      <div className="ChartContainer">
         <div className="Container">
           <div className="ChartContainer">
             <h4>Category Breakdown</h4>
@@ -90,12 +90,13 @@ class AllObservations extends Component {
             <tr>{headers.map(header => <th key={header}>{header}</th>)}</tr>
             {observations.map(obs => (
               <tr key={obs.name}>
-                    <td>{obs.name}</td>
-                    <td>{obs.category}</td>
-                    <td>{obs.logs.length}</td>
-                    <Link to={`/observations/${obs.id}`}>
-                    <td>Link to Entry</td>
-                    </Link>
+                <td>
+                  <a href={`/observations/${obs.id}`}>{obs.name}</a>
+                </td>
+                <td>
+                  <a href={`/observations/${obs.id}`}>{obs.category}</a>
+                </td>
+                <td>{obs.logs.length}</td>
               </tr>
             ))}
           </table>
