@@ -90,8 +90,8 @@ class DiverHome extends Component {
       sights = Object.keys(result)
       sights.forEach(sight => {
         data.children.push({
-          Name: sight,
-          Count: result[sight].Count,
+          name: sight,
+          count: result[sight].Count,
           imageUrl: result[sight].imageUrl
         })
       })
@@ -114,7 +114,7 @@ class DiverHome extends Component {
                 <Link to={`/logs/${log.id}`}>{log.diveName}</Link>
               </li>
             </ul>
-          )) : 
+          )) :
           <div>No Logs Recorded</div>}
         </div>
         <div>

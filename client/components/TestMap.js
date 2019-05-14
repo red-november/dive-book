@@ -5,12 +5,13 @@ import * as d3 from 'd3'
 
 class TestMap extends Component {
 
-  TestTheTest = async (data) => {
+  TestTheTest = async () => {
     const canvas = d3.select('.canva')
-    await TestForce(canva)
+    await TestForce(canvas)
   }
 
   render() {
+    this.TestTheTest()
     return (
       <div className="canva"/>
    )

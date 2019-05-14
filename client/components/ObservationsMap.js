@@ -20,7 +20,7 @@ class ObservationsMap extends Component {
         longitude: -122.4376,
         zoom: 1.8
       },
-      // popupInfo: null
+      popupInfo: null
     }
   }
 
@@ -34,63 +34,63 @@ class ObservationsMap extends Component {
     }
   }
 
-  // renderPopup() {
-  //   const {popupInfo} = this.state
-  //   if (popupInfo && popupInfo.diveName) {
-  //     return (
-  //       <Popup
-  //         tipSize={5}
-  //         latitude={popupInfo.geog.coordinates[1]}
-  //         longitude={popupInfo.geog.coordinates[0]}
-  //         anchor="top"
-  //         onClose={() => this.setState({popupInfo: null})}
-  //         closeOnClick={false}
-  //       >
-  //         <div className="popup">
-  //           <div>
-  //             <strong>{popupInfo.diveName}</strong>
-  //           </div>
-  //           <div>
-  //             <em>{popupInfo.location}</em>
-  //           </div>
-  //           <div>
-  //             <em>{popupInfo.date.split('T')[0]}</em>
-  //           </div>
-  //           {/* add img here */}
-  //           <div>
-  //             <Link to={`/logs/${popupInfo.id}`}>Details</Link>
-  //           </div>
-  //         </div>
-  //       </Popup>
-  //     )
-  //   } else if (popupInfo && popupInfo.storeFrontImgUrl) {
-  //     return (
-  //       <Popup
-  //         tipSize={5}
-  //         latitude={popupInfo.geog.coordinates[1]}
-  //         longitude={popupInfo.geog.coordinates[0]}
-  //         anchor="top"
-  //         onClose={() => this.setState({popupInfo: null})}
-  //         closeOnClick={false}
-  //       >
-  //         <div className="popup">
-  //           <div>
-  //             <strong>{popupInfo.name}</strong>
-  //           </div>
-  //           <div>
-  //             <em>{popupInfo.location}</em>
-  //           </div>
-  //           <div>
-  //             <img
-  //               src={`/pictures/diveshop/${popupInfo.storeFrontImgUrl}`}
-  //               alt="Store Front Image"
-  //             />
-  //           </div>
-  //         </div>
-  //       </Popup>
-  //     )
-  //   }
-  // }
+  renderPopup() {
+    const {popupInfo} = this.state
+    if (popupInfo && popupInfo.diveName) {
+      return (
+        <Popup
+          tipSize={5}
+          latitude={popupInfo.geog.coordinates[1]}
+          longitude={popupInfo.geog.coordinates[0]}
+          anchor="top"
+          onClose={() => this.setState({popupInfo: null})}
+          closeOnClick={false}
+        >
+          <div className="popup">
+            <div>
+              <strong>{popupInfo.diveName}</strong>
+            </div>
+            <div>
+              <em>{popupInfo.location}</em>
+            </div>
+            <div>
+              <em>{popupInfo.date.split('T')[0]}</em>
+            </div>
+            {/* add img here */}
+            <div>
+              <Link to={`/logs/${popupInfo.id}`}>Details</Link>
+            </div>
+          </div>
+        </Popup>
+      )
+    } else if (popupInfo && popupInfo.storeFrontImgUrl) {
+      return (
+        <Popup
+          tipSize={5}
+          latitude={popupInfo.geog.coordinates[1]}
+          longitude={popupInfo.geog.coordinates[0]}
+          anchor="top"
+          onClose={() => this.setState({popupInfo: null})}
+          closeOnClick={false}
+        >
+          <div className="popup">
+            <div>
+              <strong>{popupInfo.name}</strong>
+            </div>
+            <div>
+              <em>{popupInfo.location}</em>
+            </div>
+            <div>
+              <img
+                src={`/pictures/diveshop/${popupInfo.storeFrontImgUrl}`}
+                alt="Store Front Image"
+              />
+            </div>
+          </div>
+        </Popup>
+      )
+    }
+  }
 
   // renderNearestPopup() {
   //   const {popupInfo} = this.state
@@ -138,7 +138,6 @@ class ObservationsMap extends Component {
     },{})
 
     let data = Object.entries(query)
-    console.log(data)
 
     if (observations.length === 0) {
       return <h1>LOADING</h1>
@@ -152,7 +151,6 @@ class ObservationsMap extends Component {
       >
         {data.map(obs => obs[1].coordinates && (
           <div key={obs[0]}>
-          {console.log(obs)}
             <Marker
               latitude={obs[1].coordinates[1]}
               longitude={obs[1].coordinates[0]}
@@ -162,42 +160,23 @@ class ObservationsMap extends Component {
             {obs[1].counter < 6 ?
             <i
               className="fas fa-flag tierOne"
-              // onClick={() => this.setState({popupInfo: log})}
+              onClick={() => this.setState({popupInfo: obs[1]})}
             />
             :
             obs[1].counter < 11 ?
             <i
               className="fas fa-flag tierTwo"
-            // onClick={() => this.setState({popupInfo: log})}
+            onClick={() => this.setState({popupInfo: obs[1]})}
             />
             :
             <i
               className="fas fa-flag tierThree"
-              // onClick={() => this.setState({popupInfo: log})}
+              onClick={() => this.setState({popupInfo: obs[1]})}
             />
             }
             </Marker>
           </div>
         ))}
-        {/* {observations.map(
-          obs =>
-          obs.geog && (
-              <div>
-                <Marker
-                  key={obs.id}
-                  latitude={obs.geog.coordinates[1]}
-                  longitude={obs.geog.coordinates[0]}
-                  offsetLeft={-20}
-                  offsetTop={-10}
-                >
-                  <i
-                    className="fas fa-flag diveflag"
-                    // onClick={() => this.setState({popupInfo: log})}
-                  />
-                </Marker>
-              </div>
-            )
-        )}{' '} */}
         <div className="mapKey">
           <div className="mapKey-title">Key</div>
           <div>

@@ -188,7 +188,7 @@ const Bubbles = (canvas, dataset) => {
       let defs = svg.append("defs")
 
       let nodes = d3.hierarchy(dataset)
-          .sum(function(d) { return d.Count; });
+          .sum(function(d) { return d.count; });
 
       let pattern = defs.selectAll('pattern')
 
@@ -196,7 +196,7 @@ const Bubbles = (canvas, dataset) => {
           .data(dataset.children)
           .enter()
           .append('pattern')
-          .attr("id",d => d.Name.replace(/\s/g, ''))
+          .attr("id",d => d.name.replace(/\s/g, ''))
           .attr("height","100%")
           .attr("width","100%")
           .attr("patternContentUnits","objectBoundingBox")
@@ -217,7 +217,7 @@ const Bubbles = (canvas, dataset) => {
 
       node.append("title")
           .text(function(d) {
-              return d.Name + ": " + d.Count;
+              return d.name + ": " + d.count;
           });
 
       node.append("circle")
@@ -225,13 +225,13 @@ const Bubbles = (canvas, dataset) => {
               return d.r;
           })
           .style("fill","blue")
-          .style("fill", d => `url(#${d.data.Name.replace(/\s/g, '')})`)
+          .style("fill", d => `url(#${d.data.name.replace(/\s/g, '')})`)
 
       node.append("text")
           .attr("dy", ".2em")
           .style("text-anchor", "middle")
           .text(function(d) {
-              return d.data.Name;
+              return d.data.name;
           })
           .attr("font-family", "sans-serif")
           .attr("font-size", function(d){
@@ -243,7 +243,7 @@ const Bubbles = (canvas, dataset) => {
           .attr("dy", "1.3em")
           .style("text-anchor", "middle")
           .text(function(d) {
-              return d.data.Count;
+              return d.data.count;
           })
           .attr("font-family",  "Gill Sans", "Gill Sans MT")
           .attr("font-size", function(d){
@@ -260,7 +260,10 @@ const Bubbles = (canvas, dataset) => {
 
   const TestForce = (canvas) => {
     let width = 300, height = 300
-    let nodes = [{}, {}, {}, {}, {}]
+    let numNodes = 100
+    let nodes = d3.range(numNodes).map(function(d) {
+      return {radius: Math.random() * 25}
+    })
 
     let svg = canvas
       .append("svg")
@@ -268,28 +271,33 @@ const Bubbles = (canvas, dataset) => {
       .attr("height", 600)
 
     let simulation = d3.forceSimulation(nodes)
-      .force('charge', d3.forceManyBody())
+      .force('charge', d3.forceManyBody().strength(5))
       .force('center', d3.forceCenter(width / 2, height / 2))
+      .force('collision', d3.forceCollide().radius(function(d) {
+        return d.radius
+      }))
       .on('tick', ticked);
 
-      function ticked() {
-        var u = d3.select('svg')
-          .selectAll('circle')
-          .data(nodes)
+    function ticked() {
+      var u = d3.select('svg')
+        .selectAll('circle')
+        .data(nodes)
 
-        u.enter()
-          .append('circle')
-          .attr('r', 5)
-          .merge(u)
-          .attr('cx', function(d) {
-            return d.x
-          })
-          .attr('cy', function(d) {
-            return d.y
-          })
+      u.enter()
+        .append('circle')
+        .attr('r', function(d) {
+          return d.radius
+        })
+        .merge(u)
+        .attr('cx', function(d) {
+          return d.x
+        })
+        .attr('cy', function(d) {
+          return d.y
+        })
 
-        u.exit().remove()
-      }
+      u.exit().remove()
+    }
   }
 
 module.exports = {
