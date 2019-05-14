@@ -39,6 +39,14 @@ class DiverHome extends Component {
   BubblifyObservations = async (data) => {
     const canvas = d3.select('.canva')
     let success = await Bubbles(canvas, data)
+    let svgAll = document.querySelectorAll("svg")
+    let counter = svgAll.length
+    while(counter > 1) {
+      svgAll = document.querySelectorAll("svg")
+      let svgSelected = document.querySelectorAll("svg")[1]
+      svgSelected.parentNode.removeChild(svgSelected)
+      counter--
+    }
     return success
   }
 
