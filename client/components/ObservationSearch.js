@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getObservationsThunk} from '../store'
+import Chip from './styling/chip'
 
 const ObservationSearch = ({
   enterObservation,
@@ -33,9 +34,12 @@ const ObservationSearch = ({
       <h4>Observations selected:</h4>
       <ol>
         {diverObservations.map(obs => (
-          <li key={obs.id}>
-            {obs.name} <span onClick={() => removeFromList(obs.id)}>X</span>
-          </li>
+          <Chip
+            key={obs.id}
+            handleDelete={() => removeFromList(obs.id)}
+            label={obs.name}
+            imageUrl={obs.imageUrl}
+          />
         ))}
       </ol>
     </div>

@@ -93,16 +93,19 @@ class AddLog extends Component {
   }
   render() {
     return (
-      <UpdateForm
-        handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
-        log={this.state}
-        allShops={this.props.allShops}
-        singleShop={this.props.singleShop}
-        enterObservation={this.enterObservation}
-        keyup={this.keyup}
-        removeFromList={this.removeFromList}
-      />
+      <div className="form-container ChartContainer">
+        <h3 className="page-container">New Log: </h3>
+        <UpdateForm
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          log={this.state}
+          allShops={this.props.allShops}
+          singleShop={this.props.singleShop}
+          enterObservation={this.enterObservation}
+          keyup={this.keyup}
+          removeFromList={this.removeFromList}
+        />
+      </div>
     )
   }
 }

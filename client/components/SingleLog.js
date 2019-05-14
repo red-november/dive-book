@@ -195,53 +195,6 @@ class SingleLog extends Component {
     })
   }
 
-  // deActivated = async () => {
-  //   const {
-  //     date,
-  //     diveshopId,
-  //     diveName,
-  //     timeIn,
-  //     timeOut,
-  //     location,
-  //     maxDepth,
-  //     tankPressureStart,
-  //     tankPressureEnd,
-  //     tankType,
-  //     beltWeight,
-  //     wetSuitType,
-  //     wetSuitThickness,
-  //     airMixture,
-  //     description,
-  //     visibility,
-  //     hasStrongCurrent,
-  //     displayText,
-  //     offeredDiveId
-  //   } = this.props.singleLog
-  //   this.setState({
-  //     date,
-  //     diveshopId,
-  //     diveName,
-  //     timeIn,
-  //     timeOut,
-  //     location,
-  //     maxDepth,
-  //     tankPressureStart,
-  //     tankPressureEnd,
-  //     tankType,
-  //     beltWeight,
-  //     wetSuitType,
-  //     wetSuitThickness,
-  //     airMixture,
-  //     description,
-  //     visibility,
-  //     hasStrongCurrent,
-  //     displayText,
-  //     offeredDiveId,
-  //     activated: false
-  //   })
-  //   await this.props.fetchSingleShop(this.props.singleLog.diveshopId)
-  // }
-
   async reload() {
     await this.props.onLoadLog(this.props.match.params.id)
     await this.props.fetchSingleShop(this.props.singleLog.diveshopId)
@@ -292,7 +245,9 @@ class SingleLog extends Component {
             />
 
             <Link to="/qr">
-              <button onClick={this.displayScanner}>Toggle QR Scanner</button>{' '}
+              <button className="btn-main" onClick={this.displayScanner}>
+                Toggle QR Scanner
+              </button>{' '}
             </Link>
           </div>
         )}

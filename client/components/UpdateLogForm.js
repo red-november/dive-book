@@ -384,6 +384,9 @@ const UpdateForm = props => {
             </tr>
           </tbody>
         </table>
+        <button type="button" className="btn-main" onClick={handleSubmit}>
+          Submit
+        </button>
         <ObservationSearch
           enterObservation={enterObservation}
           keyup={keyup}
@@ -392,9 +395,6 @@ const UpdateForm = props => {
           diverObservations={diverObservations}
           removeFromList={removeFromList}
         />
-        <button type="button" onClick={handleSubmit}>
-          Submit
-        </button>
       </form>
     </div>
   )
