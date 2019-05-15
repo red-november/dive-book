@@ -34,9 +34,9 @@ function Chips({arr, classes, handleDelete, handleClick}) {
               avatar={<Avatar alt={elem.name} src={elem.imageUrl} />}
               label={elem.name}
               className={classes.chip}
-              // onClick={() => {
-              //   handleClick()
-              // }}
+              onClick={() => {
+                handleClick(elem.id)
+              }}
             />
           )
       )}

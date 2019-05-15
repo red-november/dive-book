@@ -171,8 +171,7 @@ class SingleLog extends Component {
     this.setState({diverObservations: currentObsArr})
   }
   routeToObservations(id) {
-    // history.push(`/observations/${id}`)
-    console.log('hiii')
+    history.push(`/observations/${id}`)
   }
 
   enterObservation(evt) {
@@ -258,6 +257,8 @@ class SingleLog extends Component {
                 singleShop={singleShop}
                 diveName={singleLog.diveName}
                 singleLog={singleLog}
+                enterObservation={this.enterObservation}
+                routeToObservations={this.routeToObservations}
               />
             </div>
           ) : (
@@ -268,10 +269,8 @@ class SingleLog extends Component {
                 log={this.state}
                 allShops={this.props.allShops}
                 singleShop={this.props.singleShop}
-                enterObservation={this.enterObservation}
                 keyup={this.keyup}
                 removeFromList={this.removeFromList}
-                routeToObservations={this.routeToObservations}
               />
             </div>
           )}

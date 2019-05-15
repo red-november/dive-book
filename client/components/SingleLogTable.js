@@ -22,7 +22,8 @@ const SingleLogTable = ({
   singleLog,
   description,
   id,
-  observations
+  observations,
+  routeToObservations
 }) => {
   return (
     <table className="log-table">
@@ -121,7 +122,11 @@ const SingleLogTable = ({
         <td>Observations:</td>
         <td>
           {' '}
-          <Chip arr={observations} handleDelete={null} />
+          <Chip
+            arr={observations}
+            handleDelete={null}
+            handleClick={routeToObservations}
+          />
         </td>
       </tr>
     </table>
