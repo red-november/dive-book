@@ -277,6 +277,7 @@ td {
 
 .btn-edit {
   width: 28px;
+  margin-bottom: 5px;
 }
 .flex-start-container {
   display: flex;

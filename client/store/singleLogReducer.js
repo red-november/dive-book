@@ -35,7 +35,7 @@ export const addLogThunk = log => async dispatch => {
   try {
     const {data} = await axios.post('/api/logs', log)
     dispatch(getSingleLog(data))
-    history.push('/home')
+    history.push(`/logs/${data.id}`)
   } catch (err) {
     console.error(err)
   }
@@ -45,7 +45,8 @@ export const updateLogThunk = (id, newData) => async dispatch => {
   try {
     const {data} = await axios.put(`/api/logs/diver/${id}`, newData)
     dispatch(updateDiverLog(data))
-    history.push('/home')
+    // history.push('/home')
+    document.location.reload()
   } catch (error) {
     console.error('error in updateLogThunk')
   }

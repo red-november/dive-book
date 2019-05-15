@@ -221,14 +221,27 @@ class SingleLog extends Component {
         <div className="flex-start-container">
           {diver.id === singleLog.diverId &&
             !activated && (
-              <button
-                type="button"
-                className="btn-main btn-edit"
-                onClick={this.activated}
-              >
-                {' '}
-                <i className="far fa-edit" />
-              </button>
+              <div>
+                <button
+                  type="button"
+                  className="btn-main btn-edit"
+                  onClick={this.activated}
+                >
+                  {' '}
+                  <i className="far fa-edit" />
+                </button>
+                <div>
+                  <Link to="/qr">
+                    <button
+                      type="button"
+                      className="btn-main"
+                      onClick={this.displayScanner}
+                    >
+                      Toggle QR Scanner
+                    </button>{' '}
+                  </Link>
+                </div>
+              </div>
             )}
 
           {!activated ? (
@@ -252,16 +265,6 @@ class SingleLog extends Component {
                 keyup={this.keyup}
                 removeFromList={this.removeFromList}
               />
-              <div className="btn-ctr">
-                <Link to="/qr">
-                  <button
-                    className="btn-main  btn-qr"
-                    onClick={this.displayScanner}
-                  >
-                    Toggle QR Scanner
-                  </button>{' '}
-                </Link>
-              </div>
             </div>
           )}
         </div>
