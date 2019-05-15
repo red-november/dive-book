@@ -166,17 +166,6 @@ const ColorMaker = input => {
   let colors = []
 
   if (input) {
-<<<<<<< HEAD
-    const growth = (255) / input.length
-    for (let i = 0; i < Math.ceil(input.length/3); i++) {
-      colors.push(`rgb(${growth * i * 3 + 0}, 0, 255`)
-    }
-    for (let j = 0; j < Math.ceil(input.length/3); j++) {
-      colors.push(`rgb(255, ${growth * j * 3 + 0}, 100`)
-    }
-    for (let k = 0; k < Math.ceil(input.length/3); k++) {
-      colors.push(`rgb(0, 255, ${growth * k * 3 + 0}`)
-=======
     const growth = 255 / input.length * 3
     console.log(growth)
     for (let i = 0; i < Math.ceil(input.length / 3); i++) {
@@ -187,7 +176,6 @@ const ColorMaker = input => {
     }
     for (let k = 0; k < Math.ceil(input.length / 3); k++) {
       colors.push(`rgb(0, 255, ${growth * k + 0}`)
->>>>>>> 52eb936419d9ca7d8cfa97f524862535d5e96e73
     }
   }
 
