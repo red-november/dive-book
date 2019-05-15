@@ -22,12 +22,12 @@ class Scanner extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="ChartContainer">
         <QrReader
           delay={300}
           onError={this.handleError}
           onScan={this.handleScan}
-          style={{width: '100%'}}
+          style={{width: '20%', margin: '80px'}}
         />
         <p>{this.state.result}</p>
       </div>

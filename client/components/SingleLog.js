@@ -49,6 +49,7 @@ class SingleLog extends Component {
     this.keyup = this.keyup.bind(this)
     this.enterObservation = this.enterObservation.bind(this)
     this.removeFromList = this.removeFromList.bind(this)
+    this.routeToObservations = this.routeToObservations.bind(this)
   }
   async componentDidMount() {
     await this.props.onLoadLog(this.props.match.params.id)
@@ -167,6 +168,10 @@ class SingleLog extends Component {
     currentObsArr = currentObsArr.filter(obs => obs.id !== id)
     this.setState({diverObservations: currentObsArr})
   }
+  routeToObservations(id) {
+    // history.push(`/observations/${id}`)
+    console.log('hiii')
+  }
 
   enterObservation(evt) {
     if (evt.keyCode === 13) {
@@ -264,6 +269,7 @@ class SingleLog extends Component {
                 enterObservation={this.enterObservation}
                 keyup={this.keyup}
                 removeFromList={this.removeFromList}
+                routeToObservations={this.routeToObservations}
               />
             </div>
           )}

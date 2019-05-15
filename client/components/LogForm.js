@@ -10,7 +10,7 @@ const LogForm = props => {
     singleShop,
     enterObservation,
     keyup,
-
+    routeToObservations,
     removeFromList
   } = props
   let {
@@ -392,6 +392,7 @@ const LogForm = props => {
             currentList={currentList}
             diverObservations={diverObservations}
             removeFromList={removeFromList}
+            routeToObservations={routeToObservations}
           />
           <button
             type="button"
