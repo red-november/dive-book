@@ -163,25 +163,24 @@ const FillDiscoverer = (data, category) => {
 // }
 
 const ColorMaker = input => {
-
   let colors = []
 
   if (input) {
-    const growth = (255) / input.length
-    for (let i = 0; i < Math.ceil(input.length/3); i++) {
+    const growth = 255 / input.length * 3
+    console.log(growth)
+    for (let i = 0; i < Math.ceil(input.length / 3); i++) {
       colors.push(`rgb(${growth * i + 0}, 0, 255`)
     }
-    for (let j = 0; j < Math.ceil(input.length/3); j++) {
+    for (let j = 0; j < Math.ceil(input.length / 3); j++) {
       colors.push(`rgb(255, ${growth * j + 0}, 100`)
     }
-    for (let k = 0; k < Math.ceil(input.length/3); k++) {
+    for (let k = 0; k < Math.ceil(input.length / 3); k++) {
       colors.push(`rgb(0, 255, ${growth * k + 0}`)
     }
   }
 
   return colors
 }
-
 
 const TimeStringToFloat = time => {
   let hoursMinutes = time.split(/[.:]/)
@@ -191,137 +190,144 @@ const TimeStringToFloat = time => {
 }
 
 const Bubbles = async (canvas, dataset) => {
+  const diameter = 600
 
-    const diameter = 600;
+  const bubble = d3
+    .pack(dataset)
+    .size([diameter, diameter])
+    .padding(1.5)
 
-    const bubble = d3.pack(dataset)
-        .size([diameter, diameter])
-        .padding(1.5);
+  if (dataset.children.length > 0) {
+    let svg = canvas
+      .append('svg')
+      .attr('width', diameter)
+      .attr('height', diameter)
+      .attr('class', 'bubble')
 
-    if(dataset.children.length > 0) {
+    let defs = svg.append('defs')
 
-      let svg = canvas
-          .append("svg")
-          .attr("width", diameter)
-          .attr("height", diameter)
-          .attr("class", "bubble")
-
-      let defs = svg.append("defs")
-
-      let nodes = d3.hierarchy(dataset)
-          .sum(function(d) { return d.count; });
-
-      let pattern = defs.selectAll('pattern')
-
-      await pattern
-          .data(dataset.children)
-          .enter()
-          .append('pattern')
-          .attr("id",d => d.name.replace(/\s/g, ''))
-          .attr("height","100%")
-          .attr("width","100%")
-          .attr("patternContentUnits","objectBoundingBox")
-          .append('image')
-          .attr("height", "1")
-          .attr("width", "1")
-          .attr("preserveAspectRatio", "none")
-          .attr("xmlns:xlink","http://www.w3.org/1999/xlink")
-          .attr("xlink:href",d => (`${d.imageUrl}`))
-
-      let node = svg.selectAll(".node")
-          .data(bubble(nodes).descendants())
-          .enter()
-          .filter(d => !d.children)
-          .append("g")
-          .attr("class", "node")
-          .attr("transform", (d) => "translate(" + d.x + "," + d.y + ")");
-
-      node.append("title")
-          .text(function(d) {
-              return d.name + ": " + d.count;
-          });
-
-      node.append("a")
-          .attr("href",d => `/observations/${d.data.id}`)
-          .append("circle")
-          .attr("r", function(d) {
-              return d.r;
-          })
-          .style("fill","blue")
-          .style("fill", d => `url(#${d.data.name.replace(/\s/g, '')})`)
-
-      node.append("text")
-          .attr("dy", ".2em")
-          .style("text-anchor", "middle")
-          .text(function(d) {
-              return d.data.name;
-          })
-          .attr("font-family", "sans-serif")
-          .attr("font-size", function(d){
-              return d.r/5;
-          })
-          .attr("fill", "white");
-
-      node.append("text")
-          .attr("dy", "1.3em")
-          .style("text-anchor", "middle")
-          .text(function(d) {
-              return d.data.count;
-          })
-          .attr("font-family",  "Gill Sans", "Gill Sans MT")
-          .attr("font-size", function(d){
-              return d.r/5;
-          })
-          .attr("fill", "white");
-
-      d3.select(self.frameElement)
-          .style("height", diameter + "px");
-
-    }
-  }
-
-
-  const TestForce = (canvas) => {
-    let width = 300, height = 300
-    let numNodes = 100
-    let nodes = d3.range(numNodes).map(function(d) {
-      return {radius: Math.random() * 25}
+    let nodes = d3.hierarchy(dataset).sum(function(d) {
+      return d.count
     })
 
-    let svg = canvas
-      .append("svg")
-      .attr("width", 600)
-      .attr("height", 600)
+    let pattern = defs.selectAll('pattern')
 
-    let simulation = d3.forceSimulation(nodes)
-      .force('charge', d3.forceManyBody().strength(5))
-      .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collision', d3.forceCollide().radius(function(d) {
-        return d.radius
-      }))
-      .on('tick', ticked);
+    await pattern
+      .data(dataset.children)
+      .enter()
+      .append('pattern')
+      .attr('id', d => d.name.replace(/\s/g, ''))
+      .attr('height', '100%')
+      .attr('width', '100%')
+      .attr('patternContentUnits', 'objectBoundingBox')
+      .append('image')
+      .attr('height', '1')
+      .attr('width', '1')
+      .attr('preserveAspectRatio', 'none')
+      .attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+      .attr('xlink:href', d => `${d.imageUrl}`)
 
-    function ticked() {
-      var u = d3.select('svg')
-        .selectAll('circle')
-        .data(nodes)
+    let node = svg
+      .selectAll('.node')
+      .data(bubble(nodes).descendants())
+      .enter()
+      .filter(d => !d.children)
+      .append('g')
+      .attr('class', 'node')
+      .attr('transform', d => 'translate(' + d.x + ',' + d.y + ')')
 
-      u.enter()
-        .append('circle')
-        .attr('r', function(d) {
-          return d.radius
-        })
-        .merge(u)
-        .attr('cx', function(d) {
-          return d.x
-        })
-        .attr('cy', function(d) {
-          return d.y
-        })
+    node.append('title').text(function(d) {
+      return d.name + ': ' + d.count
+    })
 
-      u.exit().remove()
-    }
+    node
+      .append('a')
+      .attr('href', d => `/observations/${d.data.id}`)
+      .append('circle')
+      .attr('r', function(d) {
+        return d.r
+      })
+      .style('fill', 'blue')
+      .style('fill', d => `url(#${d.data.name.replace(/\s/g, '')})`)
+
+    node
+      .append('text')
+      .attr('dy', '.2em')
+      .style('text-anchor', 'middle')
+      .text(function(d) {
+        return d.data.name
+      })
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', function(d) {
+        return d.r / 5
+      })
+      .attr('fill', 'white')
+
+    node
+      .append('text')
+      .attr('dy', '1.3em')
+      .style('text-anchor', 'middle')
+      .text(function(d) {
+        return d.data.count
+      })
+      .attr('font-family', 'Gill Sans', 'Gill Sans MT')
+      .attr('font-size', function(d) {
+        return d.r / 5
+      })
+      .attr('fill', 'white')
+
+    d3.select(self.frameElement).style('height', diameter + 'px')
   }
+}
+
+const TestForce = canvas => {
+  let width = 300,
+    height = 300
+  let numNodes = 100
+  let nodes = d3.range(numNodes).map(function(d) {
+    return {radius: Math.random() * 25}
+  })
+
+  let svg = canvas
+    .append('svg')
+    .attr('width', 600)
+    .attr('height', 600)
+
+  let simulation = d3
+    .forceSimulation(nodes)
+    .force('charge', d3.forceManyBody().strength(5))
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force(
+      'collision',
+      d3.forceCollide().radius(function(d) {
+        return d.radius
+      })
+    )
+    .on('tick', ticked)
+
+  function ticked() {
+    var u = d3
+      .select('svg')
+      .selectAll('circle')
+      .data(nodes)
+
+    u
+      .enter()
+      .append('circle')
+      .attr('r', function(d) {
+        return d.radius
+      })
+      .merge(u)
+      .attr('cx', function(d) {
+        return d.x
+      })
+      .attr('cy', function(d) {
+        return d.y
+      })
+
+    u.exit().remove()
+  }
+}
 
 module.exports = {
   GraphifyDiscoverer,

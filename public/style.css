@@ -95,6 +95,7 @@ form div {
 .Chart {
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 .nearflag {
@@ -243,4 +244,3 @@ td {
   width: 600px;
   height: 600px;
 }
-
