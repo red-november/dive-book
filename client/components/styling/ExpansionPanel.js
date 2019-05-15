@@ -25,7 +25,7 @@ function SimpleExpansionPanel(props) {
       {itemArr.map((item, idx) => (
         <div key={`item${idx}`}>
           {' '}
-          <ExpansionPanel disabled={item.content.length === 0}>
+          <ExpansionPanel disabled={item.contentCount === 0}>
             <ExpansionPanelSummary expandIcon={'🐠'}>
               <Typography className={classes.heading}>{item.name}</Typography>
             </ExpansionPanelSummary>
