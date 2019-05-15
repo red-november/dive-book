@@ -49,9 +49,11 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
       <div className="color-bar" />
       <AppBar position="static" color="default">
         <Toolbar>
-          <Typography variant="h5" color="inherit">
+          <img src='/DiveBook.png' className="NavLogo"/>
+          {/* <Typography variant="h5" color="inherit">
             DiveBook
-          </Typography>
+          </Typography> */}
+
         </Toolbar>
         <nav className="navBar">
           {isLoggedIn ? (

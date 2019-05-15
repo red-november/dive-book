@@ -308,3 +308,7 @@ li{
 li.Badge{
   list-style-image: url(/medal.png);
 }
+
+.NavLogo {
+  margin-left: 10px;
+}
