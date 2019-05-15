@@ -73,12 +73,28 @@ Diver.prototype.correctPassword = function(candidatePwd) {
 
 Diver.LoadData = async function(dataArray) {
   await dataArray.map(async data => {
-    let {id,	firstName,	lastName,	email,	password,	height,	weight,	diveshopId} = data
+    let {
+      id,
+      firstName,
+      lastName,
+      email,
+      password,
+      height,
+      weight,
+      diveshopId
+    } = data
     await Diver.create({
-      id,	firstName,	lastName,	email,	password,	height,	weight,	diveshopId
+      id,
+      firstName,
+      lastName,
+      email,
+      password,
+      height,
+      weight,
+      diveshopId
     })
   })
-  console.log("Diver Load Success!")
+  console.log('Diver Load Success!')
 }
 
 Diver.generateSalt = function() {

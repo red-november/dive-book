@@ -1,6 +1,6 @@
 body {
   font-family: 'roboto', Helvetica, Arial, sans-serif;
-  cursor: url(/diver.png), auto;
+  /* cursor: url(/diver.png), auto; */
 }
 
 a {
@@ -36,7 +36,8 @@ form div {
 }
 
 .navBar {
-  /* background-color: #03a9f4; */
+  display: flex;
+  align-items: flex-end;
 }
 
 .color-bar {
@@ -302,16 +303,16 @@ td {
   height: 600px;
 }
 
-li{
+li {
   list-style-image: url(/whale.png);
 }
 
-li.Badge{
+li.Badge {
   list-style-image: url(/medal.png);
 }
 
 .NavLogo {
   margin-left: 25px;
-  max-width: 160px;
-  max-height: 160px;
+  max-width: 80px;
+  max-height: 80px;
 }
