@@ -56,12 +56,12 @@ class AddLog extends Component {
     if (evt.target.name === 'diveshopId') {
       //fetch single shop if id is not null
       evt.target.value && this.props.fetchSingleShop(evt.target.value)
-      this.setState({displayText: false})
+      this.setState({displayText: false, diveshopId: Number(evt.target.value)})
     } else if (
       (evt.target.name === 'diveName' && evt.target.value === 'Other') ||
       (evt.target.name === 'diveshopId' && evt.target.value === '')
     ) {
-      this.setState({displayText: true})
+      this.setState({displayText: true, diveName: event.target.value})
     } else if (evt.target.name === 'diveName' && !this.state.displayText) {
       let [diveName, offeredDiveId] = evt.target.value.split('^')
       offeredDiveId = Number(offeredDiveId)

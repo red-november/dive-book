@@ -103,13 +103,15 @@ class SingleLog extends Component {
   }
 
   handleChange = event => {
-    console.log('target:', event.target.name)
     if (event.target.name === 'provider' && event.target.value === 'Other') {
       this.setState({displayText: true})
     } else if (event.target.name === 'diveshopId') {
       //fetch single shop if id is not null
       event.target.value && this.props.fetchSingleShop(event.target.value)
-      this.setState({displayText: false})
+      this.setState({
+        displayText: false,
+        diveshopId: Number(event.target.value)
+      })
     } else if (
       (event.target.name === 'diveName' && event.target.value === 'Other') ||
       (event.target.name === 'diveshopId' && event.target.value === '')
