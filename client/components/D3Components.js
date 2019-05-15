@@ -12,8 +12,8 @@ export const CircleChart = ({data}) => {
         data={data}
         margin={{top: 30, bottom: 30, left: 30, right: 30}}
         colorSchema={colorSchema}
-        width="600"
-        height="600"
+        width="700"
+        height="700"
         externalRadius="250"
         isAnimated="true"
       />
@@ -34,8 +34,8 @@ const CircleChartObservation = (props) => {
         data={props.data}
         margin={{top: 30, bottom: 30, left: 30, right: 30}}
         colorSchema={colorSchema}
-        width="600"
-        height="600"
+        width="700"
+        height="700"
         externalRadius="250"
         isAnimated="true"
       />
@@ -44,7 +44,6 @@ const CircleChartObservation = (props) => {
 
 export const LineChart = (props) => {
   const colorSchema = ColorMaker(props.data.dataByTopic)
-  console.log(props.data)
   return (
       <Line
         data={props.data}
@@ -65,7 +64,7 @@ export const BarChart = ({data}) => {
       <Bar
         data={data}
         margin={{top: 50, bottom: 50, left: 50, right: 50}}
-        width={600}
+        width={700}
         colorSchema={colorSchema}
         isAnimated="true"
 
@@ -82,6 +81,7 @@ const DepthChart = (props) => {
         data={props.data}
         margin={{top: 50, bottom: 50, left: 50, right: 50}}
         colorSchema={colorSchema}
+        width={700}
         isAnimated="true"
         {...props}
       />

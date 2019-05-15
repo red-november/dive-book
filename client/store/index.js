@@ -15,6 +15,7 @@ import allOfferedDives from './AllOfferedDivesReducer'
 import SingleCert from './singleCertReducer'
 import SingleObservation from './singleObservationReducer'
 import singleOfferedDive from './SingleOfferedDiveReducer'
+import observationsMap from './observationsMapReducer'
 
 const reducer = combineReducers({
   diver,
@@ -29,7 +30,8 @@ const reducer = combineReducers({
   allOfferedDives,
   SingleCert,
   SingleObservation,
-  singleOfferedDive
+  singleOfferedDive,
+  observationsMap
 })
 
 const middleware = composeWithDevTools(
@@ -51,3 +53,4 @@ export * from './AllOfferedDivesReducer'
 export * from './singleCertReducer'
 export * from './singleObservationReducer'
 export * from './SingleOfferedDiveReducer'
+export * from './observationsMapReducer'

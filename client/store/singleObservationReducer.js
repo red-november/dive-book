@@ -4,6 +4,7 @@ const initialState = {}
 
 const GET_SINGLE_OBSERVATION = 'GET_SINGLE_OBSERVATION'
 
+
 const getSingleObservation = observation => ({type: GET_SINGLE_OBSERVATION, observation})
 
 export const getSingleObservationThunk = (id) => async dispatch => {

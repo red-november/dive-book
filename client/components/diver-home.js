@@ -5,10 +5,12 @@ import {Link} from 'react-router-dom'
 import {
   getDiverLogsWithObservationsThunk,
   getDiverCertsThunk,
-  // getBadgesThunk,
   getLogsThunk
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
+import {LineChart, BarChart} from './D3Components'
+import {TimeStringToFloat, Bubbles} from '../../utilities/d3Utils'
+import * as d3 from 'd3'
 import Loading from './styling/Loading'
 import ExpansionPanel from './styling/ExpansionPanel'
 import moment from 'moment'
@@ -17,11 +19,36 @@ import moment from 'moment'
  * COMPONENT
  */
 class DiverHome extends Component {
+
   async componentDidMount() {
     await this.props.loadDiverLogs(this.props.diver.id)
     await this.props.loadDiverCerts(this.props.diver.id)
     await this.props.loadDiverBadges(this.props.diver.id)
     await this.props.loadAllLogs()
+
+  }
+
+  componentDidUpdate () {
+    if(this.props.diverLogs.length > 0) {
+      let data = ObservationsQuery(this.props.diverLogs)
+      this.BubblifyObservations(data)
+    }
+  }
+
+  BubblifyObservations = async (data) => {
+    const canvas = d3.select('.canva')
+    let success = await Bubbles(canvas, data)
+    let svgAll = document.querySelectorAll("svg")
+    let counter = svgAll.length
+    console.log(counter)
+    while(counter > 1) {
+      svgAll = document.querySelectorAll("svg")
+      let svgSelected = document.querySelectorAll("svg")[1]
+      svgSelected.parentNode.removeChild(svgSelected)
+      counter--
+      console.log(counter)
+    }
+    return success
   }
 
   render() {
@@ -30,7 +57,7 @@ class DiverHome extends Component {
     }
     const {firstName, id, createdAt} = this.props.diver
     let {diverLogs, diverCerts, diverBadges, allLogs} = this.props
-    let sights = ObservationsQuery(diverLogs)
+    let data = ObservationsQuery(diverLogs)
     diverLogs = sortLogsByDate(diverLogs).reverse()
 
     return (
@@ -60,26 +87,34 @@ class DiverHome extends Component {
                 ))
               },
 
-              {
-                name:
-                  sights.length === 1
-                    ? '1 Sighting'
-                    : `${sights.length} Sightings`,
-                content: sights.map(sight => (
-                  <li key={sight}>
-                    {
-                      <Link
-                        className="rrLink"
-                        to={`observations/${sight[1].id}`}
-                      >
-                        {sight[0]} - {sight[1].count} times
-                      </Link>
-                    }
-                  </li>
-                ))
-              }
-            ]}
-          />
+                {
+                  name: `${data.children.length} Sightings.`,
+                  content:
+                  <div>
+                    <div className="canva bubbles"/>
+                  </div>
+                }
+
+              // {
+              //   name:
+              //     sights.length === 1
+              //       ? '1 Sighting'
+              //       : `${sights.length} Sightings`,
+              //   content: sights.map(sight => (
+              //     <li key={sight}>
+              //       {
+              //         <Link
+              //           className="rrLink"
+              //           to={`observations/${sight[1].id}`}
+              //         >
+              //           {sight[0]} - {sight[1].count} times
+              //         </Link>
+              //       }
+              //     </li>
+              //   ))
+              // }
+
+            ]}/>
         </div>
         <div>
           {' '}
@@ -92,6 +127,7 @@ class DiverHome extends Component {
             </ul>
           ))}
         </div>
+
         <div>
           <h3>Certifications:</h3>
           {diverCerts.map(cert => (
@@ -174,7 +210,7 @@ function ObservationsQuery(logs) {
     log.observations &&
       log.observations.reduce((accum, obs) => {
         if (!accum[obs.name]) {
-          accum[obs.name] = {id: obs.id, count: 1}
+          accum[obs.name] = {id: obs.id, count: 1, imageUrl: obs.imageUrl, name: obs.name}
         } else {
           accum[obs.name].count = 1 + accum[obs.name].count
         }
@@ -182,7 +218,7 @@ function ObservationsQuery(logs) {
       }, query)
     return query
   })
-  return Object.entries(query)
+  return { children: Object.values(query) }
 }
 
 function sortLogsByDate(logs) {
