@@ -57,14 +57,18 @@ class SingleCert extends Component {
 
   render() {
     return (
-      <div>
+      <div className="cert-container">
         <CertForm
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           {...this.state}
           singleCert={this.props.SingleCert}
         />
-        <button type="button" onClick={this.handleDelete}>
+        <button
+          type="button"
+          className="btn-main btn-form btn-cert btn-danger"
+          onClick={this.handleDelete}
+        >
           Delete Certification
         </button>
       </div>

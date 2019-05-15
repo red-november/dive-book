@@ -49,6 +49,7 @@ class SingleLog extends Component {
     this.keyup = this.keyup.bind(this)
     this.enterObservation = this.enterObservation.bind(this)
     this.removeFromList = this.removeFromList.bind(this)
+    this.routeToObservations = this.routeToObservations.bind(this)
   }
   async componentDidMount() {
     await this.props.onLoadLog(this.props.match.params.id)
@@ -102,13 +103,15 @@ class SingleLog extends Component {
   }
 
   handleChange = event => {
-    console.log('target:', event.target.name)
     if (event.target.name === 'provider' && event.target.value === 'Other') {
       this.setState({displayText: true})
     } else if (event.target.name === 'diveshopId') {
       //fetch single shop if id is not null
       event.target.value && this.props.fetchSingleShop(event.target.value)
-      this.setState({displayText: false})
+      this.setState({
+        displayText: false,
+        diveshopId: Number(event.target.value)
+      })
     } else if (
       (event.target.name === 'diveName' && event.target.value === 'Other') ||
       (event.target.name === 'diveshopId' && event.target.value === '')
@@ -167,6 +170,9 @@ class SingleLog extends Component {
     currentObsArr = currentObsArr.filter(obs => obs.id !== id)
     this.setState({diverObservations: currentObsArr})
   }
+  routeToObservations(id) {
+    history.push(`/observations/${id}`)
+  }
 
   enterObservation(evt) {
     if (evt.keyCode === 13) {
@@ -178,7 +184,11 @@ class SingleLog extends Component {
       )
       let currentObsArr = [...this.state.diverObservations]
       if (!currentObsArr.find(obs => obs.id === topSelection.id)) {
-        currentObsArr.push({id: topSelection.id, name: topSelection.name})
+        currentObsArr.push({
+          id: topSelection.id,
+          name: topSelection.name,
+          imageUrl: topSelection.imageUrl
+        })
         this.setState({diverObservations: currentObsArr})
       }
     }
@@ -217,14 +227,27 @@ class SingleLog extends Component {
         <div className="flex-start-container">
           {diver.id === singleLog.diverId &&
             !activated && (
-              <button
-                type="button"
-                className="btn-main btn-edit"
-                onClick={this.activated}
-              >
-                {' '}
-                <i class="far fa-edit" />
-              </button>
+              <div>
+                <button
+                  type="button"
+                  className="btn-main btn-edit"
+                  onClick={this.activated}
+                >
+                  {' '}
+                  <i className="far fa-edit" />
+                </button>
+                <div>
+                  <Link to="/qr">
+                    <button
+                      type="button"
+                      className="btn-main"
+                      onClick={this.displayScanner}
+                    >
+                      Toggle QR Scanner
+                    </button>{' '}
+                  </Link>
+                </div>
+              </div>
             )}
 
           {!activated ? (
@@ -234,6 +257,8 @@ class SingleLog extends Component {
                 singleShop={singleShop}
                 diveName={singleLog.diveName}
                 singleLog={singleLog}
+                enterObservation={this.enterObservation}
+                routeToObservations={this.routeToObservations}
               />
             </div>
           ) : (
@@ -244,20 +269,9 @@ class SingleLog extends Component {
                 log={this.state}
                 allShops={this.props.allShops}
                 singleShop={this.props.singleShop}
-                enterObservation={this.enterObservation}
                 keyup={this.keyup}
                 removeFromList={this.removeFromList}
               />
-              <div className="btn-ctr">
-                <Link to="/qr">
-                  <button
-                    className="btn-main  btn-qr"
-                    onClick={this.displayScanner}
-                  >
-                    Toggle QR Scanner
-                  </button>{' '}
-                </Link>
-              </div>
             </div>
           )}
         </div>

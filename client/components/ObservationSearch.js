@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getObservationsThunk} from '../store'
 import Chip from './styling/chip'
+import observationsReducer from '../store/observationsReducer'
 
 const ObservationSearch = ({
   enterObservation,
@@ -9,7 +10,8 @@ const ObservationSearch = ({
   handleChange,
   currentList,
   diverObservations,
-  removeFromList
+  removeFromList,
+  routeToObservations
 }) => {
   return (
     <div className="observation-container">
@@ -33,7 +35,11 @@ const ObservationSearch = ({
           ))}
         </select>
       </div>
-      <Chip arr={diverObservations} handleDelete={removeFromList} />
+      <Chip
+        arr={diverObservations}
+        handleDelete={removeFromList}
+        handleClick={routeToObservations}
+      />
     </div>
   )
 }

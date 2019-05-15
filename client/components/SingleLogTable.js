@@ -22,7 +22,8 @@ const SingleLogTable = ({
   singleLog,
   description,
   id,
-  observations
+  observations,
+  routeToObservations
 }) => {
   return (
     <table className="log-table">
@@ -64,15 +65,15 @@ const SingleLogTable = ({
         <td>{location}</td>
       </tr>
       <tr>
-        <td>Max Depth: </td>
+        <td>Max Depth (meters): </td>
         <td>{maxDepth}</td>
       </tr>
       <tr>
-        <td>Tank Pressure Start: </td>
+        <td>Tank Pressure Start (BAR): </td>
         <td>{tankPressureStart}</td>
       </tr>
       <tr>
-        <td>Tank Pressure End: </td>
+        <td>Tank Pressure End (BAR): </td>
         <td>{tankPressureEnd}</td>
       </tr>
       <tr>
@@ -80,7 +81,7 @@ const SingleLogTable = ({
         <td>{tankType}</td>
       </tr>
       <tr>
-        <td>Belt Weight:</td>
+        <td>Belt Weight (kgs):</td>
         <td>{beltWeight}</td>
       </tr>
       <tr>
@@ -88,7 +89,7 @@ const SingleLogTable = ({
         <td>{wetSuitType}</td>
       </tr>
       <tr>
-        <td>Wet Suit Thickness</td>
+        <td>Wet Suit Thickness (mm):</td>
         <td>{wetSuitThickness}</td>
       </tr>
       <tr>
@@ -96,7 +97,7 @@ const SingleLogTable = ({
         <td>{airMixture}</td>
       </tr>
       <tr>
-        <td>Visibility: </td>
+        <td>Visibility (meters): </td>
         <td>{visibility}</td>
       </tr>
       <tr>
@@ -121,7 +122,11 @@ const SingleLogTable = ({
         <td>Observations:</td>
         <td>
           {' '}
-          <Chip arr={observations} handleDelete={null} />
+          <Chip
+            arr={observations}
+            handleDelete={null}
+            handleClick={routeToObservations}
+          />
         </td>
       </tr>
     </table>

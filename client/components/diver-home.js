@@ -44,7 +44,6 @@ class DiverHome extends Component {
       let svgSelected = document.querySelectorAll('svg')[1]
       svgSelected.parentNode.removeChild(svgSelected)
       counter--
-      console.log(counter)
     }
     return success
   }
@@ -62,12 +61,13 @@ class DiverHome extends Component {
       <div className="page-container">
         <h3 className="welcome-bar">Welcome {firstName}!</h3>
         <h6 className="member-date">
-          memeber since {moment(createdAt).format('YYYY')}
+          member since {moment(createdAt).format('YYYY')}
         </h6>
         <div>
           <ExpansionPanel
             itemArr={[
               {
+                contentCount: diverLogs.length,
                 name:
                   diverLogs.length == 1
                     ? '1 Logged Dive'
@@ -86,6 +86,7 @@ class DiverHome extends Component {
               },
 
               {
+                contentCount: data.children.length,
                 name: `${data.children.length} Sightings.`,
                 content: (
                   <div>
@@ -93,25 +94,6 @@ class DiverHome extends Component {
                   </div>
                 )
               }
-
-              // {
-              //   name:
-              //     sights.length === 1
-              //       ? '1 Sighting'
-              //       : `${sights.length} Sightings`,
-              //   content: sights.map(sight => (
-              //     <li key={sight}>
-              //       {
-              //         <Link
-              //           className="rrLink"
-              //           to={`observations/${sight[1].id}`}
-              //         >
-              //           {sight[0]} - {sight[1].count} times
-              //         </Link>
-              //       }
-              //     </li>
-              //   ))
-              // }
             ]}
           />
         </div>

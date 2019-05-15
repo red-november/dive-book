@@ -8,12 +8,13 @@ class CreateCert extends Component {
     super()
     this.state = {
       certId: '',
-      provider: '',
+      provider: 'NAUI',
       date: '',
-      level: '',
+      level: 'Open Water',
       instructorId: '',
       displayTextOrg: false,
-      displayTextLevel: false
+      displayTextLevel: false,
+      diverId: ''
     }
   }
 
@@ -31,17 +32,12 @@ class CreateCert extends Component {
 
   handleSubmit = async event => {
     event.preventDefault()
-
-    // create the object property
-    const data = {
-      diverId: this.props.diver.id,
-      certId: event.target.certId.value,
-      provider: event.target.provider.value,
-      date: event.target.date.value,
+    await this.setState({
       level: event.target.level.value,
-      instructorId: event.target.instructorId.value
-    }
-    await this.props.createCert(data)
+      diverId: this.props.diver.id,
+      provider: event.target.provider.value
+    })
+    await this.props.createCert(this.state)
   }
 
   render() {

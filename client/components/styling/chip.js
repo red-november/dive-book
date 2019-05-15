@@ -15,7 +15,7 @@ const styles = theme => ({
   }
 })
 
-function Chips({arr, classes, handleDelete}) {
+function Chips({arr, classes, handleDelete, handleClick}) {
   return (
     <div className={classes.root}>
       {arr.map(
@@ -34,6 +34,9 @@ function Chips({arr, classes, handleDelete}) {
               avatar={<Avatar alt={elem.name} src={elem.imageUrl} />}
               label={elem.name}
               className={classes.chip}
+              onClick={() => {
+                handleClick(elem.id)
+              }}
             />
           )
       )}

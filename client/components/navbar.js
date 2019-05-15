@@ -12,7 +12,8 @@ import LinkButton from './styling/LinkButton'
 
 const styles = {
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    'margin-bottom': '30px'
   }
 }
 
@@ -49,30 +50,34 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
       <div className="color-bar" />
       <AppBar position="static" color="default">
         <Toolbar>
-          <img src='/DiveBook.png' className="NavLogo"/>
           {/* <Typography variant="h5" color="inherit">
             DiveBook
           </Typography> */}
 
-        </Toolbar>
-        <nav className="navBar">
-          {isLoggedIn ? (
-            <div className="main-nav">
-              {/* The navbar will show these links after you log in */}
-              <NavMenu className="main-nav-menu" {...diverMenu} />
-              <NavMenu className="main-nav-menu" {...globalMenu} />
+          <nav className="navBar">
+            <Link to="/home" className="logoLink">
+              <img src="/DiveBook.png" className="NavLogo" />{' '}
+            </Link>
+            {isLoggedIn ? (
+              <div className="main-nav">
+                {/* The navbar will show these links after you log in */}
+                <NavMenu className="main-nav-menu" {...diverMenu} />
+                <NavMenu className="main-nav-menu" {...globalMenu} />
 
-              {isOwner && <NavMenu className="main-nav-menu" {...ownerMenu} />}
-              <LinkButton name="New Log" link="/create" />
-            </div>
-          ) : (
-            <div className="main-nav">
-              {/* The navbar will show these links before you log in */}
-              <LinkButton name="Log In" link="/login" />
-              <LinkButton name="Sign Up" link="/signup" />
-            </div>
-          )}
-        </nav>
+                {isOwner && (
+                  <NavMenu className="main-nav-menu" {...ownerMenu} />
+                )}
+                <LinkButton name="New Log" link="/create" />
+              </div>
+            ) : (
+              <div className="main-nav">
+                {/* The navbar will show these links before you log in */}
+                <LinkButton name="Log In" link="/login" />
+                <LinkButton name="Sign Up" link="/signup" />
+              </div>
+            )}
+          </nav>
+        </Toolbar>
       </AppBar>
     </div>
   )

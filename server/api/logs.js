@@ -77,7 +77,8 @@ router.post('/', async (req, res, next) => {
       description,
       visibility,
       hasStrongCurrent,
-      offeredDiveId
+      offeredDiveId,
+      diverObservations
     } = req.body
 
     if (diveshopId === '') diveshopId = null
@@ -105,6 +106,11 @@ router.post('/', async (req, res, next) => {
         offeredDiveId,
         diverId: req.user.id
       })
+      const newSightings = diverObservations.map(obs => {
+        obs.logId = log.id
+        return obs
+      })
+      await Sighting.addBulk(newSightings)
       // await log.setDiver(req.user.id)
       res.status(201).send(log)
     }

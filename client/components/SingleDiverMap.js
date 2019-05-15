@@ -122,7 +122,10 @@ class SingleDiverMap extends Component {
             <div>
               <em>{popupInfo.date.split('T')[0]}</em>
             </div>
-            {/* add img here */}
+            {/* <img image goes here---connect log to offeredDiveId where image resides
+              src={`/pictures/offeredDives/${popupInfo.imageURL}`}
+              alt="dive picture"
+            /> */}
             <div>
               <Link to={`/logs/${popupInfo.id}`}>Details</Link>
             </div>
