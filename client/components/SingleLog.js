@@ -223,7 +223,7 @@ class SingleLog extends Component {
                 onClick={this.activated}
               >
                 {' '}
-                <i class="far fa-edit" />
+                <i className="far fa-edit" />
               </button>
             )}
 

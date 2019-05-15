@@ -1,7 +1,14 @@
 /* eslint-disable complexity */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getShopsThunk, addLogThunk, getSingleShopThunk} from '../store/index'
+import {
+  getShopsThunk,
+  addLogThunk,
+  getSingleShopThunk,
+  getObservationsThunk,
+  getSingleLogThunk
+} from '../store/index'
+import {SingleLogTable, ObservationSearch} from './index'
 import LogForm from './LogForm'
 
 class AddLog extends Component {
@@ -32,9 +39,17 @@ class AddLog extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.keyup = this.keyup.bind(this)
+    this.enterObservation = this.enterObservation.bind(this)
+    this.removeFromList = this.removeFromList.bind(this)
   }
   async componentDidMount() {
     await this.props.fetchShops()
+    await this.props.fetchObservations()
+    // const {observations} = this.props.singleLog
+    // await this.setState({
+    //   diverObservations: observations
+    // })
   }
 
   handleChange(evt) {
@@ -64,9 +79,18 @@ class AddLog extends Component {
     }
   }
 
-  handleSubmit(evt) {
+  async handleSubmit(evt) {
     evt.preventDefault()
+    let observations = this.state.diverObservations.map(obs => ({
+      observationId: obs.id
+    }))
+    await this.setState({
+      diverObservations: observations,
+      currentList: []
+    })
+
     this.props.addLog(this.state)
+
     this.setState({
       date: '',
       diveshopId: 1,
@@ -91,6 +115,39 @@ class AddLog extends Component {
       diverObservations: []
     })
   }
+  //keyup, removeFromList and enterObservation all used for observation search bar
+  keyup(evt) {
+    let word = evt.target.value
+    let newList = this.props.observations.filter(obs => {
+      if (obs.name.toLowerCase().includes(word.toLowerCase())) {
+        return obs.name
+      }
+    })
+    this.setState({currentList: newList})
+  }
+
+  removeFromList(id) {
+    let currentObsArr = [...this.state.diverObservations]
+    currentObsArr = currentObsArr.filter(obs => obs.id !== id)
+    this.setState({diverObservations: currentObsArr})
+  }
+
+  enterObservation(evt) {
+    if (evt.keyCode === 13) {
+      // if (evt.target.name === 'search') {
+      //   evt.preventDefault()
+      // }
+      let topSelection = JSON.parse(
+        document.getElementById('observation-selector').value
+      )
+      let currentObsArr = [...this.state.diverObservations]
+      if (!currentObsArr.find(obs => obs.id === topSelection.id)) {
+        currentObsArr.push({id: topSelection.id, name: topSelection.name})
+        this.setState({diverObservations: currentObsArr})
+      }
+    }
+  }
+
   render() {
     return (
       <div className="form-container ChartContainer">
@@ -112,13 +169,21 @@ class AddLog extends Component {
 
 const mapStateToProps = state => ({
   allShops: state.shops,
-  singleShop: state.singleShop
+  singleShop: state.singleShop,
+  singleLog: state.singleLog,
+  observations: state.observations
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchShops: () => dispatch(getShopsThunk()),
   fetchSingleShop: shopId => dispatch(getSingleShopThunk(shopId)),
-  addLog: log => dispatch(addLogThunk(log))
+  addLog: log => dispatch(addLogThunk(log)),
+  onLoadLog: async id => {
+    await dispatch(getSingleLogThunk(id))
+  },
+  fetchObservations: () => {
+    dispatch(getObservationsThunk())
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddLog)

@@ -385,13 +385,6 @@ const LogForm = props => {
           </tbody>
         </table>
         <div className="btn-observation-container">
-          <button
-            type="button"
-            className="btn-main btn-form"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
           <ObservationSearch
             enterObservation={enterObservation}
             keyup={keyup}
@@ -400,6 +393,13 @@ const LogForm = props => {
             diverObservations={diverObservations}
             removeFromList={removeFromList}
           />
+          <button
+            type="button"
+            className="btn-main btn-form"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
         </div>
       </form>
     </div>
