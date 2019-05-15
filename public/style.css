@@ -135,6 +135,14 @@ form div {
   margin-left: 30px;
 }
 
+.form-container {
+  margin-top: 30px;
+}
+
+.top-buffer {
+  margin-top: 10px;
+}
+
 table {
   margin: 30px, 30px, 30px, 30px;
   border: 3px solid white;
@@ -232,6 +240,53 @@ td {
 
 .btn-cert {
   margin-left: 20px;
+}
+
+.btn-observation-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 200px;
+}
+
+.observation-container {
+  margin: 0;
+  padding: 0;
+  width: 500px;
+}
+
+.observation-search {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.observation-search input {
+  margin: 0 10px;
+}
+
+.btn-form {
+  width: 80px;
+}
+
+.btn-ctr {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.btn-edit {
+  width: 28px;
+}
+.flex-start-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.log-table {
+  width: 500px;
+  margin-bottom: 20px;
 }
 
 .LinkToObsMap {
