@@ -1,5 +1,6 @@
 body {
   font-family: 'roboto', Helvetica, Arial, sans-serif;
+  cursor: url(/diver.png), auto;
 }
 
 a {
@@ -95,6 +96,7 @@ form div {
 .Chart {
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 .nearflag {
@@ -298,4 +300,18 @@ td {
 .bubbles {
   width: 600px;
   height: 600px;
+}
+
+li{
+  list-style-image: url(/whale.png);
+}
+
+li.Badge{
+  list-style-image: url(/medal.png);
+}
+
+.NavLogo {
+  margin-left: 25px;
+  max-width: 160px;
+  max-height: 160px;
 }

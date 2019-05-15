@@ -4,21 +4,42 @@ import {Link} from 'react-router-dom'
 import {
   getDiverLogsThunk,
   getDiverCertsThunk,
-  // getBadgesThunk,
   getLogsThunk
 } from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
 import {DiveTimeChartWithToolTip, AirEfficiencyChartWithToolTip, BarChart, DepthChartWithToolTip} from './D3Components'
-
 import {TimeStringToFloat} from '../../utilities/d3Utils'
+import history from '../history'
 
 class DiverAnalysis extends Component {
+  constructor(){
+    super()
+    this.state = {
+      AnomalyDetected: false
+    }
+  }
+
   async componentDidMount() {
     await this.props.loadDiverLogs(this.props.diver.id)
     await this.props.loadDiverCerts(this.props.diver.id)
     await this.props.loadDiverBadges(this.props.diver.id)
     await this.props.loadAllLogs()
   }
+
+  RerenderIfAnomaly = async () => {
+    let ticks = document.querySelectorAll("g.tick").length
+    if(ticks > 5000 && !this.state.AnomalyDetected) {
+      console.log("called")
+      await this.setState({
+        AnomalyDetected: true
+      })
+      history.push("/loading")
+      setTimeout(() =>
+      history.push("/home/analysis"), 500)
+
+    }
+  }
+
   render() {
     const {firstName, id} = this.props.diver
     const {diverLogs, diverCerts, diverBadges, allLogs} = this.props
@@ -100,8 +121,8 @@ class DiverAnalysis extends Component {
       return <h1>LOADING...</h1>
     }
 
-    let tickNumbers = document.querySelectorAll(".tick").length
-    console.log(tickNumbers)
+    setTimeout(() => this.RerenderIfAnomaly(),1)
+
 
     return (
       <div className="Container">

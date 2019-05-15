@@ -23,7 +23,8 @@ import {
   DiverAnalysis,
   SingleObservation,
   SingleOfferedDive,
-  ObservationsMap
+  ObservationsMap,
+  Loading
 } from './components'
 import {me} from './store'
 
@@ -43,6 +44,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/qr" component={Scanner} />
         <Route path="/mymap" component={SingleDiverMap} />
+        <Route exact path="/loading" component={Loading} />
         <Route exact path="/allshops/:shopId" component={SingleShop} />
         <Route exact path="/allshops" component={AllShops} />
         <Route
