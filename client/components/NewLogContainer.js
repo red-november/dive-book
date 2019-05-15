@@ -57,21 +57,27 @@ class AddLog extends Component {
       //fetch single shop if id is not null
       evt.target.value && this.props.fetchSingleShop(evt.target.value)
       this.setState({displayText: false})
-    }
-
-    if (
+    } else if (
       (evt.target.name === 'diveName' && evt.target.value === 'Other') ||
       (evt.target.name === 'diveshopId' && evt.target.value === '')
     ) {
       this.setState({displayText: true})
-    }
-    if (evt.target.name === 'diveName' && !this.state.displayText) {
+    } else if (evt.target.name === 'diveName' && !this.state.displayText) {
       let [diveName, offeredDiveId] = evt.target.value.split('^')
       offeredDiveId = Number(offeredDiveId)
       this.setState({
         diveName,
         offeredDiveId
       })
+    } else if (event.target.name === 'search-selector') {
+      let currentObs = event.target.value
+      let currentObsArr = [...this.state.diverObservations]
+      if (!currentObsArr.find(obs => obs.id === JSON.parse(currentObs).id)) {
+        currentObsArr.push(JSON.parse(currentObs))
+        this.setState({
+          diverObservations: currentObsArr
+        })
+      }
     } else {
       this.setState({
         [evt.target.name]: evt.target.value
@@ -142,7 +148,11 @@ class AddLog extends Component {
       )
       let currentObsArr = [...this.state.diverObservations]
       if (!currentObsArr.find(obs => obs.id === topSelection.id)) {
-        currentObsArr.push({id: topSelection.id, name: topSelection.name})
+        currentObsArr.push({
+          id: topSelection.id,
+          name: topSelection.name,
+          imageUrl: topSelection.imageUrl
+        })
         this.setState({diverObservations: currentObsArr})
       }
     }

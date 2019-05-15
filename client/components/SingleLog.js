@@ -178,7 +178,11 @@ class SingleLog extends Component {
       )
       let currentObsArr = [...this.state.diverObservations]
       if (!currentObsArr.find(obs => obs.id === topSelection.id)) {
-        currentObsArr.push({id: topSelection.id, name: topSelection.name})
+        currentObsArr.push({
+          id: topSelection.id,
+          name: topSelection.name,
+          imageUrl: topSelection.imageUrl
+        })
         this.setState({diverObservations: currentObsArr})
       }
     }
