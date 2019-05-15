@@ -85,8 +85,8 @@ const CertForm = ({
     //     <button type="submit">Submit</button>
     //   </form>
     // )
-    <div className="page-container ChartContainer">
-      <form onSubmit={handleSubmit}>
+    <div>
+      <form onSubmit={handleSubmit} className="cert-container">
         <table>
           <tbody>
             <tr>

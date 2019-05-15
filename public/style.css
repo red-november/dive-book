@@ -324,6 +324,15 @@ li.Badge {
 
 .btn-cert {
   margin: 0;
-  margin-left: 2px;
   margin-top: 20px;
+}
+
+.cert-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-danger {
+  background-color: rgba(235, 133, 85, 0.712);
 }
