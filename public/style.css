@@ -1,6 +1,6 @@
 body {
   font-family: 'roboto', Helvetica, Arial, sans-serif;
-  cursor: url(/whale.png), auto;
+  cursor: url(/diver.png), auto;
 }
 
 a {
@@ -310,5 +310,7 @@ li.Badge{
 }
 
 .NavLogo {
-  margin-left: 10px;
+  margin-left: 25px;
+  max-width: 160px;
+  max-height: 160px;
 }
