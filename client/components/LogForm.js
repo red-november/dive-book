@@ -181,7 +181,7 @@ const LogForm = props => {
             <tr>
               <td>
                 {' '}
-                <label htmlFor="maxDepth">Max Depth:</label>{' '}
+                <label htmlFor="maxDepth">Max Depth (meters):</label>{' '}
               </td>
               <td>
                 {' '}
@@ -197,7 +197,7 @@ const LogForm = props => {
               <td>
                 {' '}
                 <label htmlFor="tankPressureStart">
-                  Tank Pressure Start:
+                  Tank Pressure Start (BAR):
                 </label>{' '}
               </td>
               <td>
@@ -213,7 +213,9 @@ const LogForm = props => {
             <tr>
               <td>
                 {' '}
-                <label htmlFor="tankPressureEnd">Tank Pressure End:</label>
+                <label htmlFor="tankPressureEnd">
+                  Tank Pressure End (BAR):
+                </label>
               </td>
               <td>
                 {' '}
@@ -253,7 +255,7 @@ const LogForm = props => {
             <tr>
               <td>
                 {' '}
-                <label htmlFor="beltWeight">Belt Weight:</label>
+                <label htmlFor="beltWeight">Belt Weight (kgs):</label>
               </td>
               <td>
                 {' '}
@@ -295,7 +297,9 @@ const LogForm = props => {
             <tr>
               <td>
                 {' '}
-                <label htmlFor="wetSuitThickness">Wet Suit Thickness:</label>
+                <label htmlFor="wetSuitThickness">
+                  Wet Suit Thickness (mm):
+                </label>
               </td>
               <td>
                 {' '}
@@ -337,7 +341,7 @@ const LogForm = props => {
             <tr>
               <td>
                 {' '}
-                <label htmlFor="visibility">Visibility:</label>
+                <label htmlFor="visibility">Visibility (meters):</label>
               </td>
               <td>
                 {' '}
