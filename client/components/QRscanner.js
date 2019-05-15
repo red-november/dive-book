@@ -29,7 +29,6 @@ class Scanner extends Component {
           onScan={this.handleScan}
           style={{width: '20%', margin: '80px'}}
         />
-        <p>{this.state.result}</p>
       </div>
     )
   }
