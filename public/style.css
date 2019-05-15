@@ -1,5 +1,6 @@
 body {
   font-family: 'roboto', Helvetica, Arial, sans-serif;
+  cursor: url(/whale.png), auto;
 }
 
 a {
@@ -244,3 +245,10 @@ td {
   height: 600px;
 }
 
+li{
+  list-style-image: url(/whale.png);
+}
+
+li.Badge{
+  list-style-image: url(/medal.png);
+}

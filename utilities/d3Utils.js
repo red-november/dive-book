@@ -169,13 +169,13 @@ const ColorMaker = input => {
   if (input) {
     const growth = (255) / input.length
     for (let i = 0; i < Math.ceil(input.length/3); i++) {
-      colors.push(`rgb(${growth * i + 0}, 0, 255`)
+      colors.push(`rgb(${growth * i * 3 + 0}, 0, 255`)
     }
     for (let j = 0; j < Math.ceil(input.length/3); j++) {
-      colors.push(`rgb(255, ${growth * j + 0}, 100`)
+      colors.push(`rgb(255, ${growth * j * 3 + 0}, 100`)
     }
     for (let k = 0; k < Math.ceil(input.length/3); k++) {
-      colors.push(`rgb(0, 255, ${growth * k + 0}`)
+      colors.push(`rgb(0, 255, ${growth * k * 3 + 0}`)
     }
   }
 

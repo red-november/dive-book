@@ -121,7 +121,7 @@ class DiverAnalysis extends Component {
       return <h1>LOADING...</h1>
     }
 
-    setTimeout(() => this.RerenderIfAnomaly(),0.1)
+    setTimeout(() => this.RerenderIfAnomaly(),1)
 
 
     return (
