@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {getSingleObservationThunk} from '../store/'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 class SingleObservation extends Component {
   async componentDidMount() {
@@ -9,6 +10,7 @@ class SingleObservation extends Component {
 
   render() {
     const {
+      id,
       name,
       category,
       description,
@@ -22,20 +24,30 @@ class SingleObservation extends Component {
         <img className="singleDiveImg" src={imageUrl} />
         <p>Category: {category}</p>
         <p>{description}</p>
-        <table>
-          <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Location</th>
-          </tr>
-          {logs.map(log => (
-            <tr key={log.id}>
-              <td>{log.date.slice(0, 10)}</td>
-              <td>{log.diveName}</td>
-              <td>{log.location}</td>
-            </tr>
-          ))}
-        </table>
+        {logs.length > 0 ?
+          <div>
+            <Link to={`/observations/map/${id}`}>
+              <div className="LinkToObsMap">Link to Map</div>
+            </Link>
+            <table>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Location</th>
+              </tr>
+              {logs.map(log => (
+                <tr key={log.id}>
+                  <td>{log.date.slice(0, 10)}</td>
+                  <td>{log.diveName}</td>
+                  <td>{log.location}</td>
+                </tr>
+              ))}
+            </table>
+          </div>
+          :
+          <div>No Sightings at this Time</div>
+        }
+
       </div>
     )
   }

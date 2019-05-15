@@ -119,11 +119,16 @@ form div {
 
 .popup {
   text-align: center;
+  background-color: gray;
+}
+
+.mapboxgl-popup-content {
+  background: gray;
 }
 
 .popup img {
-  width: 70px;
-  height: 50px;
+  width: 90px;
+  height: 60px;
 }
 
 .page-container {
@@ -162,6 +167,28 @@ td {
   width: 600px;
   height: 400px;
   padding: 30px;
+}
+
+.diveflag {
+  color: red;
+}
+
+.tierOne {
+  color: green;
+  width: 20px;
+  height: 20px;
+}
+
+.tierTwo {
+  color: aquamarine;
+  width: 20px;
+  height: 20px;
+}
+
+.tierThree {
+  color: rgb(73, 73, 255);
+  width: 20px;
+  height: 20px;
 }
 
 .member-date {
@@ -205,4 +232,14 @@ td {
 
 .btn-cert {
   margin-left: 20px;
+}
+
+.LinkToObsMap {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.bubbles {
+  width: 600px;
+  height: 600px;
 }

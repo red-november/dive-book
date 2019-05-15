@@ -99,6 +99,10 @@ class DiverAnalysis extends Component {
     if (allLogs.length === 0 || diverLogs.length === 0) {
       return <h1>LOADING...</h1>
     }
+
+    let tickNumbers = document.querySelectorAll(".tick").length
+    console.log(tickNumbers)
+
     return (
       <div className="Container">
         <div className="ChartContainer">
