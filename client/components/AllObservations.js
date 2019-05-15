@@ -68,10 +68,10 @@ class AllObservations extends Component {
             <h4>Category Breakdown</h4>
             <CircleChart data={chartCategoryData} />
           </div>
-          <div className="ChartContainer">
+          {/* <div className="ChartContainer">
             <h4>Observations Occurence Breakdown</h4>
             <CircleChartObservationToolTip data={chartObsData} />
-          </div>
+          </div> */}
         </div>
         {!activated ? (
           <button type="button" onClick={this.activated}>
