@@ -14,13 +14,12 @@ router.get('/', async (req, res, next) => {
 router.get('/:obsId', async (req, res, next) => {
   const obsId = Number(req.params.obsId)
   const observation = await Observation.findOne({
-    where:{
+    where: {
       id: obsId
     },
     include: [{model: Log}]
   })
   res.status(200).send(observation)
-
 })
 
 
@@ -54,4 +53,4 @@ router.post('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
- })
+})

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Log, EarnedBadge, Diver, Observation} = require('../db/models')
+const {Log, Sighting, EarnedBadge, Diver, Observation} = require('../db/models')
 const db = require('../db')
 const Sequelize = require('sequelize')
 module.exports = router
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:logId', async (req, res, next) => {
   const id = Number(req.params.logId)
   try {
-    const log = await Log.findByPk(id)
+    const log = await Log.findByPk(id, {include: [{model: Observation}]})
     res.status(200).send(log)
   } catch (error) {
     next(error)
@@ -115,6 +115,7 @@ router.post('/', async (req, res, next) => {
 
 router.put('/diver/:logId', async (req, res, next) => {
   const {
+    date,
     diveName,
     timeIn,
     timeOut,
@@ -131,7 +132,8 @@ router.put('/diver/:logId', async (req, res, next) => {
     visibility,
     hasStrongCurrent,
     diveshopId,
-    offeredDiveId
+    offeredDiveId,
+    diverObservations
   } = req.body
   try {
     const logId = req.params.logId
@@ -139,25 +141,48 @@ router.put('/diver/:logId', async (req, res, next) => {
     if (!log) {
       res.send(404)
     }
-    let logUpdate = await log.update({
-      diveName,
-      timeIn,
-      timeOut,
-      location,
-      maxDepth,
-      tankPressureStart,
-      tankPressureEnd,
-      tankType,
-      beltWeight,
-      wetSuitThickness,
-      wetSuitType,
-      airMixture,
-      description,
-      visibility,
-      hasStrongCurrent,
-      diveshopId,
-      offeredDiveId
-    })
+    let logUpdate
+    if (!log.isVerified) {
+      logUpdate = await log.update({
+        date,
+        diveName,
+        timeIn,
+        timeOut,
+        location,
+        maxDepth,
+        tankPressureStart,
+        tankPressureEnd,
+        tankType,
+        beltWeight,
+        wetSuitThickness,
+        wetSuitType,
+        airMixture,
+        description,
+        visibility,
+        hasStrongCurrent,
+        diveshopId,
+        offeredDiveId
+      })
+    } else {
+      logUpdate = await log.update({
+        description
+      })
+    }
+    //get existing sightings
+    const sightings = await Sighting.findAll({where: {logId: req.params.logId}})
+
+    //split between new ones and ones to remove
+    const [add, remove] = splitSightings(diverObservations, sightings)
+
+    //add new sightings to log
+    if (add.length > 0) {
+      await Sighting.addBulk(add)
+    }
+
+    //remove old sightings from log
+    if (remove.length > 0) {
+      await Sighting.destroyBulk(remove)
+    }
     res.status(200).send(logUpdate)
   } catch (err) {
     next(err)
@@ -227,3 +252,23 @@ router.get('/nearest/:coords', async (req, res, next) => {
     next(error)
   }
 })
+
+function splitSightings(frontEnd, backEnd) {
+  const frontEndMap = arrToMap(frontEnd)
+  const add = frontEnd
+  const remove = []
+  backEnd.forEach(
+    obs => !frontEndMap.has(obs.observationId) && remove.push(obs)
+  )
+
+  return [add, remove]
+}
+
+function arrToMap(arr) {
+  const result = new Map()
+  arr.forEach(
+    elem =>
+      !result.has(elem.observationId) && result.set(elem.observationId, true)
+  )
+  return result
+}
