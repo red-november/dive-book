@@ -148,19 +148,40 @@ const FillDiscoverer = (data, category) => {
   return data
 }
 
+// const ColorMaker = input => {
+
+//   let colors = []
+
+//   if (input) {
+//     const growth = (255 - 100) / input.length
+//     for (let i = 0; i < input.length; i++) {
+//       colors.push(`rgb(0, ${growth * i + 100}, 230`)
+//     }
+//   }
+
+//   return colors
+// }
+
 const ColorMaker = input => {
 
   let colors = []
 
   if (input) {
-    const growth = (255 - 100) / input.length
-    for (let i = 0; i < input.length; i++) {
-      colors.push(`rgb(0, ${growth * i + 100}, 230`)
+    const growth = (255) / input.length
+    for (let i = 0; i < Math.ceil(input.length/3); i++) {
+      colors.push(`rgb(${growth * i + 0}, 0, 255`)
+    }
+    for (let j = 0; j < Math.ceil(input.length/3); j++) {
+      colors.push(`rgb(255, ${growth * j + 0}, 100`)
+    }
+    for (let k = 0; k < Math.ceil(input.length/3); k++) {
+      colors.push(`rgb(0, 255, ${growth * k + 0}`)
     }
   }
 
   return colors
 }
+
 
 const TimeStringToFloat = time => {
   let hoursMinutes = time.split(/[.:]/)
