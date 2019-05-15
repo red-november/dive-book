@@ -62,7 +62,7 @@ class DiverHome extends Component {
       <div className="page-container">
         <h3 className="welcome-bar">Welcome {firstName}!</h3>
         <h6 className="member-date">
-          memeber since {moment(createdAt).format('YYYY')}
+          member since {moment(createdAt).format('YYYY')}
         </h6>
         <div>
           <ExpansionPanel

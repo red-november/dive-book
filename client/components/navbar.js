@@ -55,7 +55,9 @@ const Navbar = ({handleClick, isLoggedIn, isOwner, classes}) => {
           </Typography> */}
 
           <nav className="navBar">
-            <img src="/DiveBook.png" className="NavLogo" />
+            <Link to="/home" className="logoLink">
+              <img src="/DiveBook.png" className="NavLogo" />{' '}
+            </Link>
             {isLoggedIn ? (
               <div className="main-nav">
                 {/* The navbar will show these links after you log in */}

@@ -317,3 +317,7 @@ li.Badge {
   max-width: 80px;
   max-height: 80px;
 }
+
+.logoLink {
+  margin: 0;
+}
