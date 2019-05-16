@@ -236,17 +236,19 @@ class SingleLog extends Component {
                   {' '}
                   <i className="far fa-edit" />
                 </button>
-                <div>
-                  <Link to="/qr">
-                    <button
-                      type="button"
-                      className="btn-main"
-                      onClick={this.displayScanner}
-                    >
-                      Toggle QR Scanner
-                    </button>{' '}
-                  </Link>
-                </div>
+                {!singleLog.isVerified && (
+                  <div>
+                    <Link to="/qr">
+                      <button
+                        type="button"
+                        className="btn-main"
+                        onClick={this.displayScanner}
+                      >
+                        Toggle QR Scanner
+                      </button>{' '}
+                    </Link>
+                  </div>
+                )}
               </div>
             )}
 
