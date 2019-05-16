@@ -264,6 +264,16 @@ class SingleLog extends Component {
               />
             </div>
           ) : (
+            //   {singleLog.isVerified ? (<div className="top-buffer">
+            //   <SingleLogTable
+            //     {...this.props.singleLog}
+            //     singleShop={singleShop}
+            //     diveName={singleLog.diveName}
+            //     singleLog={singleLog}
+            //     enterObservation={this.enterObservation}
+            //     routeToObservations={this.routeToObservations}
+            //   />
+            // </div>):
             <div className="top-buffer">
               <LogForm
                 handleChange={this.handleChange}
