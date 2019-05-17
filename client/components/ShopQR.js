@@ -15,7 +15,7 @@ const ShopQR = ({diveshopId, diveshop, getShop}) => {
     return <h1> loading...</h1>
   }
   return (
-    <div>
+    <div className = "QRCode">
       <h1>{diveshop.name}</h1>
       <h3>Scan to get your stamp!</h3>
       <QRgenerator diveshopId={diveshopId} />
