@@ -103,7 +103,7 @@ class DiverHome extends Component {
           {diverBadges.map(badge => (
             <ul key={badge.id}>
               <li className="Badge">
-                {badge.name} {badge.description}
+                {badge.name} &mdash; {badge.description}
               </li>
             </ul>
           ))}
