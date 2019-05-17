@@ -471,6 +471,19 @@ async function seed() {
 
         console.log(`Location Load Success!`)
 
+  const ShopAddressBook = await Promise.all([
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 1'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 2'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 3'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 4'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 5'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 6'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-118.400833,34.007778),4326) where id = 7'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 8'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 9'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 10'),
+    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 11'),										])
+
   const CertificationsBook = await Promise.all(
     [	Certification.create({ provider: "SSI", level: "Open Water", certId: "368SSI", date: "2016-08-06", diverId: 1, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "927NAUI", date: "2019-01-05", diverId: 1, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "752NAUI", date: "2018-04-05", diverId: 1, instructorId: "HCOLE1234"}),
     Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "903NAUI", date: "2018-11-30", diverId: 2, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "900NAUI", date: "2018-11-24", diverId: 2, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "228PADI", date: "2015-12-28", diverId: 2, instructorId: "HCOLE1234"}),
