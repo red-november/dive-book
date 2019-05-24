@@ -30,7 +30,7 @@ class DiverHome extends Component {
     if (this.props.diverLogs.length > 0) {
       let svgAll = document.querySelectorAll('svg')
       let counter = svgAll.length
-      // only have ObservationsQuery ran one time when there is no bubble chart existed.
+      // // only have ObservationsQuery ran one time when there is no bubble chart existed.
       if (counter === 0) {
         let data = ObservationsQuery(this.props.diverLogs)
         this.BubblifyObservations(data)
