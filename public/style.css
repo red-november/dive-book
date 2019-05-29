@@ -336,3 +336,9 @@ li.Badge {
 .btn-danger {
   background-color: rgba(235, 133, 85, 0.712);
 }
+
+.QRCode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
