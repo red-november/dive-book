@@ -18,10 +18,7 @@ class SingleOfferedDive extends Component {
         <h3>{this.props.singleOfferedDive.name}</h3>
         <h4>{/* Dive Offered By:<a>{this.props.singleShop.name}</a> */}</h4>
         <h4>
-          <img
-            className="singleDiveImg"
-            src={`/pictures/offereddives/${imageURL}`}
-          />
+          <img className="singleDiveImg" src={`${imageURL}`} />
           <p />
           {location}
           <p />
