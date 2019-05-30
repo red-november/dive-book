@@ -10,8 +10,6 @@
 
 ### Website: https://thedivebook.herokuapp.com/
 
-### Github: https://github.com/emily6699/scuba-dive-book
-
 ### YouTuBe Presentation: https://youtu.be/B95ammM_fvQ
 
 ### Quick Start
