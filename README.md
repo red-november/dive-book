@@ -30,8 +30,22 @@ Password: 123
 
 ### Website ScreenShots
 
+## Front page shows number of Logs and D3 bubble charts for all the obervations from all the users.
+
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/frontPagewithBubbleChart.png)
+
+## Map displays fish icons relating to the freqyency of the observations by dive site for all the users.
+
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/MapwithFishIcon.png)
+
+## Personal analyses of the user's progression over time with metrics such as time under water, rate of air consumption, number of Dives Comparison, and Max Depth History.
+
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Analysis.png)
+
+## User's verified log with stamp and tagged observations.
+
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Log.png)
-![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/DonutChart.png)
+
+## Donnut Chart shows the number of dives by Logs
+
+![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/LogsDonutChart.png)
