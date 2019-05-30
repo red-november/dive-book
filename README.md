@@ -22,6 +22,10 @@ npm install
 
 # Serve on localhost:8081
 npm run start-dev
+
+# login
+Email: Ben.Awesome@email.com
+Password: 123
 ```
 
 ### Website ScreenShots
@@ -29,4 +33,5 @@ npm run start-dev
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/frontPagewithBubbleChart.png)
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Analysis.png)
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Log.png)
+![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/MapwithFishIcon.png)
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/DonutChart.png)
