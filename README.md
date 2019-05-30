@@ -6,11 +6,9 @@
 
 ### Technologies:
 
-#### Node.js, Javascript, Express.js, React BriteCharts, React.js, Redux.js, D3, Material UI,React-Map-GL, PostgreSQL
+#### Node.js, Javascript, Express.js, React BriteCharts, React.js, Redux.js, D3, Material UI, React-Map-GL, PostgreSQL
 
 ### Website: https://thedivebook.herokuapp.com/
-
-### Github: https://github.com/emily6699/scuba-dive-book
 
 ### YouTuBe Presentation: https://youtu.be/B95ammM_fvQ
 
@@ -30,7 +28,7 @@ Password: 123
 
 ### Website ScreenShots
 
-### Front page shows number of Logs and D3 bubble charts for all the obervations from all the users.
+### Front page shows number of logs and D3 bubble charts for all the obervations from all the users.
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/frontPagewithBubbleChart.png)
 
@@ -42,10 +40,10 @@ Password: 123
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Analysis.png)
 
-### User's verified log with stamp and tagged observations.
+### User's verified log with stamp after QR scanning and tagged observations.
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Log.png)
 
-### Donnut Chart shows the number of dives by Logs
+### Donnut Chart shows the number of dives by logs
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/LogsDonutChart.png)
