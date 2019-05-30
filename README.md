@@ -46,6 +46,6 @@ Password: 123
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Log.png)
 
-### Donnut Chart shows the number of dives by Logs
+### Donnut Chart shows the number of dives by logs
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/LogsDonutChart.png)
