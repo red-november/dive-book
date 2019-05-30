@@ -20,7 +20,7 @@ class SingleOfferedDive extends Component {
         <h4>
           <img
             className="singleDiveImg"
-            src={`/pictures/offereddives/${imageURL}`}
+            src={`${imageURL}`}
           />
           <p />
           {location}
