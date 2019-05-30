@@ -6,7 +6,7 @@
 
 ### Technologies:
 
-#### Node.js, Javascript, Express.js, React BriteCharts, React.js, Redux.js, D3, Material UI,React-Map-GL, PostgreSQL
+#### Node.js, Javascript, Express.js, React BriteCharts, React.js, Redux.js, D3, Material UI, React-Map-GL, PostgreSQL
 
 ### Website: https://thedivebook.herokuapp.com/
 
