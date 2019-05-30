@@ -1,17 +1,32 @@
 # DiveBook
 
-## Description:
+### Description:
 
-### Social Media Progressive Web Application for SCUBA divers to record dives, see diving analysis charts, and get verification from dive shops by scanning QR code. The app focuses on data visualizations by using D3 and QR code scanner.
+#### Social Media Progressive Web Application for SCUBA divers to record dives, see diving analysis charts, and get verification from dive shops by scanning QR code. The app focuses on data visualizations by using D3 and QR code scanner.
 
-## Website:https://thedivebook.herokuapp.com/
+### Website: https://thedivebook.herokuapp.com/
 
-## Github: https://github.com/red-november/dive-book
+### Github: https://github.com/red-november/dive-book
 
-## Technologies:
+### YouTuBe Presentation: https://youtu.be/B95ammM_fvQ
 
-### Node.js, Javascript, Express.js, PostgreSQL, React.js, Redux.js, D3, Material UI.
+### Technologies:
 
-### ScreenShots
+#### Node.js, Javascript, Express.js, React.js, Redux.js, D3, Material UI, PostgreSQL
 
-![img][]
+### Quick Start
+
+```
+# Install dependencies
+npm install
+
+# Serve on localhost:8081
+npm run start-dev
+```
+
+### Website ScreenShots
+
+![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/frontPagewithBubbleChart.png)
+![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Analysis.png)
+![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Log.png)
+![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/DonutChart.png)
