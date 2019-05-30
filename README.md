@@ -30,11 +30,11 @@ Password: 123
 
 ### Website ScreenShots
 
-### Front page shows number of Logs and D3 bubble charts for all the obervations from all the users.
+### Front page shows number of logs and D3 bubble charts for all the obervations from all the users.
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/frontPagewithBubbleChart.png)
 
-### Map displays fish icons relating to the freqyency of the observations by dive site for all the users.
+### Map displays fish icons relating to the frequency of the observations by dive site for all the users.
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/MapwithFishIcon.png)
 
@@ -42,7 +42,7 @@ Password: 123
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Analysis.png)
 
-### User's verified log with stamp and tagged observations.
+### User's verified log with stamp after QR scanning and tagged observations.
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Log.png)
 
