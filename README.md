@@ -6,7 +6,7 @@
 
 ### Technologies:
 
-#### Node.js, Javascript, Express.js, React.js, Redux.js, D3, Material UI, PostgreSQL
+#### Node.js, Javascript, Express.js, React BriteCharts, React.js, Redux.js, D3, Material UI,React-Map-GL, PostgreSQL
 
 ### Website: https://thedivebook.herokuapp.com/
 
@@ -31,7 +31,7 @@ Password: 123
 ### Website ScreenShots
 
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/frontPagewithBubbleChart.png)
+![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/MapwithFishIcon.png)
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Analysis.png)
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/Log.png)
-![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/MapwithFishIcon.png)
 ![img](https://github.com/emily6699/scuba-dive-book/blob/readMe/public/pictures/readMePic/DonutChart.png)
