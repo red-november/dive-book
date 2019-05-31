@@ -70,7 +70,7 @@ describe('Class methods', () => {
     })
 
     it('creates divers for each element in the array', () => {
-      return Diver.findByPk(2).then(diver =>
+      return Diver.findOne({where: {firstName: 'Fred'}}).then(diver =>
         expect(diver.firstName).to.equal('Fred')
       )
     })

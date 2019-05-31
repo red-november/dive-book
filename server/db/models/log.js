@@ -107,7 +107,7 @@ const Log = db.define('log', {
   },
   description: {
     type: Sequelize.TEXT,
-    defaultValue: "Awesome Dive!!!!"
+    defaultValue: 'Awesome Dive!!!!'
   },
   hasStrongCurrent: {
     type: Sequelize.BOOLEAN,
@@ -127,7 +127,6 @@ const Log = db.define('log', {
 //class methods
 
 //returns an array of all unique observations
-
 
 Log.getAllObservations = async function(diverId) {
   try {
