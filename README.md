@@ -8,8 +8,6 @@
 
 #### Node.js, Javascript, Express.js, React BriteCharts, React.js, Redux.js, D3, Material UI, React-Map-GL, PostgreSQL
 
-### Website: https://thedivebook.herokuapp.com/
-
 ### YouTuBe Presentation: https://youtu.be/B95ammM_fvQ
 
 ### Quick Start
