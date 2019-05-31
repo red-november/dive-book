@@ -68,5 +68,13 @@ describe('certification routes', () => {
         expect(data.provider).to.equal('NAUI')
       )
     })
+
+    it('DELETE /api/certs/:id', async () => {
+      const res = await request(app)
+        .delete('/api/certs/1')
+        .expect(200)
+
+      await Certification.findByPk(1).then(data => expect(data).to.equal(null))
+    })
   }) //end describe non-GET routes
 }) //end describe certification routes
