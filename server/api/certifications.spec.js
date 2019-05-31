@@ -38,5 +38,14 @@ describe('certification routes', () => {
       expect(res.body).to.be.an('object')
       expect(res.body.provider).to.equal('PADI')
     })
+
+    it('GET /api/certs/diver/:diverId', async () => {
+      const res = await request(app)
+        .get('/api/certs/diver/1')
+        .expect(200)
+
+      expect(res.body).to.be.an('array')
+      expect(res.body[0].instructorId).to.equal('harrison123')
+    })
   }) //end describe GET routes
 }) //end describe certification routes
