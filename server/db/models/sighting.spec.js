@@ -58,4 +58,20 @@ describe('sighting class methods', () => {
       }).then(data => expect(data.length).to.equal(2))
     })
   }) // end describe addBulk
+
+  describe('destroyBulk', () => {
+    before(async () => {
+      await Sighting.destroyBulk([
+        {logId: 1, observationId: 2},
+        {logId: 1, observationId: 1}
+      ])
+    })
+    it('removes observations in bulk', () => {
+      return Sighting.findOne({
+        where: {
+          observationId: 2
+        }
+      }).then(data => expect(data).to.equal(null))
+    })
+  }) //end describe destroyBulk
 }) //end describe class methods

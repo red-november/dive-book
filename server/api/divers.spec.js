@@ -68,11 +68,5 @@ describe('Class methods', () => {
         expect(diver.firstName).to.equal('Rocky')
       })
     })
-
-    it('creates divers for each element in the array', () => {
-      return Diver.findOne({where: {firstName: 'Fred'}}).then(diver =>
-        expect(diver.firstName).to.equal('Fred')
-      )
-    })
   }) //end describe load data
 }) //end describe class methods
