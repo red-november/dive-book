@@ -48,4 +48,25 @@ describe('certification routes', () => {
       expect(res.body[0].instructorId).to.equal('harrison123')
     })
   }) //end describe GET routes
+
+  describe('non-GET routes', () => {
+    const reqBody = {
+      certId: 1,
+      provider: 'NAUI',
+      instructorId: 'harrison123',
+      level: 'Advanced Open Water',
+      date: '2015-01-13 19:00:00-05'
+    }
+
+    it('PUT /api/certs/:id', async () => {
+      const res = await request(app)
+        .put('/api/certs/1')
+        .send(reqBody)
+        .expect(200)
+
+      await Certification.findByPk(1).then(data =>
+        expect(data.provider).to.equal('NAUI')
+      )
+    })
+  }) //end describe non-GET routes
 }) //end describe certification routes
