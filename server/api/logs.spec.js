@@ -58,5 +58,13 @@ describe('log routes', () => {
       expect(res.body).to.be.an('object')
       expect(res.body.visibility).to.equal(15)
     })
+
+    it('GET /api/logs/diver/:diverId', async () => {
+      const res = await request(app)
+        .get('/api/logs/diver/1')
+        .expect(200)
+      expect(res.body).to.be.an('array')
+      expect(res.body[0].maxDepth).to.equal(10)
+    })
   }) // end describe GET routes
 }) //end describe log routes
