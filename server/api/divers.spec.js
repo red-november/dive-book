@@ -52,21 +52,3 @@ describe('Diver routes', () => {
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
-
-describe('Class methods', () => {
-  beforeEach(async () => {
-    await before()
-  })
-
-  describe('Load data', () => {
-    it('creates divers for each element in the array', () => {
-      return Diver.findOne({
-        where: {
-          firstName: 'Rocky'
-        }
-      }).then(diver => {
-        expect(diver.firstName).to.equal('Rocky')
-      })
-    })
-  }) //end describe load data
-}) //end describe class methods
