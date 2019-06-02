@@ -50,5 +50,13 @@ describe('log routes', () => {
       expect(res.body).to.be.an('array')
       expect(res.body[0].diveName).to.equal('Barracuda Point')
     })
-  })
-})
+
+    it('GET /api/logs/:id', async () => {
+      const res = await request(app)
+        .get('/api/logs/1')
+        .expect(200)
+      expect(res.body).to.be.an('object')
+      expect(res.body.visibility).to.equal(15)
+    })
+  }) // end describe GET routes
+}) //end describe log routes
