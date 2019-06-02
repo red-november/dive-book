@@ -4,6 +4,8 @@ const db = require('../db')
 const app = require('../index')
 const Diver = db.model('diver')
 const Log = db.model('log')
+const Observation = db.model('observation')
+const Sighting = db.model('sighting')
 
 async function before() {
   await db.sync({force: true})
@@ -35,6 +37,17 @@ async function before() {
     hasStrongCurrent: false,
     visibility: 15
   })
+
+  await Observation.create({
+    category: 'mollusks',
+    name: 'Cuttlefish',
+    description: 'master of disguise'
+  })
+
+  await Sighting.create({
+    logId: 1,
+    observationId: 1
+  })
 }
 
 describe('log routes', () => {
@@ -65,6 +78,16 @@ describe('log routes', () => {
         .expect(200)
       expect(res.body).to.be.an('array')
       expect(res.body[0].maxDepth).to.equal(10)
+    })
+
+    it('GET /api/logs/diver/:diverId/observations', async () => {
+      const res = await request(app)
+        .get('/api/logs/diver/1/observations')
+        .expect(200)
+
+      expect(res.body).to.be.an('array')
+      expect(res.body[0].observations).to.be.an('array')
+      expect(res.body[0].observations[0].name).to.equal('Cuttlefish')
     })
   }) // end describe GET routes
 }) //end describe log routes
