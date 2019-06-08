@@ -27,7 +27,7 @@ class Scanner extends Component {
           delay={300}
           onError={this.handleError}
           onScan={this.handleScan}
-          style={{width: '20%', margin: '80px'}}
+          style={{width: '50%', margin: '80px'}}
         />
       </div>
     )

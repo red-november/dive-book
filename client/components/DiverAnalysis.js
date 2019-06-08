@@ -1,18 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {
-  getDiverLogsThunk,
-  getDiverCertsThunk,
-  getLogsThunk
-} from '../store'
+import {getDiverLogsThunk, getDiverCertsThunk, getLogsThunk} from '../store'
 import {getDiverBadgesThunk} from '../store/diverBadgesReducer'
-import {DiveTimeChartWithToolTip, AirEfficiencyChartWithToolTip, BarChart, DepthChartWithToolTip} from './D3Components'
+import {
+  DiveTimeChartWithToolTip,
+  AirEfficiencyChartWithToolTip,
+  BarChart,
+  DepthChartWithToolTip
+} from './D3Components'
 import {TimeStringToFloat} from '../../utilities/d3Utils'
 import history from '../history'
 
 class DiverAnalysis extends Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
       AnomalyDetected: false
@@ -27,16 +28,14 @@ class DiverAnalysis extends Component {
   }
 
   RerenderIfAnomaly = async () => {
-    let ticks = document.querySelectorAll("g.tick").length
-    if(ticks > 5000 && !this.state.AnomalyDetected) {
-      console.log("called")
+    let ticks = document.querySelectorAll('g.tick').length
+    if (ticks > 700 && !this.state.AnomalyDetected) {
+      console.log('called')
       await this.setState({
         AnomalyDetected: true
       })
-      history.push("/loading")
-      setTimeout(() =>
-      history.push("/home/analysis"), 500)
-
+      history.push('/loading')
+      setTimeout(() => history.push('/home/analysis'), 500)
     }
   }
 
@@ -121,8 +120,7 @@ class DiverAnalysis extends Component {
       return <h1>LOADING...</h1>
     }
 
-    setTimeout(() => this.RerenderIfAnomaly(),1)
-
+    setTimeout(() => this.RerenderIfAnomaly(), 1)
 
     return (
       <div className="Container">
@@ -151,9 +149,7 @@ class DiverAnalysis extends Component {
         </div>
         <div className="ChartContainer">
           <h4>Max Depth History</h4>
-          <DepthChartWithToolTip
-            data={maxDepthData}
-          />
+          <DepthChartWithToolTip data={maxDepthData} />
         </div>
       </div>
     )
@@ -186,4 +182,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiverAnalysis)
-
