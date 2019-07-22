@@ -1,46 +1,31 @@
 'use strict'
 
 const db = require('../server/db')
+
 const {
-  Diver,
-  DiveShop,
-  Certification,
-  OfferedDive,
-  Log,
-  Badge,
-  Observation,
-} = require('../server/db/models')
-const {DiveShopsData, OfferedDivesData, ObservationOddsByOfferedDiveData, ObservationsData, DiversData, ObservationHash, TourGuide} = require('./data')
+    // Diver,
+    // DiveShop,
+    // Certification,
+    // OfferedDive,
+    Log,
+    // Badge,
+    // Observation,
+  } = require('../server/db/models')
+
+//   const {
+//     DiveShopsData,
+//     OfferedDivesData,
+//     ObservationOddsByOfferedDiveData,
+//     ObservationsData,
+//     DiversData,
+//     ObservationHash,
+//     TourGuide
+// } = require('./data')
+  
+
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
-
-  // HerokuSeed-one
-
-  await db.query(
-    'ALTER TABLE logs ADD COLUMN geog geography(Point,4326);'
-  )
-  await db.query(
-    'ALTER TABLE diveshops ADD COLUMN geog geography(Point,4326);'
-  )
-  await db.query(
-    'ALTER TABLE "offeredDives" ADD COLUMN geog geography(Point,4326);'
-  )
-
-  await DiveShop.LoadData(DiveShopsData)
-  await Diver.LoadData(DiversData)
-  await OfferedDive.LoadData(OfferedDivesData)
-  await Observation.LoadData(ObservationsData)
-
-  const badges = await Promise.all([
-    Badge.create({name: 'Juvenile', description: 'Logged at least 10 dives'}),
-    Badge.create({name: 'Aquaman', description: 'Dived beyond 30 meters'}),
-    Badge.create({name: 'Discoverer', description: 'Made 40 observations'}),
-    Badge.create({name: 'Voyager', description: 'Dived in over 10 places'})
-  ])
-  console.log("Badges Load Success!")
-
-  // HerokuSeed-two
 
   const DiveBook = await Promise.all([
     Log.create(	{		diveName: "Manta Ray Night Dive", 	location: "Honolulu, Hawaii", 	isVerified: true, 	date: "2015-01-14", 	timeIn: "07:11:00", 	timeOut: "07:49:00", 	maxDepth: 35, 	tankPressureStart: 228, 	tankPressureEnd: 15, 	tankType: "Steel", 	beltWeight: 24, 	wetSuitType: "Other", 	wetSuitThickness: 5, 	airMixture: "Air", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 17, 	diverId: 4, 	offeredDiveId: 8, 	diveshopId: 5	}),
@@ -242,288 +227,13 @@ async function seed() {
     Log.create(	{		diveName: "Molokini Crater Wall", 	location: "Honolulu, Hawaii", 	isVerified: true, 	date: "2019-04-09", 	timeIn: "05:26:00", 	timeOut: "06:06:00", 	maxDepth: 29, 	tankPressureStart: 209, 	tankPressureEnd: 72, 	tankType: "Steel", 	beltWeight: 5, 	wetSuitType: "None", 	wetSuitThickness: 0, 	airMixture: "Nitrox", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 15, 	diverId: 2, 	offeredDiveId: 14, 	diveshopId: 5	}),
     Log.create(	{		diveName: "Sodwana Bay", 	location: "Sodwana Bay, South Africa", 	isVerified: true, 	date: "2019-04-12", 	timeIn: "21:45:00", 	timeOut: "22:48:00", 	maxDepth: 34, 	tankPressureStart: 232, 	tankPressureEnd: 103, 	tankType: "Aluminum", 	beltWeight: 19, 	wetSuitType: "Fulljohn", 	wetSuitThickness: 1, 	airMixture: "Air", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 8, 	diverId: 4, 	offeredDiveId: 22, 	diveshopId: 10	}),
     Log.create(	{		diveName: "Navy Pier", 	location: "Navy Pier, Western Australia", 	isVerified: true, 	date: "2019-04-18", 	timeIn: "09:01:00", 	timeOut: "09:55:00", 	maxDepth: 38, 	tankPressureStart: 218, 	tankPressureEnd: 15, 	tankType: "Steel", 	beltWeight: 3, 	wetSuitType: "Shortie", 	wetSuitThickness: 5, 	airMixture: "Air", 	description: "Best dive ever!!!", 	hasStrongCurrent: false, 	visibility: 18, 	diverId: 5, 	offeredDiveId: 9, 	diveshopId: 3	}),
-    Log.create(	{		diveName: "Palawan", 	location: "Palawan, Philippines", 	isVerified: true, 	date: "2019-04-24", 	timeIn: "06:41:00", 	timeOut: "07:16:00", 	maxDepth: 25, 	tankPressureStart: 221, 	tankPressureEnd: 58, 	tankType: "Aluminum", 	beltWeight: 13, 	wetSuitType: "Dry Suit", 	wetSuitThickness: 3, 	airMixture: "Air", 	description: "Best dive ever!!!", 	hasStrongCurrent: true, 	visibility: 9, 	diverId: 16, 	offeredDiveId: 12, 	diveshopId: 1	}),	])
+    Log.create(	{		diveName: "Palawan", 	location: "Palawan, Philippines", 	isVerified: true, 	date: "2019-04-24", 	timeIn: "06:41:00", 	timeOut: "07:16:00", 	maxDepth: 25, 	tankPressureStart: 221, 	tankPressureEnd: 58, 	tankType: "Aluminum", 	beltWeight: 13, 	wetSuitType: "Dry Suit", 	wetSuitThickness: 3, 	airMixture: "Air", 	description: "Best dive ever!!!", 	hasStrongCurrent: true, 	visibility: 9, 	diverId: 16, 	offeredDiveId: 12, 	diveshopId: 1	})
+  ])
+  
   console.log(`DiveBook Load Success! ${DiveBook.length} logs available`)
-
-  // HerokuSeed-three
-
-  const AddressBook = await Promise.all([	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 1'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 2'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 3'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 4'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 5'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 6'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 7'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 8'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 9'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 10'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 11'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 12'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 13'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 14'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 15'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 16'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 17'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 18'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(97.866667,9.416667),4326) where id = 19'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 20'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-121.9,36.8),4326) where id = 21'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 22'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-118.416667,33.383333),4326) where id = 23'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 24'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 25'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 26'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 27'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.290303,19.327874),4326) where id = 28'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-118.416667,33.383333),4326) where id = 29'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 30'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(97.866667,9.416667),4326) where id = 31'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 32'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 33'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 34'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 35'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 36'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 37'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-121.9,36.8),4326) where id = 38'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 39'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 40'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 41'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.628756,4.114683),4326) where id = 42'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.290303,19.327874),4326) where id = 43'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 44'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 45'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(35.538056,-23.794722),4326) where id = 46'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 47'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 48'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 49'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 50'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 51'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 52'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 53'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(97.866667,9.416667),4326) where id = 54'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-118.416667,33.383333),4326) where id = 55'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 56'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 57'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-121.9,36.8),4326) where id = 58'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 59'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 60'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 61'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(35.538056,-23.794722),4326) where id = 62'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 63'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 64'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 65'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 66'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 67'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 68'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 69'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 70'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 71'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 72'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 73'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(97.866667,9.416667),4326) where id = 74'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 75'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 76'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 77'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 78'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 79'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 80'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 81'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 82'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 83'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 84'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 85'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-121.9,36.8),4326) where id = 86'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 87'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 88'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(35.538056,-23.794722),4326) where id = 89'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 90'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 91'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-118.416667,33.383333),4326) where id = 92'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-118.416667,33.383333),4326) where id = 93'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.628756,4.114683),4326) where id = 94'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 95'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 96'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 97'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.290303,19.327874),4326) where id = 98'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 99'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 100'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 101'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 102'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 103'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 104'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 105'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 106'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 107'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 108'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 109'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 110'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 111'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 112'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 113'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-121.9,36.8),4326) where id = 114'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 115'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 116'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 117'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 118'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 119'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 120'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(97.866667,9.416667),4326) where id = 121'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 122'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 123'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 124'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 125'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 126'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 127'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 128'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 129'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 130'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 131'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 132'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(97.866667,9.416667),4326) where id = 133'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 134'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 135'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 136'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 137'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 138'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 139'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(35.538056,-23.794722),4326) where id = 140'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 141'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 142'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 143'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 144'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(35.538056,-23.794722),4326) where id = 145'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 146'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 147'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 148'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 149'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 150'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-121.9,36.8),4326) where id = 151'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 152'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 153'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 154'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 155'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.628756,4.114683),4326) where id = 156'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 157'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 158'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 159'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 160'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.290303,19.327874),4326) where id = 161'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-121.9,36.8),4326) where id = 162'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 163'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 164'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 165'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 166'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 167'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 168'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 169'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 170'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-118.416667,33.383333),4326) where id = 171'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 172'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 173'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 174'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-118.416667,33.383333),4326) where id = 175'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 176'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 177'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.628756,4.114683),4326) where id = 178'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 179'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(35.538056,-23.794722),4326) where id = 180'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(97.866667,9.416667),4326) where id = 181'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 182'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 183'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 184'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 185'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 186'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 187'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 188'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 189'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 190'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 191'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 192'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 193'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 194'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(97.866667,9.416667),4326) where id = 195'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 196'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 197'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 198'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 199'),
-	db.query('UPDATE logs set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 200'),											])
-
-  const OfferedDivesAddressBook = await Promise.all([
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(118.628756,4.114683),4326) where id = 1'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(134.616667,7.5),4326) where id = 2'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 3'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 4'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 5'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 6'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(34.253889,27.722222),4326) where id = 7'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 8'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(114.191304,-21.817378),4326) where id = 9'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 10'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 11'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 12'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-90.55,-0.666667),4326) where id = 13'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 14'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(121.070833,13.549722),4326) where id = 15'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-121.9,36.8),4326) where id = 16'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-118.416667,33.383333),4326) where id = 17'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-119.416667,34.008333),4326) where id = 18'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 19'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 20'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-81.290303,19.327874),4326) where id = 21'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 22'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(35.538056,-23.794722),4326) where id = 23'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 24'),
-  db.query('UPDATE "offeredDives" set geog = ST_SetSRID(ST_MakePoint(97.866667,9.416667),4326) where id = 25'),								])
-
-        console.log(`Location Load Success!`)
-
-  const ShopAddressBook = await Promise.all([
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(118.83,10),4326) where id = 1'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-88.188611,17.498611),4326) where id = 2'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(138.7581,-33.0255),4326) where id = 3'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(34.329722,27.912222),4326) where id = 4'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-157.816667,21.3),4326) where id = 5'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(115.088056,-8.335),4326) where id = 6'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-118.400833,34.007778),4326) where id = 7'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-81.544167,24.666944),4326) where id = 8'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-74.0059,40.7127),4326) where id = 9'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(32.683333,-27.533333),4326) where id = 10'),
-    db.query('UPDATE diveshops set geog = ST_SetSRID(ST_MakePoint(-3.05,58.9),4326) where id = 11'),										])
-
-  // HerokuSeed-four
-
-  const CertificationsBook = await Promise.all(
-    [	Certification.create({ provider: "SSI", level: "Open Water", certId: "368SSI", date: "2016-08-06", diverId: 1, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "927NAUI", date: "2019-01-05", diverId: 1, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "752NAUI", date: "2018-04-05", diverId: 1, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "903NAUI", date: "2018-11-30", diverId: 2, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "900NAUI", date: "2018-11-24", diverId: 2, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "228PADI", date: "2015-12-28", diverId: 2, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "084PADI", date: "2015-05-14", diverId: 3, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "583SSI", date: "2017-07-11", diverId: 3, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "285PADI", date: "2016-03-28", diverId: 3, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "SSI", level: "Open Water", certId: "369SSI", date: "2016-08-07", diverId: 4, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "558SSI", date: "2017-06-01", diverId: 4, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "071PADI", date: "2015-04-24", diverId: 4, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "845NAUI", date: "2018-08-29", diverId: 5, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "155PADI", date: "2015-09-03", diverId: 5, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "423SSI", date: "2016-10-31", diverId: 5, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "SSI", level: "Open Water", certId: "367SSI", date: "2016-08-04", diverId: 6, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "509SSI", date: "2017-03-16", diverId: 6, instructorId: "HCOLE1234"}),	Certification.create({ provider: "Other", level: "Rescue Diver", certId: "949Other", date: "2019-02-09", diverId: 6, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "649NAUI", date: "2017-10-23", diverId: 7, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "035PADI", date: "2015-02-26", diverId: 7, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "401SSI", date: "2016-09-26", diverId: 7, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "286PADI", date: "2016-03-28", diverId: 8, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "118PADI", date: "2015-07-06", diverId: 8, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "685NAUI", date: "2017-12-20", diverId: 8, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "297PADI", date: "2016-04-14", diverId: 9, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "455SSI", date: "2016-12-21", diverId: 9, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "458SSI", date: "2016-12-26", diverId: 9, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "304PADI", date: "2016-04-26", diverId: 10, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "386SSI", date: "2016-09-02", diverId: 10, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "448SSI", date: "2016-12-10", diverId: 10, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "751NAUI", date: "2018-04-03", diverId: 11, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "222PADI", date: "2015-12-18", diverId: 11, instructorId: "HCOLE1234"}),	Certification.create({ provider: "SSI", level: "Open Water", certId: "583SSI", date: "2017-07-12", diverId: 11, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "027PADI", date: "2015-02-13", diverId: 12, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "843NAUI", date: "2018-08-26", diverId: 12, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "835NAUI", date: "2018-08-13", diverId: 12, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "627NAUI", date: "2017-09-19", diverId: 13, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Advanced Open Water", certId: "766NAUI", date: "2018-04-27", diverId: 13, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "272PADI", date: "2016-03-07", diverId: 13, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "Other", level: "Deep Diver", certId: "974Other", date: "2019-03-21", diverId: 14, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "275PADI", date: "2016-03-11", diverId: 14, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "290PADI", date: "2016-04-04", diverId: 14, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "019PADI", date: "2015-02-01", diverId: 15, instructorId: "HCOLE1234"}),	Certification.create({ provider: "NAUI", level: "Rescue Diver", certId: "877NAUI", date: "2018-10-19", diverId: 15, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "261PADI", date: "2016-02-18", diverId: 15, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 16, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 16, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 16, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 17, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 17, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 17, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "283PADI", date: "2016-03-24", diverId: 18, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "046PADI", date: "2015-03-16", diverId: 18, instructorId: "HCOLE1234"}),	Certification.create({ provider: "Other", level: "Deep Diver", certId: "997Other", date: "2019-04-26", diverId: 18, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 19, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 19, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 19, instructorId: "HCOLE1234"}),
-    Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 20, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 20, instructorId: "HCOLE1234"}),	Certification.create({ provider: "PADI", level: "Open Water", certId: "000PADI", date: "2015-01-01", diverId: 20, instructorId: "HCOLE1234"}),	])
-
-    console.log(`Certification Load Success!`)
-
-  await TourGuide(DiveBook, ObservationOddsByOfferedDiveData, ObservationHash)
-
   console.log(`seeded successfully`)
 }
 
-// We've separated the `seed` function from the `runSeed` function.
-// This way we can isolate the error handling and exit trapping.
-// The `seed` function is concerned only with modifying the database.
 async function runSeed() {
   console.log('seeding...')
   try {
@@ -538,12 +248,8 @@ async function runSeed() {
   }
 }
 
-// Execute the `seed` function, IF we ran this module directly (`node seed`).
-// `Async` functions always return a promise, so we can use `catch` to handle
-// any errors that might occur inside of `seed`.
 if (module === require.main) {
   runSeed()
 }
 
-// we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed
+module.exports = {seed}
