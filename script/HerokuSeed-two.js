@@ -24,7 +24,7 @@ const {
   
 
 async function seed() {
-  await db.sync({force: true})
+  await db.sync(/*{force: true}*/)
   console.log('db synced!')
 
   const DiveBook = await Promise.all([

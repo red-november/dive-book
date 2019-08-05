@@ -25,7 +25,7 @@ const {
 const Sequelize = require('sequelize')
 
 async function seed() {
-  await db.sync({force: true})
+  await db.sync(/*{force: true}*/)
   console.log('db synced!')
 
   console.log(`Loading Certifications`)
