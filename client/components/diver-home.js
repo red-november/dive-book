@@ -28,24 +28,36 @@ class DiverHome extends Component {
 
   componentDidUpdate() {
     if (this.props.diverLogs.length > 0) {
-      let data = ObservationsQuery(this.props.diverLogs)
-      this.BubblifyObservations(data)
+      let svgAll = document.querySelectorAll('svg')
+      let counter = svgAll.length
+      // // only have ObservationsQuery ran one time when there is no bubble chart existed.
+      if (counter === 0) {
+        let data = ObservationsQuery(this.props.diverLogs)
+        this.BubblifyObservations(data)
+      }
     }
   }
 
   BubblifyObservations = async data => {
     const canvas = d3.select('.canva')
-    let success = await Bubbles(canvas, data)
-    let svgAll = document.querySelectorAll('svg')
-    let counter = svgAll.length
-    console.log(counter)
-    while (counter > 1) {
-      svgAll = document.querySelectorAll('svg')
-      let svgSelected = document.querySelectorAll('svg')[1]
-      svgSelected.parentNode.removeChild(svgSelected)
-      counter--
-    }
-    return success
+    // let success = await Bubbles(canvas, data)
+    // let svgAll = document.querySelectorAll('svg')
+    // let counter = svgAll.length
+    // console.log(counter)
+    // while (counter > 1) {
+    //   svgAll = document.querySelectorAll('svg')
+    //   let svgSelected = document.querySelectorAll('svg')[1]
+    //   svgSelected.parentNode.removeChild(svgSelected)
+    //   counter--
+    //   console.log('counter', counter)
+    // }
+
+    // if the bubbles chart is already renderred, we don't need to render it again.
+    // if (counter === 0) {
+    await Bubbles(canvas, data)
+    // }
+
+    // return success
   }
 
   render() {
