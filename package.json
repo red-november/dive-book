@@ -42,7 +42,7 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^3.9.3",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "britecharts": "^2.11.0",
     "britecharts-react": "^0.5.1",
     "compression": "^1.7.3",
