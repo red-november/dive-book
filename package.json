@@ -55,7 +55,7 @@
     "history": "^4.9.0",
     "immutable": "^4.0.0-rc.12",
     "mapbox-gl": "^0.54.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",
