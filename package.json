@@ -48,7 +48,7 @@
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
     "d3": "^5.9.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-session": "^1.15.1",
     "file-system": "^2.2.2",
     "fs": "0.0.1-security",
